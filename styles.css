@@ -539,7 +539,12 @@ footer .copyright {
   text-align: center;
 }
 
-
+/* Shop page */
+#page-header{
+  background-image: url("img/banner/b1.jpg");
+  height: 40vh;
+  width: 100%;
+}
 
 
 
