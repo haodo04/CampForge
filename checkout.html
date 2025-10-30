@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Thanh Toán</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/checkout.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 <section id="header">
@@ -36,27 +42,27 @@
 
                 <div class="form-group">
                     <label for="fname">Họ *</label>
-                    <input type="text" id="fname" placeholder="Nguyễn" required>
+                    <input type="text" id="fname" placeholder="Họ" required>
                 </div>
 
                 <div class="form-group">
                     <label for="lname">Tên *</label>
-                    <input type="text" id="lname" placeholder="Văn A" required>
+                    <input type="text" id="lname" placeholder="Tên" required>
                 </div>
 
                 <div class="form-group">
                     <label for="address">Địa chỉ *</label>
-                    <input type="text" id="address" placeholder="123 Nguyễn Trãi, Quận 5, TP.HCM" required>
+                    <input type="text" id="address" placeholder="Address" required>
                 </div>
 
                 <div class="form-group">
                     <label for="city">Thành phố *</label>
-                    <input type="text" id="city" placeholder="Hồ Chí Minh" required>
+                    <input type="text" id="city" placeholder="City" required>
                 </div>
 
                 <div class="form-group">
                     <label for="postal">Mã bưu chính *</label>
-                    <input type="text" id="postal" placeholder="700000" required>
+                    <input type="text" id="postal" placeholder="code" required>
                 </div>
 
                 <div class="form-group">
@@ -71,19 +77,19 @@
 
                 <div class="form-group">
                     <label for="phone">Số điện thoại *</label>
-                    <input type="tel" id="phone" placeholder="0123 456 789" required>
+                    <input type="tel" id="phone" placeholder="Phone" required>
                 </div>
 
                 <div class="form-group">
                     <label>Ghi chú (tùy chọn)</label>
-                    <textarea rows="4" placeholder="Ghi chú cho người giao hàng..."></textarea>
+                    <textarea rows="4" placeholder="Ghi chú..."></textarea>
                 </div>
             </form>
 
             <div class="shipping-method">
                 <h3>Phương thức giao hàng</h3>
-                <label><input type="radio" name="shipping" checked> Giao hàng tiêu chuẩn - ₫100,000</label><br>
-                <label><input type="radio" name="shipping"> Giao hàng nhanh - ₫150,000</label>
+                <label><input type="radio" name="shipping" checked> Giao hàng tiêu chuẩn - 100,000 đ</label><br>
+                <label><input type="radio" name="shipping"> Giao hàng nhanh - 150,000 đ</label>
             </div>
 
             <div class="payment-method">
@@ -98,23 +104,23 @@
             <table id="order-summary">
                 <tr>
                     <td>Áo Thun Trơn</td>
-                    <td>₫150,000</td>
+                    <td>150,000 đ</td>
                 </tr>
                 <tr>
                     <td>Áo Khoác Jeans</td>
-                    <td>₫350,000</td>
+                    <td>350,000 đ</td>
                 </tr>
                 <tr>
                     <td><strong>Tạm tính</strong></td>
-                    <td>₫500,000</td>
+                    <td>500,000 đ</td>
                 </tr>
                 <tr>
                     <td>Phí giao hàng</td>
-                    <td>₫100,000</td>
+                    <td>100,000 đ</td>
                 </tr>
                 <tr>
                     <td><strong>Tổng cộng</strong></td>
-                    <td><strong>₫600,000</strong></td>
+                    <td><strong>600,000 đ</strong></td>
                 </tr>
             </table>
             <button class="normal">Xác nhận thanh toán</button>
