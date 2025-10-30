@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+</head>
+<body>
+<section id="header">
+    <a href="#"><img src="img/logo.png" alt="logo"></a>
+    <div>
+        <ul id="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a class="active" href="checkout.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+        </ul>
+    </div>
+</section>
+
+<section id="page-header" class="cart-header">
+    <h2>#Checkout</h2>
+    <p>Confirm your details and payment method</p>
+</section>
+
+<section id="checkout" class="section-p1">
+    <div class="checkout-container">
+        <div class="checkout-left">
+            <h3>Thông tin giao hàng</h3>
+            <form id="shipping-form">
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fname">Họ *</label>
+                    <input type="text" id="fname" placeholder="Nguyễn" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lname">Tên *</label>
+                    <input type="text" id="lname" placeholder="Văn A" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa chỉ *</label>
+                    <input type="text" id="address" placeholder="123 Nguyễn Trãi, Quận 5, TP.HCM" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">Thành phố *</label>
+                    <input type="text" id="city" placeholder="Hồ Chí Minh" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="postal">Mã bưu chính *</label>
+                    <input type="text" id="postal" placeholder="700000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Quốc gia *</label>
+                    <select id="country">
+                        <option selected>Việt Nam</option>
+                        <option>Lào</option>
+                        <option>Campuchia</option>
+                        <option>Thái Lan</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Số điện thoại *</label>
+                    <input type="tel" id="phone" placeholder="0123 456 789" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Ghi chú (tùy chọn)</label>
+                    <textarea rows="4" placeholder="Ghi chú cho người giao hàng..."></textarea>
+                </div>
+            </form>
+
+            <div class="shipping-method">
+                <h3>Phương thức giao hàng</h3>
+                <label><input type="radio" name="shipping" checked> Giao hàng tiêu chuẩn - ₫100,000</label><br>
+                <label><input type="radio" name="shipping"> Giao hàng nhanh - ₫150,000</label>
+            </div>
+
+            <div class="payment-method">
+                <h3>Phương thức thanh toán</h3>
+                <label><input type="radio" name="payment" value="COD" checked> Thanh toán khi nhận hàng (COD)</label><br>
+                <label><input type="radio" name="payment" value="VNPAY"> Thanh toán qua VNPAY</label>
+            </div>
+        </div>
+
+        <div class="checkout-right">
+            <h3>Đơn hàng của bạn</h3>
+            <table id="order-summary">
+                <tr>
+                    <td>Áo Thun Trơn</td>
+                    <td>₫150,000</td>
+                </tr>
+                <tr>
+                    <td>Áo Khoác Jeans</td>
+                    <td>₫350,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Tạm tính</strong></td>
+                    <td>₫500,000</td>
+                </tr>
+                <tr>
+                    <td>Phí giao hàng</td>
+                    <td>₫100,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Tổng cộng</strong></td>
+                    <td><strong>₫600,000</strong></td>
+                </tr>
+            </table>
+            <button class="normal">Xác nhận thanh toán</button>
+        </div>
+    </div>
+</section>
+
+<section id="newsletter" class="section-p1">
+    <div class="newstext">
+        <h4>Sign Up Newsletters</h4>
+        <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
+    </div>
+    <div class="form">
+        <input type="text" placeholder="Enter Your Email">
+        <button class="normal">Sign Up</button>
+    </div>
+</section>
+
+<footer class="section-p1">
+    <div class="col">
+        <img src="img/logo.png" alt="">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> 562 Wellington Road, Street 32, San Francisco</p>
+        <p><strong>Phone:</strong> +01 2222 365 /(+91) 01 2345 6789</p>
+        <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+        <div class="follow">
+            <h4>Follow us</h4>
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-pinterest-p"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <h4>About</h4>
+        <a href="#">About us</a>
+        <a href="#">Delivery Information</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Contact us</a>
+    </div>
+
+    <div class="col">
+        <h4>My Account</h4>
+        <a href="#">Sign In</a>
+        <a href="#">View Cart</a>
+        <a href="#">My Wishlist</a>
+        <a href="#">Track My Order</a>
+        <a href="#">Help</a>
+    </div>
+
+    <div class="col install">
+        <h4>Install App</h4>
+        <p>From App Store or Google Play</p>
+        <div class="row">
+            <img src="img/pay/app.jpg" alt="">
+            <img src="img/pay/play.jpg" alt="">
+        </div>
+        <p>Secured Payment Gateways</p>
+        <img src="img/pay/pay.png" alt="">
+    </div>
+
+    <div class="copyright">
+        <p>@ 2025, Cara Fashion Store - HTML CSS Ecommerce Template</p>
+    </div>
+</footer>
+
+</body>
+</html>
