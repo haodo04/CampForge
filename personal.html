@@ -411,7 +411,225 @@
       </div>
     </div>
 
+    <div
+      class="modal fade"
+      id="reviewModal"
+      tabindex="-1"
+      aria-labelledby="reviewModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reviewModalLabel">Đánh giá sản phẩm</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex align-items-center mb-3 border p-2 rounded">
+              <img
+                id="productImage"
+                src="./assets/img/products/f3.jpg"
+                alt="Ảnh sản phẩm"
+                width="60"
+                height="60"
+                style="object-fit: cover; border-radius: 4px"
+              />
+              <div class="ms-3 flex-grow-1">
+                <div id="productName" class="fw-bold">
+                  Tranh Phong Cảnh (Mẫu)
+                </div>
+                <div class="d-flex">
+                  <div class="me-3">
+                    Kích thước: <span id="productSize">40x60cm</span>
+                  </div>
+                  <div>Số lượng: <span id="productQuantity">1</span></div>
+                </div>
+              </div>
+            </div>
 
+            <form id="reviewForm">
+              <input
+                type="hidden"
+                id="paintingId"
+                name="paintingId"
+                value="1"
+              />
+              <input type="hidden" id="itemId" name="itemId" value="101" />
+
+              <div id="starRating" class="mb-2">
+                <i class="fa fa-star text-warning" data-value="1"></i>
+                <i class="fa fa-star text-warning" data-value="2"></i>
+                <i class="fa fa-star text-warning" data-value="3"></i>
+                <i class="fa fa-star" data-value="4"></i>
+                <i class="fa fa-star" data-value="5"></i>
+              </div>
+
+              <textarea
+                id="comment"
+                class="form-control mb-2"
+                rows="4"
+                placeholder="Viết đánh giá của bạn..."
+              ></textarea>
+              <input type="hidden" id="rating" value="3" />
+              <button type="submit" class="btn btn-primary">
+                Gửi đánh giá
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="addressModal"
+      tabindex="-1"
+      aria-labelledby="addressModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addressModalLabel">
+              Nhập địa chỉ nhận hàng
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="province" class="form-label">Tỉnh/Thành phố:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="province"
+                placeholder="Tỉnh/Thành phố"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="district" class="form-label">Quận/Huyện:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="district"
+                placeholder="Quận/Huyện"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="ward" class="form-label">Phường/Xã:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ward"
+                placeholder="Phường/xã"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="specificAddress" class="form-label"
+                >Địa chỉ cụ thể:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="specificAddress"
+                placeholder="Số nhà, tên đường..."
+                required
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="closeAddressModal"
+              data-bs-dismiss="modal"
+            >
+              Hủy
+            </button>
+            <button type="button" class="btn btn-primary" id="saveAddress">
+              Lưu
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="voucherModal"
+      tabindex="-1"
+      aria-labelledby="voucherModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="voucherModalLabel">
+              Danh sách voucher của bạn
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Tên voucher</th>
+                  <th>Mã</th>
+                  <th>Giảm (%)</th>
+                  <th>Hiệu lực</th>
+                  <th>Hết hạn</th>
+                  <th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Giảm giá đặc biệt</td>
+                  <td>SALE20</td>
+                  <td>20</td>
+                  <td>2025-01-01</td>
+                  <td>2025-12-31</td>
+                  <td>Chưa dùng</td>
+                </tr>
+                <tr>
+                  <td>Ưu đãi cho thành viên mới</td>
+                  <td>NEWBIE10</td>
+                  <td>10</td>
+                  <td>2024-01-01</td>
+                  <td>2025-06-30</td>
+                  <td>Đã dùng</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- newsletters -->
     <section id="newsletter" class="section-p1">
       <div class="newstext">
