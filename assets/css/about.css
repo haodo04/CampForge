@@ -1,6 +1,6 @@
 /* About page */
 #page-header .about-header {
-    background-image: url("img/about/banner.png");
+    background-image: url("/assets/img/about/banner.png");
 }
 
 #about-head {
