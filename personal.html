@@ -259,7 +259,159 @@
       </div>
     </div>
 
-    
+    <div class="card mb-4" style="margin: 30px">
+      <div
+        class="card-header text-white"
+        style="background: #088178 !important"
+      >
+        <h4>Đơn Hàng Của Bạn</h4>
+      </div>
+      <div class="card-body">
+        <div
+          class="order-status-tabs d-flex justify-content-start mb-4"
+          id="orderStatusTabs"
+        >
+          <button class="status-tab active" data-status="ALL">Tất cả</button>
+          <button class="status-tab" data-status="chờ">Chờ xác nhận</button>
+          <button class="status-tab" data-status="đang giao">Vận chuyển</button>
+          <button class="status-tab" data-status="hoàn thành">
+            Hoàn thành
+          </button>
+          <button class="status-tab" data-status="đã hủy giao hàng">
+            Đã hủy
+          </button>
+          <button class="status-tab" data-status="giao hàng thất bại">
+            Thất bại
+          </button>
+        </div>
+
+        <table id="allOrders" class="table table-bordered display">
+          <thead>
+            <tr>
+              <th>Mã Đơn Hàng</th>
+              <th>Tổng Tiền</th>
+              <th>Ngày Đặt</th>
+              <th>Thanh Toán</th>
+              <th>Phương thức TT</th>
+              <th>Vận chuyển</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#ODR12345</td>
+              <td><span class="fw-bold">1.500.000 ₫</span></td>
+              <td>2025-10-25</td>
+              <td>Đã thanh toán</td>
+              <td>COD</td>
+              <td>Hoàn thành</td>
+              <td>
+                <button
+                  class="btn btn-info btn-sm view-order"
+                  data-bs-toggle="modal"
+                  data-bs-target="#orderDetailsModal"
+                >
+                  Chi tiết
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>#ODR12346</td>
+              <td><span class="fw-bold">850.000 ₫</span></td>
+              <td>2025-10-28</td>
+              <td>Chưa thanh toán</td>
+              <td>VNPay</td>
+              <td>Đang giao</td>
+              <td>
+                <button
+                  class="btn btn-info btn-sm view-order"
+                  data-bs-toggle="modal"
+                  data-bs-target="#orderDetailsModal"
+                >
+                  Chi tiết
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="orderDetailsModal"
+      tabindex="-1"
+      aria-labelledby="orderDetailsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="orderDetailsModalLabel">
+              Chi Tiết Đơn Hàng
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="orderRecipientInfo">
+              <p><strong>Người nhận:</strong> Nguyễn Văn A</p>
+              <p>
+                <strong>Địa chỉ:</strong> 123 Đường ABC, Phường 1, Quận 2, TP.
+                Hồ Chí Minh
+              </p>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Mã sản phẩm</th>
+                  <th>Tên Sản Phẩm</th>
+                  <th>Ảnh</th>
+                  <th>Kích Thước</th>
+                  <th>Số Lượng</th>
+                  <th>Giá</th>
+                  <th class="review-column">Đánh giá</th>
+                </tr>
+              </thead>
+              <tbody id="orderDetailsBody">
+                <tr>
+                  <td>P001</td>
+                  <td>Lều cắm trại</td>
+                  <td>
+                    <img
+                      src="./assets/img/products/f3.jpg"
+                      alt="Ảnh sản phẩm"
+                      width="50"
+                    />
+                  </td>
+                  <td>40x60cm</td>
+                  <td>1</td>
+                  <td>1.500.000 ₫</td>
+                  <td class="review-column">
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#reviewModal"
+                    >
+                      Đánh giá
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="totalPrice" class="fw-bold text-end">
+              Tổng tiền: 1.500.000 ₫
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <!-- newsletters -->
     <section id="newsletter" class="section-p1">
       <div class="newstext">
