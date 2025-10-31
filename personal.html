@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Trang cá nhân</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link rel="stylesheet" href="/assets/css/personal.css" />
+  </head>
+  <body>
+    <section id="header">
+      <a href="#"><img src="/assets/img/logo.png" alt="logo" /></a>
+      <div>
+        <ul id="navbar">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li>
+            <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+          </li>
+          <li id="lg-user-profile"><a href="personal.html"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+      </div>
+    </section>
+    <!-- main -->
+    <div class="container mt-5">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h4>Thông Tin Cá Nhân</h4>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <p><strong>Họ và tên:</strong> Nguyễn Văn A</p>
+              <p><strong>Số điện thoại:</strong> 0901234567</p>
+              <p><strong>Email:</strong> nguyenvana@example.com</p>
+              <p>
+                <strong>Địa chỉ:</strong> 123 Đường ABC, Phường 1, Quận 2, TP.
+                Hồ Chí Minh
+              </p>
+              <div class="button-group">
+                <button
+                  class="btn btn-warning btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#changePassword"
+                >
+                  <i class="fas fa-key"></i> Đổi mật khẩu
+                </button>
+                <button
+                  class="btn btn-success btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editPersonalInfoModal"
+                >
+                  <i class="fas fa-edit"></i> Chỉnh sửa
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </button>
+                <button
+                  class="btn btn-primary btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#voucherModal"
+                >
+                  <i class="fas fa-ticket-alt"></i> Voucher của tôi
+                </button>
+              </div>
+
+              <div
+                class="modal fade"
+                id="deleteAccountModal"
+                tabindex="-1"
+                aria-labelledby="deleteAccountLabel"
+                aria-hidden="true"
+              ></div>
+
+              <div
+                class="modal fade"
+                id="editPersonalInfoModal"
+                tabindex="-1"
+                aria-labelledby="editPersonalInfoModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editPersonalInfoModalLabel">
+                        Chỉnh Sửa Thông Tin Cá Nhân
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Đóng"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="editPersonalInfoForm">
+                        <div class="mb-3">
+                          <label for="nameChange" class="form-label"
+                            >Họ và tên <span style="color: red">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="nameChange"
+                            name="fullName"
+                            value="Nguyễn Văn A"
+                          />
+                          <div class="error" id="nameChangeError"></div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="phoneChange" class="form-label"
+                            >Số điện thoại</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="phoneChange"
+                            name="phone"
+                            value="0901234567"
+                          />
+                          <div class="error" id="phoneChangeError"></div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="emailChange" class="form-label"
+                            >Email <span style="color: red">*</span></label
+                          >
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="emailChange"
+                            name="email"
+                            value="nguyenvana@example.com"
+                          />
+                          <div class="error" id="emailChangeError"></div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="addressChange" class="form-label"
+                            >Địa chỉ</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="addressChange"
+                            name="address"
+                            value="123 Đường ABC, Phường 1, Quận 2, TP. Hồ Chí Minh"
+                          />
+                          <div class="error" id="addressChangeError"></div>
+                        </div>
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          style="
+                            background-color: var(--primary-color) !important;
+                          "
+                        >
+                          Lưu Thay Đổi
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="changePassword"
+      tabindex="-1"
+      aria-labelledby="changePasswordLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="changePasswordLabel">Đổi mật khẩu</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="change-password" method="post">
+              <div class="mb-3">
+                <label for="currentPassword" class="form-label"
+                  >Mật khẩu hiện tại</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="currentPassword"
+                  name="currentPassword"
+                  placeholder="Nhập mật khẩu hiện tại"
+                  required
+                />
+                <div class="text-danger small" id="currentPasswordError"></div>
+              </div>
+              <div class="mb-3">
+                <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="newPassword"
+                  name="newPassword"
+                  placeholder="Nhập mật khẩu mới"
+                  required
+                />
+                <div class="text-danger small" id="newPasswordError"></div>
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label"
+                  >Nhập lại mật khẩu mới</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Nhập lại mật khẩu mới"
+                  required
+                />
+                <div class="text-danger small" id="confirmPasswordError"></div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="background-color: var(--primary-color) !important"
+              >
+                Lưu Thay Đổi
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4" style="margin: 30px">
+      <div
+        class="card-header text-white"
+        style="background: #088178 !important"
+      >
+        <h4>Đơn Hàng Của Bạn</h4>
+      </div>
+      <div class="card-body">
+        <div
+          class="order-status-tabs d-flex justify-content-start mb-4"
+          id="orderStatusTabs"
+        >
+          <button class="status-tab active" data-status="ALL">Tất cả</button>
+          <button class="status-tab" data-status="chờ">Chờ xác nhận</button>
+          <button class="status-tab" data-status="đang giao">Vận chuyển</button>
+          <button class="status-tab" data-status="hoàn thành">
+            Hoàn thành
+          </button>
+          <button class="status-tab" data-status="đã hủy giao hàng">
+            Đã hủy
+          </button>
+          <button class="status-tab" data-status="giao hàng thất bại">
+            Thất bại
+          </button>
+        </div>
+
+        <table id="allOrders" class="table table-bordered display">
+          <thead>
+            <tr>
+              <th>Mã Đơn Hàng</th>
+              <th>Tổng Tiền</th>
+              <th>Ngày Đặt</th>
+              <th>Thanh Toán</th>
+              <th>Phương thức TT</th>
+              <th>Vận chuyển</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#ODR12345</td>
+              <td><span class="fw-bold">1.500.000 ₫</span></td>
+              <td>2025-10-25</td>
+              <td>Đã thanh toán</td>
+              <td>COD</td>
+              <td>Hoàn thành</td>
+              <td>
+                <button
+                  class="btn btn-info btn-sm view-order"
+                  data-bs-toggle="modal"
+                  data-bs-target="#orderDetailsModal"
+                >
+                  Chi tiết
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>#ODR12346</td>
+              <td><span class="fw-bold">850.000 ₫</span></td>
+              <td>2025-10-28</td>
+              <td>Chưa thanh toán</td>
+              <td>VNPay</td>
+              <td>Đang giao</td>
+              <td>
+                <button
+                  class="btn btn-info btn-sm view-order"
+                  data-bs-toggle="modal"
+                  data-bs-target="#orderDetailsModal"
+                >
+                  Chi tiết
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="orderDetailsModal"
+      tabindex="-1"
+      aria-labelledby="orderDetailsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="orderDetailsModalLabel">
+              Chi Tiết Đơn Hàng
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="orderRecipientInfo">
+              <p><strong>Người nhận:</strong> Nguyễn Văn A</p>
+              <p>
+                <strong>Địa chỉ:</strong> 123 Đường ABC, Phường 1, Quận 2, TP.
+                Hồ Chí Minh
+              </p>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Mã sản phẩm</th>
+                  <th>Tên Sản Phẩm</th>
+                  <th>Ảnh</th>
+                  <th>Kích Thước</th>
+                  <th>Số Lượng</th>
+                  <th>Giá</th>
+                  <th class="review-column">Đánh giá</th>
+                </tr>
+              </thead>
+              <tbody id="orderDetailsBody">
+                <tr>
+                  <td>P001</td>
+                  <td>Lều cắm trại</td>
+                  <td>
+                    <img
+                      src="./assets/img/products/f3.jpg"
+                      alt="Ảnh sản phẩm"
+                      width="50"
+                    />
+                  </td>
+                  <td>40x60cm</td>
+                  <td>1</td>
+                  <td>1.500.000 ₫</td>
+                  <td class="review-column">
+                    <button
+                      class="btn btn-secondary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#reviewModal"
+                    >
+                      Đánh giá
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="totalPrice" class="fw-bold text-end">
+              Tổng tiền: 1.500.000 ₫
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="reviewModal"
+      tabindex="-1"
+      aria-labelledby="reviewModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reviewModalLabel">Đánh giá sản phẩm</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex align-items-center mb-3 border p-2 rounded">
+              <img
+                id="productImage"
+                src="./assets/img/products/f3.jpg"
+                alt="Ảnh sản phẩm"
+                width="60"
+                height="60"
+                style="object-fit: cover; border-radius: 4px"
+              />
+              <div class="ms-3 flex-grow-1">
+                <div id="productName" class="fw-bold">
+                  Tranh Phong Cảnh (Mẫu)
+                </div>
+                <div class="d-flex">
+                  <div class="me-3">
+                    Kích thước: <span id="productSize">40x60cm</span>
+                  </div>
+                  <div>Số lượng: <span id="productQuantity">1</span></div>
+                </div>
+              </div>
+            </div>
+
+            <form id="reviewForm">
+              <input
+                type="hidden"
+                id="paintingId"
+                name="paintingId"
+                value="1"
+              />
+              <input type="hidden" id="itemId" name="itemId" value="101" />
+
+              <div id="starRating" class="mb-2">
+                <i class="fa fa-star text-warning" data-value="1"></i>
+                <i class="fa fa-star text-warning" data-value="2"></i>
+                <i class="fa fa-star text-warning" data-value="3"></i>
+                <i class="fa fa-star" data-value="4"></i>
+                <i class="fa fa-star" data-value="5"></i>
+              </div>
+
+              <textarea
+                id="comment"
+                class="form-control mb-2"
+                rows="4"
+                placeholder="Viết đánh giá của bạn..."
+              ></textarea>
+              <input type="hidden" id="rating" value="3" />
+              <button type="submit" class="btn btn-primary">
+                Gửi đánh giá
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="addressModal"
+      tabindex="-1"
+      aria-labelledby="addressModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addressModalLabel">
+              Nhập địa chỉ nhận hàng
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="province" class="form-label">Tỉnh/Thành phố:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="province"
+                placeholder="Tỉnh/Thành phố"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="district" class="form-label">Quận/Huyện:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="district"
+                placeholder="Quận/Huyện"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="ward" class="form-label">Phường/Xã:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ward"
+                placeholder="Phường/xã"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="specificAddress" class="form-label"
+                >Địa chỉ cụ thể:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="specificAddress"
+                placeholder="Số nhà, tên đường..."
+                required
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="closeAddressModal"
+              data-bs-dismiss="modal"
+            >
+              Hủy
+            </button>
+            <button type="button" class="btn btn-primary" id="saveAddress">
+              Lưu
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="voucherModal"
+      tabindex="-1"
+      aria-labelledby="voucherModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="voucherModalLabel">
+              Danh sách voucher của bạn
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Tên voucher</th>
+                  <th>Mã</th>
+                  <th>Giảm (%)</th>
+                  <th>Hiệu lực</th>
+                  <th>Hết hạn</th>
+                  <th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Giảm giá đặc biệt</td>
+                  <td>SALE20</td>
+                  <td>20</td>
+                  <td>2025-01-01</td>
+                  <td>2025-12-31</td>
+                  <td>Chưa dùng</td>
+                </tr>
+                <tr>
+                  <td>Ưu đãi cho thành viên mới</td>
+                  <td>NEWBIE10</td>
+                  <td>10</td>
+                  <td>2024-01-01</td>
+                  <td>2025-06-30</td>
+                  <td>Đã dùng</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- newsletters -->
+    <section id="newsletter" class="section-p1">
+      <div class="newstext">
+        <h4>Sign Up Newsletters</h4>
+        <p>
+          Get E-mail updates about our latest shop and
+          <span>special offters.</span>
+        </p>
+      </div>
+      <div class="form">
+        <input type="text" placeholder="Enter Your Email" />
+        <button class="normal">Sign Up</button>
+      </div>
+    </section>
+    <!-- footer -->
+    <footer class="custom-padding">
+      <div class="footer-col">
+        <img class="logo" src="/assets/img/logo.png" alt="logo">
+        <h4>Contact</h4>
+        <p><strong>Address:</strong> 562 Wellington Road, Street 32, San Francisco</p>
+        <p><strong>Phone:</strong> +01 2222 365 /(+91) 01 2345 6789</p>
+        <p><strong>Hours:</strong> 10:00 - 18:00, Mon -Sat</p>
+        <div class="follow">
+          <h4>Follow us</h4>
+          <div class="icon">
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-pinterest"></i>
+            <i class="fa-brands fa-youtube"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="#">About us</a>
+        <a href="#">Delivery Information</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>My Account</h4>
+        <a href="#">Sign In</a>
+        <a href="#">View Cart</a>
+        <a href="#">My Wishlist</a>
+        <a href="#">Track My Order</a>
+        <a href="#">Help</a>
+      </div>
+
+      <div class="footer-col install">
+        <h4>Install App</h4>
+        <p>From App Store or Google Play</p>
+        <div class="app-row">
+          <img src="./assets/img/pay/app.jpg" alt="app">
+          <img src="./assets/img/pay/play.jpg" alt="play">
+        </div>
+        <p>Secured Payment Gateways</p>
+        <img src="/assets/img/pay/pay.png" alt="page">
+      </div>
+
+      <div class="copyright">
+        <p>Copyright © 2013-2025 HAODK.VN. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+  </body>
+</html>
