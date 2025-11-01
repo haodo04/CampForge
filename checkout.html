@@ -12,16 +12,22 @@
 </head>
 <body>
 <section id="header">
-    <a href="#"><img src="img/logo.png" alt="logo"></a>
+    <a href="#"><img src="/assets/img/logo.png" alt="logo" /></a>
     <div>
         <ul id="navbar">
-            <li><a href="index.html">Home</a></li>
+            <li><a class="active" href="index.html">Home</a></li>
             <li><a href="shop.html">Shop</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
-            <li><a class="active" href="checkout.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+            <li id="lg-bag"><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+            <li id="lg-user-profile"><a href="personal.html"><i class="fa-solid fa-user"></i></a></li>
+            <a href="#" id="close"><i class="fa-solid fa-circle-xmark"></i></a>
         </ul>
+    </div>
+    <div id="mobile">
+        <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+        <i id="bar" class="fa-solid fa-outdent"></i>
     </div>
 </section>
 
@@ -29,7 +35,7 @@
     <div class="checkout-container">
         <!-- Left side -->
         <div class="checkout-left">
-            <h3>Thong tin thanh toan</h3>
+            <h3>Thông tin thanh toán</h3>
 
             <form id="shipping-form">
                 <div class="form-group">
@@ -84,32 +90,37 @@
 
         <!-- Right side -->
         <div class="checkout-right">
-            <h3>Don Hang Cua Ban</h3>
+            <h3>Đơn hàng của bạn</h3>
 
             <div class="cart-item">
                 <img src="https://via.placeholder.com/70" alt="Sofa">
                 <div class="details">
                     <p class="name">Balo leo nui</p>
+                    <p class="color">Màu đen</p>
                     <p class="price">1,200,000 đ</p>
                 </div>
+                <input type="number" value="1">
+                <button><a href=""><i class="fa-solid fa-xmark"></i></a></button>
             </div>
 
             <div class="cart-item">
                 <img src="https://via.placeholder.com/70" alt="Desk">
                 <div class="details">
-                    <p class="name">Bo dung cu danh lua</p>
+                    <p class="name">Bộ dụng cụ đánh lửa</p>
                     <p class="price">225,000 đ</p>
                 </div>
+                <input type="number" value="1">
+                <button><a href=""><i class="fa-solid fa-xmark"></i></a></button>
             </div>
 
             <div class="summary" id="order-summary">
-                <div><span>Tam tinh</span><span>1,425,000 đ</span></div>
-                <div><span>Phi giao hang</span><span>100,000 đ</span></div>
-                <div><span>Ma giam gia</span><span>- 40,000 đ</span></div>
-                <div class="total"><span>Tong tinh</span><span>1,485,000 đ</span></div>
+                <div><span>Tạm tính</span><span>1,425,000 đ</span></div>
+                <div><span>Phí giao hàng</span><span>100,000 đ</span></div>
+                <div><span>Mã giảm giá</span><span>- 40,000 đ</span></div>
+                <div class="total"><span>Tổng tính</span><span>1,485,000 đ</span></div>
             </div>
 
-            <button class="normal">Thanh toan</button>
+            <button class="normal">Thanh toán</button>
         </div>
     </div>
 </section>
