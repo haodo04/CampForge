@@ -66,7 +66,7 @@
             <option>Large</option>
           </select>
           <input type="number" value="1">
-          <button class="normal">Add To Cart</button>
+          <button class="normal add-to-cart">Add To Cart</button>
           <h4>Product Details</h4>
           <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum optio 
             expedita voluptatum assumenda, neque ea corrupti esse eaque velit vero similique. 
@@ -227,6 +227,37 @@
       smallimg[3].onclick = function() {
         MainImg.src = smallimg[3].src;
       }
+
+      // --- JS cuối trang ---
+      document.addEventListener("DOMContentLoaded", () => {
+          // Đổi ảnh chính
+          const MainImg = document.getElementById("MainImg");
+          const smallImgs = document.querySelectorAll(".small-img");
+          smallImgs.forEach(img => {
+              img.onclick = () => MainImg.src = img.src;
+          });
+
+          // Add To Cart
+          const addBtn = document.querySelector(".add-to-cart");
+          addBtn.addEventListener("click", () => {
+              const name = document.querySelector(".single-pro-details h4").innerText;
+              const price = parseFloat(document.querySelector(".single-pro-details h2").innerText.replace("$", ""));
+              const image = document.getElementById("MainImg").src;
+              const quantity = parseInt(document.querySelector(".single-pro-details input").value);
+
+              const product = { name, price, image, quantity };
+              let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+              const existing = cart.find(p => p.name === name);
+              if (existing) existing.quantity += quantity;
+              else cart.push(product);
+
+              localStorage.setItem("cart", JSON.stringify(cart));
+              alert(`${name} đã được thêm vào giỏ hàng!`);
+              window.location.href = "cart.html";
+          });
+      });
+
     </script>
   </body>
 </html>
