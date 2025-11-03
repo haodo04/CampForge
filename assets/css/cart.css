@@ -1,0 +1,51 @@
+.empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px;
+    background: #fff;
+    border-radius: 12px;
+    margin: 60px auto;
+    max-width: 700px;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.empty-message i {
+    font-size: 64px;
+    color: #088178;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.empty-message p {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.empty-message .normal {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #088178, #066d67);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.empty-message .normal:hover {
+    background: linear-gradient(135deg, #066d67, #026761);
+}
+
+/* Hiệu ứng mượt */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
