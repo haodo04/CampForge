@@ -22,7 +22,28 @@
             <li><a href="blog.html">Blog</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
-            <li><a class="active" href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+            <li class="cart-icon">
+                <a href="#">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cart-count">0</span>
+                </a>
+
+                <div id="mini-cart" class="mini-cart">
+                    <h4>Shopping Bag</h4>
+                    <div id="mini-cart-items" class="mini-cart-items">
+                        <!-- JS will insert items here -->
+                    </div>
+
+                    <div class="mini-cart-total">
+                        <p>Total: <span id="mini-cart-total">$0</span></p>
+                    </div>
+
+                    <div class="mini-cart-buttons">
+                        <a href="cart.html" class="btn btn-primary">View Cart</a>
+                        <a href="checkout.html" id="checkout">Checkout</a>
+                    </div>
+                </div>
+            </li>
             <li id="lg-user-profile"><a href="personal.html"><i class="fa-solid fa-user"></i></a></li>
         </ul>
     </div>
@@ -54,9 +75,9 @@
 
     <!-- Hiển thị khi giỏ trống -->
     <div id="empty-cart" class="empty-message">
-        <i class="fa-solid fa-cart-shopping"></i>
+        <i class="fa-solid fa-bag-shopping"></i>
         <p>Giỏ hàng của bạn đang trống!</p>
-        <a href="shop.html" class="normal">Tiếp tục mua sắm</a>
+        <a href="category.html" class="normal">Tiếp tục mua sắm</a>
     </div>
 </section>
 
