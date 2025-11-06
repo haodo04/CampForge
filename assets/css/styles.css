@@ -564,6 +564,124 @@ footer .col {
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.cart-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart-icon i {
+    font-size: 22px;
+    color: #222;
+}
+
+.cart-icon:hover i {
+    color: #088178;
+}
+
+.cart-icon span {
+    position: absolute;
+    top: -6px;
+    color: #088178;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
+/*minicart*/
+.mini-cart {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    width: 320px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+    animation: slideDown 0.25s ease;
+}
+
+/* Khi hiển thị */
+.mini-cart.show {
+    display: block;
+}
+
+.mini-cart h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 14px;
+}
+
+.mini-cart-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.mini-cart-item img {
+    width: 58px;
+    height: 58px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #f8f8f8;
+}
+
+.mini-cart-item .info {
+    flex: 1;
+}
+
+.mini-cart-item .info p {
+    margin: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.mini-cart-item .info span {
+    font-size: 13px;
+    color: #666;
+}
+
+.mini-cart-total {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mini-cart-total span {
+    position: relative;
+    bottom: -200px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+.mini-cart-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.mini-cart-buttons a {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #e3e6f3;
+    padding: 9px 0;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
 #coupon{
     width: 50%;
     margin-bottom: 30px;
