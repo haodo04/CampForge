@@ -71,8 +71,8 @@ body {
 .visual::before {
   width: 180px;
   height: 120px;
-  top: 48px;
-  left: 56px;
+  top: 25px;
+  left: 35px;
   transform: rotate(-6deg);
 }
 
@@ -102,15 +102,16 @@ body {
 
 .brand h1 {
   margin: 0;
-  font-size: 18px;
+  font-size: 26px;
   font-weight: 600;
   letter-spacing: .2px;
+  margin-left: 30px;
 }
 
 .tag {
   position: relative;
   z-index: 1;
-  margin-top: 40px;
+  margin-top: 90px;
 }
 
 .tag h2 {
