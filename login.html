@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in — White Neumorphic</title>
+  
+</head>
+<body>
+  <main class="shell" role="main" aria-label="Login layout">
+    <!-- Phần bên trái -->
+    <section class="visual" aria-hidden="true">
+      <div class="brand"><div class="logo"></div><h1>Whitebrand</h1></div>
+      <div class="tag">
+        <h2>Soft, clean, effortless.</h2>
+        <p>Neumorphic white design that feels tactile yet minimal.</p>
+      </div>
+      <div class="badges">
+        <div class="chip">Private & secure</div>
+        <div class="chip">Distraction‑free</div>
+        <div class="chip">WCAG‑friendly</div>
+      </div>
+    </section>
+
+    <!-- Phần bên phải -->
+    <section class="panel">
+      <div class="card" aria-label="Sign in card">
+        <h2>Welcome back</h2>
+        <p class="sub">Use your email and password to continue.</p>
+
+        <form id="form" novalidate>
+          <div class="field">
+            <input id="email" class="input" type="email" name="email" autocomplete="username" placeholder=" " aria-label="Email address" required />
+            <label class="label" for="email">Email address</label>
+          </div>
+
+          <div class="field" style="margin-top:2px;">
+            <input id="password" class="input" type="password" name="password" autocomplete="current-password" placeholder=" " aria-label="Password" minlength="6" required />
+            <label class="label" for="password">Password</label>
+            <button class="toggle" type="button"  aria-label="Show or hide password">Show</button>
+          </div>
+
+          <div class="row">
+            <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
+            <a href="#" class="link">Forgot password?</a>
+          </div>
+
+          <button id="submit" class="btn" type="submit">Sign in</button>
+
+          <div class="or"><span>or</span></div>
+          <div class="oauth">
+            <button type="button" class="sbtn" aria-label="Continue with Google">Google</button>
+            <button type="button" class="sbtn" aria-label="Continue with Apple">Apple</button>
+          </div>
+
+          <p class="tiny">By continuing, you agree to our Terms and acknowledge our Privacy Policy.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
