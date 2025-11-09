@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý giảm giá</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/admin/discounts.css">
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="sidebar-title">Admin Panel</a>
+      <a href="./dashboard.html">Tổng quan</a>
+      <a href="./products.html">Quản lý sản phẩm</a>
+      <a href="./orders.html">Quản lý đơn hàng</a>
+      <a href="./users.html">Quản lý người dùng</a>
+      <a href="./previews.html">Quản lý đánh giá</a>
+      <a href="#">Quản lý giảm giá</a>
+      <a href="#">Quản lý voucher</a>
+      <a href="#">Quản lý kho</a>
+      <a href="#">Nhật ký</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white" style="background: #e7621b !important;">
+          <h4>Danh sách giảm giá</h4>
+        </div>
+        <div class="card-body">
+          <button type="button" class="btn btn-primary" style="margin-bottom: 15px;">
+            Thêm chương trình giảm giá
+          </button>
+          <table id="discounts" class="table table-bordered display">
+            <thead>
+              <tr>
+                <th>Mã giảm giá</th>
+                <th>Ảnh</th>
+                <th>Tên giảm giá</th>
+                <th>% Giảm</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>001</td>
+                <td><img src="https://via.placeholder.com/60" alt="Ảnh giảm giá" width="60"></td>
+                <td>Giảm giá 20%</td>
+                <td>20%</td>
+                <td>2023-11-01</td>
+                <td>2023-11-30</td>
+                <td>2023-11-01</td>
+                <td>
+                  <button class="btn btn-info btn-sm">Chỉnh sửa</button>
+                  <button class="btn btn-danger btn-sm">Xóa</button>
+                </td>
+              </tr>
+              <tr>
+                <td>002</td>
+                <td><img src="https://via.placeholder.com/60" alt="Ảnh giảm giá" width="60"></td>
+                <td>Giảm giá 15%</td>
+                <td>15%</td>
+                <td>2023-12-01</td>
+                <td>2023-12-31</td>
+                <td>2023-12-01</td>
+                <td>
+                  <button class="btn btn-info btn-sm">Chỉnh sửa</button>
+                  <button class="btn btn-danger btn-sm">Xóa</button>
+                </td>
+              </tr>
+              <tr>
+                <td>003</td>
+                <td><img src="https://via.placeholder.com/60" alt="Ảnh giảm giá" width="60"></td>
+                <td>Giảm giá đầu tháng</td>
+                <td>10%</td>
+                <td>2023-12-01</td>
+                <td>2023-12-31</td>
+                <td>2023-12-01</td>
+                <td>
+                  <button class="btn btn-info btn-sm">Chỉnh sửa</button>
+                  <button class="btn btn-danger btn-sm">Xóa</button>
+                </td>
+              </tr>
+              <tr>
+                <td>004</td>
+                <td><img src="https://via.placeholder.com/60" alt="Ảnh giảm giá" width="60"></td>
+                <td>Giảm giá cuối năm</td>
+                <td>16%</td>
+                <td>2023-12-01</td>
+                <td>2023-12-31</td>
+                <td>2023-12-01</td>
+                <td>
+                  <button class="btn btn-info btn-sm">Chỉnh sửa</button>
+                  <button class="btn btn-danger btn-sm">Xóa</button>
+                </td>
+              </tr>
+              <tr>
+                <td>005</td>
+                <td><img src="https://via.placeholder.com/60" alt="Ảnh giảm giá" width="60"></td>
+                <td>Giảm giá sâu</td>
+                <td>35%</td>
+                <td>2023-12-01</td>
+                <td>2023-12-31</td>
+                <td>2023-12-01</td>
+                <td>
+                  <button class="btn btn-info btn-sm">Chỉnh sửa</button>
+                  <button class="btn btn-danger btn-sm">Xóa</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="../assets/js/admin/discounts.js"></script>
+  </body>
+</html>
