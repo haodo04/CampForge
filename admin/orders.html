@@ -56,8 +56,8 @@
                             <td>Chuyển khoản</td>
                             <td>Đang giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                         <tr>
@@ -68,8 +68,8 @@
                             <td>Tiền mặt</td>
                             <td>Chờ giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                         <tr>
@@ -80,8 +80,8 @@
                             <td>Tiền mặt</td>
                             <td>Chờ giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                         <tr>
@@ -92,8 +92,8 @@
                             <td>Tiền mặt</td>
                             <td>Chờ giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                         <tr>
@@ -104,8 +104,8 @@
                             <td>Tiền mặt</td>
                             <td>Chờ giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                         <tr>
@@ -116,8 +116,8 @@
                             <td>Tiền mặt</td>
                             <td>Chờ giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                     </tbody>
@@ -154,8 +154,8 @@
                             <td>Chuyển khoản</td>
                             <td>Đã giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                         <tr>
@@ -167,8 +167,8 @@
                             <td>Chuyển khoản</td>
                             <td>Đã giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                         <tr>
@@ -180,8 +180,8 @@
                             <td>Chuyển khoản</td>
                             <td>Đã giao</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-danger btn-sm">Xóa</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-danger btn-sm delete-order">Xóa</button>
                             </td>
                         </tr>
                     </tbody>
@@ -214,8 +214,8 @@
                             <td>Đã thanh toán</td>
                             <td>Chuyển khoản</td>
                             <td>
-                                <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                                <button class="btn btn-primary btn-sm">Khôi phục</button>
+                                <button class="btn btn-info btn-sm view-order">Xem Chi Tiết</button>
+                                <button class="btn btn-primary btn-sm restore-order">Khôi phục</button>
                             </td>
                         </tr>
                     </tbody>
@@ -223,6 +223,72 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal: Xem chi tiết Đơn hàng -->
+<div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="viewOrderModalLabel" class="modal-title">Chi tiết đơn hàng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-2">
+          <div class="col-6"><strong>Mã ĐH:</strong> <span id="v_id">--</span></div>
+          <div class="col-6"><strong>Tổng tiền:</strong> <span id="v_total">--</span></div>
+          <div class="col-6"><strong>Ngày đặt:</strong> <span id="v_orderDate">--</span></div>
+          <div class="col-6"><strong>Ngày giao:</strong> <span id="v_shipDate">--</span></div>
+          <div class="col-6"><strong>TT thanh toán:</strong> <span id="v_payStatus">--</span></div>
+          <div class="col-6"><strong>Phương thức TT:</strong> <span id="v_payMethod">--</span></div>
+          <div class="col-12"><strong>Vận chuyển:</strong> <span id="v_shipStatus">--</span></div>
+        </div>
+        <hr class="my-3">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Xác nhận Xóa -->
+<div class="modal fade" id="deleteOrderModal" tabindex="-1" aria-labelledby="deleteOrderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="deleteOrderModalLabel" class="modal-title">Xác nhận xóa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        Xóa đơn hàng <strong id="d_id">--</strong> (tổng tiền: <strong id="d_total">--</strong>)?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger btn-sm" id="confirmDeleteOrderBtn">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Xác nhận Khôi phục -->
+<div class="modal fade" id="restoreOrderModal" tabindex="-1" aria-labelledby="restoreOrderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="restoreOrderModalLabel" class="modal-title">Khôi phục đơn hàng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        Khôi phục đơn hàng <strong id="r_id">--</strong> ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary btn-sm" id="confirmRestoreOrderBtn">Khôi phục</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     <script src="../assets/js/admin/orders.js"></script>
 </body>
