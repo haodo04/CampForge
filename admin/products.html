@@ -75,8 +75,8 @@
                 <td>1,000,000 ₫</td>
                 <td>2023-11-08</td>
                 <td>
-                  <button class="btn btn-info btn-sm">Xem Chi Tiết</button>
-                  <button class="btn btn-danger btn-sm">Xóa</button>
+                  <button class="btn btn-info btn-sm view-camping">Xem Chi Tiết</button>
+                  <button class="btn btn-danger btn-sm delete-camping">Xóa</button>
                 </td>
               </tr>
               <tr>
@@ -365,6 +365,55 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: Xem chi tiết sản phẩm -->
+<div class="modal fade" id="viewCampingModal" tabindex="-1" aria-labelledby="viewCampingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewCampingModalLabel">Chi tiết sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex gap-3">
+          <img id="viewImg" src="" alt="Ảnh sản phẩm" style="width:120px;height:120px;object-fit:cover;border:1px solid #eee;border-radius:6px;">
+          <div class="flex-grow-1">
+            <p class="mb-1"><strong>Mã SP:</strong> <span id="viewId">--</span></p>
+            <p class="mb-1"><strong>Tên:</strong> <span id="viewName">--</span></p>
+            <p class="mb-1"><strong>Trạng thái:</strong> <span id="viewStatus">--</span></p>
+            <p class="mb-1"><strong>Giá:</strong> <span id="viewPrice">--</span></p>
+            <p class="mb-1"><strong>Ngày tạo:</strong> <span id="viewDate">--</span></p>
+          </div>
+        </div>
+        <!-- Khu mô tả/thông tin thêm nếu cần -->
+        <hr class="my-3">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Xác nhận xóa -->
+<div class="modal fade" id="deleteCampingModal" tabindex="-1" aria-labelledby="deleteCampingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="deleteCampingModalLabel" class="modal-title">Xác nhận xóa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắn muốn xóa sản phẩm <strong id="deleteName">--</strong> (Mã: <strong id="deleteId">--</strong>)?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger btn-sm" id="confirmDeleteCampingBtn">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
     <script src="../assets/js/admin/products.js"></script>
