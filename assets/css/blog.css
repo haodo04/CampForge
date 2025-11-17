@@ -1,5 +1,6 @@
-#page-header.blog-header{
-    background-image: url("/assets/img/banner/b19.jpg");
+#page-header {
+    background-image: url("../img/banner/banner01.jpeg");
+    width: 100%;
 }
 
 #blog{

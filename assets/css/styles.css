@@ -383,6 +383,11 @@ body {
   border: 1px solid #088178;
 }
 
+#sm-banner .banner-box a{
+    color: #fff;
+    text-decoration: none;
+}
+
 #banner3 {
   display: flex;
   justify-content: space-between;
