@@ -10,13 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    // Hàm format tiền VNĐ
+    function formatVND(value) {
+        return value.toLocaleString("vi-VN") + "đ";
+    }
+
     // Hàm hiển thị giỏ hàng
     function renderCart() {
         if (cart.length === 0) {
             cartBody.innerHTML = "";
             emptyCart.style.display = "block";
-            subtotalValue.textContent = "$0";
-            totalValue.textContent = "$0";
+            subtotalValue.textContent = "0đ";
+            totalValue.textContent = "0đ";
             return;
         }
 
@@ -34,19 +39,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         <i class="fa-solid fa-xmark"></i></a></td>
                     <td><img src="${product.image}" alt="${product.name}" width="60"></td>
                     <td>${product.name}</td>
-                    <td>$${product.price.toFixed(2)}</td>
+                    <td>${formatVND(product.price)}</td>
                     <td><input type="number" class="qty" data-index="${index}" min="1" value="${product.quantity}"></td>
-                    <td>$${itemTotal.toFixed(2)}</td>
+                    <td>${formatVND(itemTotal)}</td>
                 </tr>
             `;
         });
 
         cartBody.innerHTML = html;
-        subtotalValue.textContent = `$${subtotal.toFixed(2)}`;
-        totalValue.textContent = `$${subtotal.toFixed(2)}`;
+        subtotalValue.textContent = formatVND(subtotal);
+        totalValue.textContent = formatVND(subtotal);
     }
 
-    // Hàm hiển thị mini cart (header)
+    // Mini cart (trong header)
     function renderMiniCart() {
         if (!miniCart || !miniCartTotal) return;
 
@@ -64,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <img src="${product.image}" alt="${product.name}">
                     <div class="info">
                         <p class="name">${product.name}</p>
-                        <p class="color">Color: ${product.color || "N/A"}</p>
-                        <p class="price">$${product.price.toFixed(2)} x ${product.quantity}</p>
+                        <p class="color">Color: ${product.color || "Không có"}</p>
+                        <p class="price">${formatVND(product.price)} x ${product.quantity}</p>
                     </div>
                     <button class="remove-mini" data-index="${index}">
                         <i class="fa-solid fa-xmark"></i>
@@ -74,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         });
 
-        miniCartTotal.textContent = `$${total.toFixed(2)}`;
+        miniCartTotal.textContent = formatVND(total);
         cartCount.textContent = count;
     }
 
@@ -104,17 +109,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Nút checkout
+    // Checkout
     document.getElementById("checkoutBtn").addEventListener("click", () => {
         if (cart.length === 0) {
-            alert("Your cart is empty!");
+            alert("Giỏ hàng của bạn đang trống!");
             return;
         }
         window.location.href = "checkout.html";
     });
 
-    // Gọi hiển thị
+    // Gọi
     renderCart();
     renderMiniCart();
 });
-
