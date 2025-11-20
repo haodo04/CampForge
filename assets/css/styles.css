@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Spartan", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 html {
@@ -83,13 +85,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 80px;
+    height: 90px; 
+    padding: 0 80px; 
     background: #e3e6f3;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
     z-index: 999;
     position: sticky;
     top: 0;
     left: 0;
+}
+
+#header img.logo_img {
+    max-height: 120px;  
+    width: auto;
+    display: block;
 }
 
 #navbar {
@@ -107,7 +116,7 @@ body {
 #navbar li a {
   text-decoration: none;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   color: #1a1a1a;
   transition: 0.3 ease;
 }
@@ -135,6 +144,74 @@ body {
 
 #close {
   display: none;
+}
+
+/* right header */
+#right-icons {
+    display: flex;
+    align-items: center;
+    gap: 24px;             
+}
+
+#right-icons a {
+    text-decoration: none;
+}
+
+#right-icons i {
+    font-size: 18px;       
+    color: #1a1a1a;         
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#right-icons i:hover {
+    color: #088178;        
+    transform: scale(1.10);
+}
+
+#right-icons .fa-user {
+    display: none;
+}
+
+#right-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-buttons a {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 400;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btn-login {
+    color: #088178;
+    border: 1px solid #088178;
+}
+
+.btn-login:hover {
+    background: #088178;
+    color: #fff;
+}
+
+.btn-register {
+    color: #088178;
+    border: 1px solid #088178;
+}
+
+.btn-register:hover {
+    background: #088178;
+    color: #fff;
 }
 
 /* home page */
