@@ -589,8 +589,11 @@ footer .col {
 #page-header p {
     color: #fff;
 }
-#page-header .cart-header{
-    background-image: url("/assets/img/about/banner.png");
+#page-header.cart-header{
+    background-image: url("../img/banner/banner11.jpg");
+    width: 100%;
+    background-size: cover;
+    height: 400px;
 }
 /*cart page*/
 #cart{
