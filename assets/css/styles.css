@@ -197,6 +197,7 @@ body {
 .btn-login {
     color: #088178;
     border: 1px solid #088178;
+    cursor: pointer;
 }
 
 .btn-login:hover {
@@ -207,12 +208,30 @@ body {
 .btn-register {
     color: #088178;
     border: 1px solid #088178;
+    cursor: pointer;
 }
 
 .btn-register:hover {
     background: #088178;
     color: #fff;
 }
+
+.btn-logout {
+    color: #088178;
+    border: 1px solid #088178;
+    cursor: pointer;
+}
+
+.btn-logout i {
+    font-size: 12px;   
+    margin-right: 6px; 
+}
+
+.btn-logout:hover {
+    background: #088178;
+    color: #fff;
+}
+
 
 /* home page */
 
