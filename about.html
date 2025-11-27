@@ -13,31 +13,35 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <link rel="stylesheet" href="/assets/css/about.css" />
+      <link rel="stylesheet" href="assets/css/search.css">
   </head>
   <body>
-<section id="header">
+  <section id="header">
       <a href="#"
-        ><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"
+      ><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"
       /></a>
 
       <ul id="navbar">
-        <li><a href="index.html">Trang chủ</a></li>
-        <li><a href="category.html">Danh mục</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a class="active" href="about.html">Giới thiệu</a></li>
-        <li><a href="contact.html">Liên hệ</a></li>
+          <li><a class="active" href="index.html">Trang chủ</a></li>
+          <li><a href="category.html">Danh mục</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="contact.html">Liên hệ</a></li>
       </ul>
 
       <div id="right-icons">
-        <a href="#"><i class="fa fa-search"></i></a>
-        <a href="cart.html"><i class="fa fa-shopping-cart"></i></a>
+          <div id="search-box">
+              <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
+              <button id="searchBtn"><i class="fa fa-search"></i></button>
+          </div>
+          <a href="cart.html"><i class="fa fa-shopping-cart"></i></a>
 
-        <div class="auth-buttons">
-          <a href="login.html" class="btn-login">Đăng nhập</a>
-          <a href="register.html" class="btn-register">Đăng ký</a>
-        </div>
+          <div class="auth-buttons">
+              <a href="login.html" class="btn-login">Đăng nhập</a>
+              <a href="register.html" class="btn-register">Đăng ký</a>
+          </div>
       </div>
-</section>
+  </section>
 
     <section id="page-header" class="about-header">
       <h2>#Về chúng tôi</h2>
