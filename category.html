@@ -19,27 +19,55 @@
       <link rel="stylesheet" href="assets/css/search.css">
       <script src="assets/js/search.js"></script>
   </head>
+  <style>
+      ul{
+          padding-left: 0;
+          position: relative;
+          left: -5px;
+          top: 1px;
+      }
+      #navbar li{
+          padding: 10px 10px 0 0;
+          margin: 10px 5px 5px 25px;
+      }
+      #navbar li a{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          width: 100%;
+      }
+      #navbar li a:hover,
+      #navbar li a.active {
+          color: #088178;
+      }
+      #navbar li a.active::after,
+      #navbar li a:hover::after {
+          content: "";
+          width: 40px;
+          height: 2px;
+          background: #088178;
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+      }
+  </style>
   <body>
   <section id="header">
-      <a href="#"
-      ><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"
-      /></a>
-
+      <a href="index.html"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
-          <li><a class="active" href="index.html">Trang chủ</a></li>
+          <li><a href="index.html" class="active">Trang chủ</a></li>
           <li><a href="category.html">Danh mục</a></li>
           <li><a href="blog.html">Blog</a></li>
           <li><a href="about.html">Giới thiệu</a></li>
           <li><a href="contact.html">Liên hệ</a></li>
       </ul>
-
       <div id="right-icons">
           <div id="search-box">
               <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
               <button id="searchBtn"><i class="fa fa-search"></i></button>
           </div>
           <a href="cart.html"><i class="fa fa-shopping-cart"></i></a>
-
           <div class="auth-buttons">
               <a href="login.html" class="btn-login">Đăng nhập</a>
               <a href="register.html" class="btn-register">Đăng ký</a>
@@ -47,7 +75,8 @@
       </div>
   </section>
 
-    <main class="shop-page py-3">
+
+  <main class="shop-page py-3">
       <div class="container">
         <div class="row g-4">
           <!-- filter -->
