@@ -6,17 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Đăng nhập — Camp Forge</title>
 
+  <!-- Font + Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="./assets/css/login.css">
 </head>
 
 <body>
-  <main class="shell" role="main" aria-label="Login layout">
+  <main class="shell" role="main">
 
-    <!-- Phần bên trái -->
-    <section class="visual" aria-hidden="true">
+    <!-- LEFT AREA -->
+    <section class="visual">
       <div class="brand">
-        <img src="./assets/img/logo.png" alt="Camp Forge logo">
+        <img src="./assets/img/logo_new.png" alt="Camp Forge logo">
         <h1>Camp Forge</h1>
       </div>
 
@@ -31,53 +35,68 @@
       </div>
     </section>
 
-    <!-- Phần bên phải -->
+    <!-- RIGHT AREA -->
     <section class="panel">
-      <div class="card" aria-label="Sign in card">
-
+      <div class="card">
         <h2>Chào mừng trở lại</h2>
         <p class="sub">Nhập email và mật khẩu để tiếp tục.</p>
 
         <form id="form" novalidate>
 
           <div class="field">
-            <input id="email" class="input" type="email" name="email" placeholder=" " required />
+            <input id="email" class="input" type="email" placeholder=" " required />
             <label class="label" for="email">Email</label>
           </div>
 
-          <div class="field" style="margin-top:2px;">
-            <input id="password" class="input" type="password" name="password" placeholder=" " minlength="6" required />
+          <div class="field">
+            <input id="password" class="input" type="password" placeholder=" " minlength="6" required />
             <label class="label" for="password">Mật khẩu</label>
-            <button class="toggle" type="button" onclick="togglePw()" aria-label="Show or hide password">Hiện</button>
+            <button class="toggle" type="button" onclick="togglePw()">Hiện</button>
           </div>
 
           <div class="row">
-            <label class="remember">
-              <input type="checkbox" id="remember"> Ghi nhớ đăng nhập
-            </label>
-            <a href="#" class="link">Quên mật khẩu?</a>
+            <label class="remember"><input type="checkbox" id="remember"> Ghi nhớ đăng nhập</label>
+            <a href="forgot-password.html" class="link">Quên mật khẩu?</a>
           </div>
 
           <button id="submit" class="btn" type="submit">Đăng nhập</button>
 
           <div class="or"><span>hoặc</span></div>
 
+          <!-- OAUTH BUTTONS -->
           <div class="oauth">
-            <button type="button" class="sbtn">Google</button>
-            <button type="button" class="sbtn">Apple</button>
+
+            <button type="button" class="sbtn fb">
+              <i class="fa-brands fa-facebook"></i>
+              Facebook
+            </button>
+
+            <button type="button" class="sbtn gg">
+              <i class="fa-brands fa-google"></i>
+              Google
+            </button>
+
           </div>
 
           <p class="tiny">
-            Khi tiếp tục, bạn đồng ý với <a href="#">Điều khoản</a> và chấp nhận
+            Khi tiếp tục, bạn đồng ý với <a href="#">Điều khoản</a> và 
             <a href="#">Chính sách bảo mật</a>.
+          </p>
+
+          <!--Link sang trang đăng ký -->
+          <p class="tiny" style="margin-top:16px;">
+            Chưa có tài khoản?  
+            <a href="./register.html" style="color: var(--brand); font-weight: 600;">
+              Đăng ký ngay
+            </a>
           </p>
 
         </form>
       </div>
     </section>
+
   </main>
 
   <script src="./assets/js/login.js"></script>
 </body>
-
 </html>
