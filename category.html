@@ -53,11 +53,12 @@
       }
   </style>
   <body>
+  <div class="header-top"></div>
   <section id="header">
       <a href="index.html"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
-          <li><a href="index.html" class="active">Trang chủ</a></li>
-          <li><a href="category.html">Danh mục</a></li>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a class="active" href="category.html">Danh mục</a></li>
           <li><a href="blog.html">Blog</a></li>
           <li><a href="about.html">Giới thiệu</a></li>
           <li><a href="contact.html">Liên hệ</a></li>
@@ -74,6 +75,15 @@
           </div>
       </div>
   </section>
+
+  <nav aria-label="breadcrumb" class="bg-light py-3">
+  <div class="container">
+    <ol class="breadcrumb m-0">
+      <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Danh mục</li>
+    </ol>
+  </div>
+</nav>
 
 
   <main class="shop-page py-3">
@@ -120,28 +130,28 @@
                       class="form-check-input"
                       type="checkbox"
                       id="s1"
-                    /><label class="form-check-label" for="s1">20×30 cm</label>
+                    /><label class="form-check-label" for="s1">2×3 m</label>
                   </div>
                   <div class="form-check mb-2">
                     <input
                       class="form-check-input"
                       type="checkbox"
                       id="s2"
-                    /><label class="form-check-label" for="s2">30×40 cm</label>
+                    /><label class="form-check-label" for="s2">3×4 m</label>
                   </div>
                   <div class="form-check mb-2">
                     <input
                       class="form-check-input"
                       type="checkbox"
                       id="s3"
-                    /><label class="form-check-label" for="s3">40×60 cm</label>
+                    /><label class="form-check-label" for="s3">4×6 m</label>
                   </div>
                   <div class="form-check mb-2">
                     <input
                       class="form-check-input"
                       type="checkbox"
                       id="s4"
-                    /><label class="form-check-label" for="s4">60×90 cm</label>
+                    /><label class="form-check-label" for="s4">6×9 m</label>
                   </div>
                 </div>
 
@@ -362,10 +372,12 @@
               </div>
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
-                  <img
+                  <a href="sproduct.html">
+                    <img
                     src="/assets/img/products/f7.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
+                  </a>
                   <div class="des">
                     <span>BLACKDOG</span>
                     <h5>Lều trung tâm (lều tăng)</h5>
@@ -377,7 +389,7 @@
                       <i class="fa-solid fa-star"></i>
                     </div>
                     <h4>2.500.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                    <a href="sproduct.html" class="add-cart" aria-label="Thêm vào giỏ"
                       ><i class="fa-solid fa-cart-shopping cart"></i
                     ></a>
                   </div>
@@ -385,13 +397,15 @@
               </div>
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
-                  <img
+                  <a href="sproduct.html">
+                    <img
                     src="/assets/img/products/f1.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
+                  </a>
                   <div class="des">
                     <span>BLACKDOG</span>
-                    <h5>Lều trung tâm (lều tăng)</h5>
+                    <h5>Lều trung tâm</h5>
                     <div class="star" aria-label="Đánh giá 5/5">
                       <i class="fa-solid fa-star"></i
                       ><i class="fa-solid fa-star"></i>
@@ -400,7 +414,7 @@
                       <i class="fa-solid fa-star"></i>
                     </div>
                     <h4>3.700.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                    <a href="sproduct.html" class="add-cart" aria-label="Thêm vào giỏ"
                       ><i class="fa-solid fa-cart-shopping cart"></i
                     ></a>
                   </div>
@@ -579,52 +593,54 @@
 </section>
 
 <footer class="section-p1">
-    <div class="col">
-        <img src="/assets/img/logo.png" alt="">
+      <div class="col">
         <h4>Liên hệ</h4>
-        <p><strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ Đức, HCM</p>
+        <p>
+          <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
+          Đức, HCM
+        </p>
         <p><strong>Điện thoại: </strong> +01 2222 365 /(+91) 01 2345 6789</p>
         <p><strong>Giờ mở cửa: </strong> 10:00 - 18:00, T2 - T7</p>
         <div class="follow">
-            <h4>Theo dõi chúng tôi</h4>
-            <div class="icon">
-                <i class="fab fa-facebook-f"></i>
-                <i class="fab fa-twitter"></i>
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-pinterest-p"></i>
-                <i class="fab fa-youtube"></i>
-            </div>
+          <h4>Theo dõi chúng tôi</h4>
+          <div class="icon">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-pinterest-p"></i>
+            <i class="fab fa-youtube"></i>
+          </div>
         </div>
-    </div>
-    <div class="col">
+      </div>
+      <div class="col">
         <h4>Giới thiệu</h4>
         <a href="#">Về chúng tôi</a>
         <a href="#">Thông tin giao hàng</a>
         <a href="#">Chính sách</a>
         <a href="#">Điều khoản</a>
         <a href="#">Liên hệ</a>
-    </div>
-    <div class="col">
+      </div>
+      <div class="col">
         <h4>Tài khoản</h4>
         <a href="#">Đăng ký</a>
         <a href="#">Giỏ hàng</a>
         <a href="#">Yêu thích</a>
         <a href="#">Đơn hàng</a>
         <a href="#">Trợ giúp</a>
-    </div>
-    <div class="col install">
+      </div>
+      <div class="col install">
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
-        <div class="row">
-            <img src="/assets/img/pay/app.jpg" alt="">
-            <img src="/assets/img/pay/play.jpg" alt="">
+        <div class="app-row">
+          <img src="/assets/img/pay/app.jpg" alt="" />
+          <img src="/assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="">
-    </div>
-    <div class="copyright">
+        <img src="/assets/img/pay/pay.png" alt="" />
+      </div>
+      <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
-    </div>
+      </div>
 </footer>
 
 
