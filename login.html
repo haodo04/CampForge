@@ -1,72 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign in — White Neumorphic</title>
+  <title>Đăng nhập — Camp Forge</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/login.css">
-
 </head>
 
 <body>
   <main class="shell" role="main" aria-label="Login layout">
+
     <!-- Phần bên trái -->
     <section class="visual" aria-hidden="true">
       <div class="brand">
-          <img src="./assets/img/logo.png" alt="">
+        <img src="./assets/img/logo.png" alt="Camp Forge logo">
         <h1>Camp Forge</h1>
       </div>
+
       <div class="tag">
-        <h2>Soft, clean, effortless.</h2>
-        <p>Neumorphic white design that feels tactile yet minimal.</p>
+        <h2>Nhẹ nhàng, sạch sẽ, dễ sử dụng.</h2>
       </div>
+
       <div class="badges">
-        <div class="chip">Private & secure</div>
-        <div class="chip">Distraction‑free</div>
-        <div class="chip">WCAG‑friendly</div>
+        <div class="chip">Riêng tư & an toàn</div>
+        <div class="chip">Không gây xao nhãng</div>
+        <div class="chip">Tối giản & dễ sử dụng</div>
       </div>
     </section>
 
     <!-- Phần bên phải -->
     <section class="panel">
       <div class="card" aria-label="Sign in card">
-        <h2>Welcome back</h2>
-        <p class="sub">Use your email and password to continue.</p>
+
+        <h2>Chào mừng trở lại</h2>
+        <p class="sub">Nhập email và mật khẩu để tiếp tục.</p>
 
         <form id="form" novalidate>
+
           <div class="field">
-            <input id="email" class="input" type="email" name="email" autocomplete="username" placeholder=" "
-              aria-label="Email address" required />
-            <label class="label" for="email">Email address</label>
+            <input id="email" class="input" type="email" name="email" placeholder=" " required />
+            <label class="label" for="email">Email</label>
           </div>
 
           <div class="field" style="margin-top:2px;">
-            <input id="password" class="input" type="password" name="password" autocomplete="current-password"
-              placeholder=" " aria-label="Password" minlength="6" required />
-            <label class="label" for="password">Password</label>
-            <button class="toggle" type="button" onclick="togglePw()" aria-label="Show or hide password">Show</button>
+            <input id="password" class="input" type="password" name="password" placeholder=" " minlength="6" required />
+            <label class="label" for="password">Mật khẩu</label>
+            <button class="toggle" type="button" onclick="togglePw()" aria-label="Show or hide password">Hiện</button>
           </div>
 
           <div class="row">
-            <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
-            <a href="#" class="link">Forgot password?</a>
+            <label class="remember">
+              <input type="checkbox" id="remember"> Ghi nhớ đăng nhập
+            </label>
+            <a href="#" class="link">Quên mật khẩu?</a>
           </div>
 
-          <button id="submit" class="btn" type="submit">Sign in</button>
+          <button id="submit" class="btn" type="submit">Đăng nhập</button>
 
-          <div class="or"><span>or</span></div>
+          <div class="or"><span>hoặc</span></div>
+
           <div class="oauth">
-            <button type="button" class="sbtn" aria-label="Continue with Google">Google</button>
-            <button type="button" class="sbtn" aria-label="Continue with Apple">Apple</button>
+            <button type="button" class="sbtn">Google</button>
+            <button type="button" class="sbtn">Apple</button>
           </div>
 
-          <p class="tiny">By continuing, you agree to our Terms and acknowledge our Privacy Policy.</p>
+          <p class="tiny">
+            Khi tiếp tục, bạn đồng ý với <a href="#">Điều khoản</a> và chấp nhận
+            <a href="#">Chính sách bảo mật</a>.
+          </p>
+
         </form>
       </div>
     </section>
   </main>
+
   <script src="./assets/js/login.js"></script>
 </body>
 
