@@ -6,7 +6,7 @@ const form = document.getElementById('form');
     function togglePw(){
       const is = password.type === 'password';
       password.type = is ? 'text' : 'password';
-      document.querySelector('.toggle').textContent = is ? 'Hide' : 'Show';
+      document.querySelector('.toggle').textContent = is ? 'Ẩn' : 'Hiện';
     }
 
     form.addEventListener('submit', (e) => {

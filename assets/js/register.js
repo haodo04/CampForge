@@ -7,7 +7,7 @@ function togglePw(id, btnEl) {
   const isPassword = input.type === "password";
   input.type = isPassword ? "text" : "password";
 
-  if (btnEl) btnEl.textContent = isPassword ? "Hide" : "Show";
+  if (btnEl) btnEl.textContent = isPassword ? "Ẩn" : "Hiện";
 }
 
 // Query elements
