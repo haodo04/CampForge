@@ -1,153 +1,102 @@
 :root {
-  --bg: #f3f5f9;
-  /* Nền trắng */
-  --card: #ffffff;
-  /* Màu trắng hoàn toàn */
+  --bg: #f3f5f9;          /* nền ngoài */
+  --panel-bg: #edf0fb;    /* nền cho visual + panel + card */
   --text: #16181d;
-  /* Màu gần đen */
   --muted: #69707a;
-  /* Chữ Xám nhẹ */
-  --line: #e9edf3;
-  /* Đường viền nhẹ */
+  --line: #d4d7df;        /* viền nhẹ */
   --brand: #111827;
-  /* Điểm nhấn */
-  --ring: rgba(17, 24, 39, .10);
-  --soft-shadow: 12px 12px 28px rgba(0, 0, 0, .08), -8px -8px 20px rgba(255, 255, 255, .9);
-  --inset: inset 8px 8px 18px rgba(0, 0, 0, .05), inset -8px -8px 18px rgba(255, 255, 255, .9);
 }
 
 * {
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
-}
-
-body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   color: var(--text);
-  background:
-    radial-gradient(1200px 600px at -10% -10%, rgba(0, 0, 0, .03), transparent 40%),
-    radial-gradient(900px 500px at 110% 110%, rgba(0, 0, 0, .035), transparent 45%),
-    var(--bg);
+  background: var(--bg);
   display: grid;
   place-items: center;
   padding: 24px;
 }
 
-/* Shell card with neumorphic feel */
+/* ================= SHELL ================= */
 .shell {
   width: min(960px, 100%);
-  border-radius: 28px;
-  background: var(--card);
-  box-shadow: var(--soft-shadow);
+  border-radius: 20px;
+  background: white;
   border: 1px solid var(--line);
   overflow: hidden;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
 }
 
-/* Left visual — stays white, uses subtle embossed shapes */
+/* =============== LEFT PANEL ================= */
 .visual {
-  background: linear-gradient(180deg, #fff 0%, #f7f9fc 100%);
-  position: relative;
+  background: var(--panel-bg);
   padding: 56px;
+  position: relative;
+  border-right: 1px solid var(--line);
 }
 
+/* Bỏ hết shadow */
 .visual::before,
 .visual::after {
-  content: "";
-  position: absolute;
-  border-radius: 32px;
-  filter: blur(0.2px);
-  background: #fff;
-  border: 1px solid var(--line);
-  box-shadow: var(--soft-shadow);
-}
-
-.visual::before {
-  width: 180px;
-  height: 120px;
-  top: 25px;
-  left: 35px;
-  transform: rotate(-6deg);
-}
-
-.visual::after {
-  width: 220px;
-  height: 140px;
-  bottom: 56px;
-  right: 56px;
-  transform: rotate(8deg);
+  display: none;
 }
 
 .brand {
-  position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-.logo {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: #111827;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, .18);
+.brand img {
+  width: 95px;
+  height: 115px;
 }
 
 .brand h1 {
   margin: 0;
   font-size: 26px;
   font-weight: 600;
-  letter-spacing: .2px;
-  margin-left: 30px;
 }
 
 .tag {
-  position: relative;
-  z-index: 1;
   margin-top: 90px;
 }
 
 .tag h2 {
-  font-size: 30px;
-  line-height: 1.18;
+  font-size: 28px;
   margin: 0 0 10px;
-  letter-spacing: -.2px;
 }
 
 .tag p {
-  margin: 0;
   color: var(--muted);
+  margin: 0;
 }
 
 .badges {
-  position: relative;
-  z-index: 1;
+  margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 28px;
 }
 
 .chip {
   padding: 10px 14px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: #fff;
   border: 1px solid var(--line);
-  box-shadow: var(--soft-shadow);
   font-size: 13px;
-  color: #3b3f45
+  color: #3b3f45;
 }
 
-/* Right panel — the form */
+/* ================= RIGHT PANEL ================= */
 .panel {
-  background: var(--card);
+  background: var(--panel-bg);
   display: grid;
   place-items: center;
   padding: 40px 28px;
@@ -156,24 +105,23 @@ body {
 .card {
   width: min(440px, 92%);
   padding: 32px 28px;
-  border-radius: 24px;
-  background: var(--card);
+  border-radius: 18px;
+  background: var(--panel-bg);
   border: 1px solid var(--line);
-  box-shadow: var(--soft-shadow);
 }
 
 .card h2 {
   margin: 0 0 8px;
   font-size: 24px;
-  font-weight: 600;
 }
 
 .sub {
   margin: 0 0 20px;
-  color: var(--muted);
   font-size: 14px;
+  color: var(--muted);
 }
 
+/* ================= FORM ================= */
 form {
   display: grid;
   gap: 14px;
@@ -181,9 +129,8 @@ form {
 
 .field {
   position: relative;
-  border-radius: 16px;
-  background: #f8fafe;
-  box-shadow: var(--inset);
+  background: #fff;
+  border-radius: 14px;
   border: 1px solid var(--line);
 }
 
@@ -195,86 +142,69 @@ form {
   background: transparent;
   font-size: 15px;
   outline: none;
-  border-radius: 16px;
 }
 
 .label {
   position: absolute;
-  left: 16px;
   top: 14px;
+  left: 16px;
   font-size: 13px;
   color: #6b7280;
-  pointer-events: none;
   transition: .18s ease;
 }
 
-.input:focus~.label,
-.input:not(:placeholder-shown)~.label {
-  top: 7px;
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: 6px;
   font-size: 11px;
   color: #4b5563;
 }
 
+/* Toggle password */
 .toggle {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  height: 34px;
   padding: 0 10px;
-  border-radius: 12px;
-  background: #fff;
+  height: 34px;
+  border-radius: 10px;
+  background: white;
   border: 1px solid var(--line);
-  box-shadow: var(--soft-shadow);
-  font-size: 12px;
-  color: #374151;
   cursor: pointer;
+  font-size: 12px;
 }
 
+/* ================= ROW ================= */
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 6px;
 }
 
 .remember {
-  display: inline-flex;
-  align-items: center;
+  display: flex;
   gap: 8px;
   font-size: 13px;
-  color: #4b5563;
 }
 
-.link {
-  font-size: 13px;
-  color: var(--brand);
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-
+/* ================= BUTTON MAIN ================= */
 .btn {
-  width: 100%;
   height: 50px;
+  width: 100%;
+  border-radius: 14px;
   border: none;
-  border-radius: 16px;
   background: var(--brand);
-  color: #fff;
+  color: white;
   font-weight: 600;
-  letter-spacing: .2px;
   cursor: pointer;
-  transition: .18s transform, .18s box-shadow;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, .12);
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, .16);
+  opacity: 0.9;
 }
 
+/* ================= DIVIDER ================= */
 .or {
   display: flex;
   align-items: center;
@@ -285,8 +215,8 @@ form {
 .or::before,
 .or::after {
   content: "";
-  height: 1px;
   flex: 1;
+  height: 1px;
   background: var(--line);
 }
 
@@ -295,34 +225,55 @@ form {
   color: var(--muted);
 }
 
+/* ================= OAUTH BUTTONS ================= */
 .oauth {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .sbtn {
   height: 46px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: #fff;
   border: 1px solid var(--line);
-  box-shadow: var(--soft-shadow);
-  font-weight: 500;
   cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
+.sbtn i {
+  font-size: 18px;
+}
+
+/* Facebook */
+.fb {
+  color: #1877f2;
+  font-weight: 600;
+}
+
+/* Google */
+.gg {
+  color: #d93025;
+  font-weight: 600;
+}
+
+/* FOOTER */
 .tiny {
-  margin-top: 12px;
+  margin-top: 14px;
   font-size: 12px;
   color: #6b7280;
   text-align: center;
 }
 
+/* RESPONSIVE */
 @media (max-width: 980px) {
   .shell {
     grid-template-columns: 1fr;
   }
-
   .visual {
     display: none;
   }
