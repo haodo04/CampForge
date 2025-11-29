@@ -7,6 +7,33 @@
   font-family: "Spartan", sans-serif;
 }
 
+.breadcrumb {
+    background: transparent;
+    font-size: 16px;    
+}
+
+.breadcrumb-item a,
+.breadcrumb-item,
+.breadcrumb-item.active {
+    font-size: 16px;     
+    font-weight: 500;     
+    color: #088178;      
+}
+
+.breadcrumb-item.active {
+    color: #333;          
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #6c757d;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+
 .shop-page .container{
   max-width: 1440px;   
   padding-left: 16px;
