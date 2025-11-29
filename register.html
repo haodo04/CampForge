@@ -3,24 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Create account — Basic</title>
+  <title>Create account — Register</title>
+
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
   <link rel="stylesheet" href="./assets/css/register.css">
-  
 </head>
+
 <body>
   <main class="shell" role="main" aria-label="Register layout">
-    <!-- Left visual area (đồng bộ login) -->
+    <!-- LEFT PANEL -->
     <section class="visual" aria-hidden="true">
       <div class="brand">
-        <!-- Giữ đường dẫn logo như dự án của bạn -->
         <img src="./assets/img/logo.png" alt="Camp Forge logo">
         <h1>Camp Forge</h1>
       </div>
+
       <div class="tag">
         <h2>Create your account</h2>
         <p>Soft, clean, and distraction-free onboarding.</p>
       </div>
+
       <div class="badges">
         <div class="chip">Private & secure</div>
         <div class="chip">Minimal & calm</div>
@@ -28,43 +33,47 @@
       </div>
     </section>
 
-    <!-- Right register card -->
+    <!-- RIGHT PANEL -->
     <section class="panel">
-      <div class="card" aria-label="Create account card">
+      <div class="card">
         <h2>Create account</h2>
         <p class="sub">Fill in your details to get started.</p>
 
         <form id="registerForm" novalidate>
+
           <div class="row gap">
             <div class="field">
-              <input id="first" class="input" type="text" name="first_name" placeholder=" " aria-label="First name" required />
+              <input id="first" class="input" type="text" name="first_name" placeholder=" " required />
               <label class="label" for="first">First name</label>
             </div>
+
             <div class="field">
-              <input id="last" class="input" type="text" name="last_name" placeholder=" " aria-label="Last name" required />
+              <input id="last" class="input" type="text" name="last_name" placeholder=" " required />
               <label class="label" for="last">Last name</label>
             </div>
           </div>
 
           <div class="field">
-            <input id="regEmail" class="input" type="email" name="email" autocomplete="email" placeholder=" " aria-label="Email" required />
+            <input id="regEmail" class="input" type="email" placeholder=" " required />
             <label class="label" for="regEmail">Email</label>
-            <div class="err" id="emailErr">Please enter a valid email.</div>
+            <div class="err" id="emailErr">Vui lòng nhập email hợp lệ.</div>
           </div>
 
-          <div class="field" style="margin-top:2px;">
-            <input id="regPassword" class="input" type="password" name="password" autocomplete="new-password" placeholder=" " aria-label="Password" minlength="6" required />
+          <div class="field">
+            <input id="regPassword" class="input" type="password" minlength="6" placeholder=" " required />
             <label class="label" for="regPassword">Password</label>
-            <button class="toggle" type="button" aria-label="Show or hide password">Show</button>
-            <div class="pw-meter" aria-hidden="true"><span id="meter"></span></div>
-            <div class="err" id="pwErr">Password must be at least 6 characters and contain letters & numbers.</div>
+            <button class="toggle" type="button" onclick="togglePw('regPassword', this)">Show</button>
+
+            <div class="pw-meter"><span id="meter"></span></div>
+            <div class="err" id="pwErr">Mật khẩu phải có ít nhất 6 ký tự và chứa chữ cái và số.</div>
           </div>
 
-          <div class="field" style="margin-top:2px;">
-            <input id="confirm" class="input" type="password" name="confirm_password" autocomplete="new-password" placeholder=" " aria-label="Confirm password" minlength="6" required />
+          <div class="field">
+            <input id="confirm" class="input" type="password" minlength="6" placeholder=" " required />
             <label class="label" for="confirm">Confirm password</label>
-            <button class="toggle" type="button" aria-label="Show or hide password">Show</button>
-            <div class="err" id="cfErr">Passwords do not match.</div>
+            <button class="toggle" type="button" onclick="togglePw('confirm', this)">Show</button>
+
+            <div class="err" id="cfErr">Mật khẩu không khớp.</div>
           </div>
 
           <label class="terms">
@@ -73,10 +82,14 @@
           </label>
 
           <button id="createBtn" class="btn" type="submit">Create account</button>
+
           <p class="tiny">Already have an account? <a href="./login.html">Sign in</a></p>
         </form>
       </div>
     </section>
   </main>
+
+  <!-- JS -->
+  <script src="./assets/js/register.js"></script>
 </body>
 </html>
