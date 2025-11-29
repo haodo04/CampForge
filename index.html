@@ -1,442 +1,318 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Web</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-  </head>
-  <body>
-    <section id="header">
-      <a href="#"><img src="./assets/img/logo.png" alt="logo" /></a>
-      <div>
-        <ul id="navbar">
-          <li><a class="active" href="index.html">Home</a></li>
-          <li><a href="category.html">Category</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li id="lg-bag"><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
-          <li id="lg-user-profile"><a href="personal.html"><i class="fa-solid fa-user"></i></a></li>
-          <a href="#" id="close"><i class="fa-solid fa-circle-xmark"></i></a>
-        </ul>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create account — White Neumorphic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3f5f9;          /* Nền trắng */
+      --card: #ffffff;        /* Trắng hoàn toàn */
+      --text: #16181d;        /* Gần đen */
+      --muted: #69707a;       /* Xám nhẹ */
+      --line: #e9edf3;        /* Viền nhẹ */
+      --brand: #111827;       /* Điểm nhấn đơn sắc */
+      --ring: rgba(17, 24, 39, .10);
+      --soft-shadow: 12px 12px 28px rgba(0,0,0,.08), -8px -8px 20px rgba(255,255,255,.9);
+      --inset: inset 8px 8px 18px rgba(0,0,0,.05), inset -8px -8px 18px rgba(255,255,255,.9);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at -10% -10%, rgba(0, 0, 0, .03), transparent 40%),
+        radial-gradient(900px 500px at 110% 110%, rgba(0, 0, 0, .035), transparent 45%),
+        var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    /* Shell card with neumorphic feel */
+    .shell {
+      width: min(1000px, 100%);
+      border-radius: 28px;
+      background: var(--card);
+      box-shadow: var(--soft-shadow);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    /* Left visual — stays white, uses subtle embossed shapes */
+    .visual {
+      background: linear-gradient(180deg, #fff 0%, #f7f9fc 100%);
+      position: relative;
+      padding: 56px;
+    }
+    .visual::before,
+    .visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 32px;
+      filter: blur(0.2px);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+    }
+    .visual::before { width: 180px; height: 120px; top: 48px; left: 56px; transform: rotate(-6deg); }
+    .visual::after  { width: 220px; height: 140px; bottom: 56px; right: 56px; transform: rotate(8deg); }
+
+    .brand {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 26px rgba(0,0,0,.18); }
+    .brand h1 { margin: 0; font-size: 26px; font-weight: 600; letter-spacing: .2px; margin-left: 8px; }
+
+    .tag { position: relative; z-index: 1; margin-top: 90px; }
+    .tag h2 { font-size: 30px; line-height: 1.18; margin: 0 0 10px; letter-spacing: -.2px; }
+    .tag p  { margin: 0; color: var(--muted); }
+
+    .badges { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .chip { padding: 10px 14px; border-radius: 14px; background: #fff; border: 1px solid var(--line); box-shadow: var(--soft-shadow); font-size: 13px; color: #3b3f45; }
+
+    /* Right panel — the form */
+    .panel { background: var(--card); display: grid; place-items: center; padding: 40px 28px; }
+
+    .card {
+      width: min(480px, 92%);
+      padding: 32px 28px;
+      border-radius: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+    }
+    .card h2 { margin: 0 0 8px; font-size: 24px; font-weight: 600; }
+    .sub { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+
+    form { display: grid; gap: 14px; }
+
+    .field {
+      position: relative;
+      border-radius: 16px;
+      background: #f8fafe;
+      box-shadow: var(--inset);
+      border: 1px solid var(--line);
+    }
+    .input {
+      width: 100%; height: 50px;
+      padding: 24px 48px 8px 16px;
+      border: none; background: transparent;
+      font-size: 15px; outline: none; border-radius: 16px;
+    }
+    .label {
+      position: absolute; left: 16px; top: 14px;
+      font-size: 13px; color: #6b7280; pointer-events: none; transition: .18s ease;
+    }
+    .input:focus ~ .label,
+    .input:not(:placeholder-shown) ~ .label { top: 7px; font-size: 11px; color: #4b5563; }
+
+    .toggle {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      height: 34px; padding: 0 10px; border-radius: 12px; background: #fff;
+      border: 1px solid var(--line); box-shadow: var(--soft-shadow);
+      font-size: 12px; color: #374151; cursor: pointer;
+    }
+
+    .row.gap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .pw-meter {
+      height: 8px; border-radius: 999px; background: #eef2f7; border: 1px solid var(--line);
+      overflow: hidden; margin: 8px 12px 0 12px;
+    }
+    .pw-meter > span { display: block; height: 100%; width: 0%; background: #ef4444; transition: .25s width, .25s background; }
+
+    .terms { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #4b5563; margin-top: 6px; }
+
+    .btn {
+      width: 100%; height: 50px; border: none; border-radius: 16px; background: var(--brand);
+      color: #fff; font-weight: 600; letter-spacing: .2px; cursor: pointer;
+      transition: .18s transform, .18s box-shadow; box-shadow: 0 14px 30px rgba(0, 0, 0, .12);
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 38px rgba(0, 0, 0, .16); }
+    .btn[disabled] { opacity: .7; cursor: not-allowed; }
+
+    .tiny { margin-top: 12px; font-size: 12px; color: #6b7280; text-align: center; }
+    .tiny a { color: var(--brand); text-decoration: none; }
+    .tiny a:hover { text-decoration: underline; }
+
+    .err { display: none; color: #ef4444; font-size: 12px; margin: 6px 12px 0 12px; }
+    .err.show { display: block; }
+
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 1fr; }
+      .visual { display: none; }
+    }
+    @media (max-width: 520px) {
+      .row.gap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell" role="main" aria-label="Register layout">
+    <!-- Left visual area (đồng bộ login) -->
+    <section class="visual" aria-hidden="true">
+      <div class="brand">
+        <!-- Giữ đường dẫn logo như dự án của bạn -->
+        <img src="./assets/img/logo.png" alt="Camp Forge logo">
+        <h1>Camp Forge</h1>
       </div>
-      <div id="mobile">
-        <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
-        <i id="bar" class="fa-solid fa-outdent"></i>
+      <div class="tag">
+        <h2>Create your account</h2>
+        <p>Soft, clean, and distraction-free onboarding.</p>
+      </div>
+      <div class="badges">
+        <div class="chip">Private & secure</div>
+        <div class="chip">Minimal & calm</div>
+        <div class="chip">WCAG-friendly</div>
       </div>
     </section>
 
-    <section id="hero">
-      <h4>Trade-in-offer</h4>
-      <h2>Super value deals</h2>
-      <h1>On all products</h1>
-      <p>Save more with coupons & up to 70% off!</p>
-      <button>Shop now</button>
-    </section>
+    <!-- Right register card -->
+    <section class="panel">
+      <div class="card" aria-label="Create account card">
+        <h2>Create account</h2>
+        <p class="sub">Fill in your details to get started.</p>
 
-    <section id="feature" class="section-p1">
-      <div class="fe-box">
-        <img src="/assets/img/features/f1.png" alt="" />
-        <h6>Free Shipping</h6>
-      </div>
-      <div class="fe-box">
-        <img src="/assets/img/features/f2.png" alt="" />
-        <h6>Online Order</h6>
-      </div>
-      <div class="fe-box">
-        <img src="/assets/img/features/f3.png" alt="" />
-        <h6>Save Money</h6>
-      </div>
-      <div class="fe-box">
-        <img src="/assets/img/features/f4.png" alt="" />
-        <h6>Promotions</h6>
-      </div>
-      <div class="fe-box">
-        <img src="/assets/img/features/f5.png" alt="" />
-        <h6>Happy Sell</h6>
-      </div>
-      <div class="fe-box">
-        <img src="/assets/img/features/f6.png" alt="" />
-        <h6>F24/7 Support</h6>
-      </div>
-    </section>
+        <form id="registerForm" novalidate>
+          <div class="row gap">
+            <div class="field">
+              <input id="first" class="input" type="text" name="first_name" placeholder=" " aria-label="First name" required />
+              <label class="label" for="first">First name</label>
+            </div>
+            <div class="field">
+              <input id="last" class="input" type="text" name="last_name" placeholder=" " aria-label="Last name" required />
+              <label class="label" for="last">Last name</label>
+            </div>
+          </div>
 
-    <section id="product1" class="section-p1">
-      <h2>Featured Products</h2>
-      <p>Summer Collection New Modern Design</p>
-      <div class="pro-container">
-        <div class="pro">
-          <img src="/assets/img/products/f1.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+          <div class="field">
+            <input id="regEmail" class="input" type="email" name="email" autocomplete="email" placeholder=" " aria-label="Email" required />
+            <label class="label" for="regEmail">Email</label>
+            <div class="err" id="emailErr">Please enter a valid email.</div>
           </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/f2.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+
+          <div class="field" style="margin-top:2px;">
+            <input id="regPassword" class="input" type="password" name="password" autocomplete="new-password" placeholder=" " aria-label="Password" minlength="6" required />
+            <label class="label" for="regPassword">Password</label>
+            <button class="toggle" type="button" onclick="togglePw('regPassword', this)" aria-label="Show or hide password">Show</button>
+            <div class="pw-meter" aria-hidden="true"><span id="meter"></span></div>
+            <div class="err" id="pwErr">Password must be at least 6 characters and contain letters & numbers.</div>
           </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/f3.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
+
+          <div class="field" style="margin-top:2px;">
+            <input id="confirm" class="input" type="password" name="confirm_password" autocomplete="new-password" placeholder=" " aria-label="Confirm password" minlength="6" required />
+            <label class="label" for="confirm">Confirm password</label>
+            <button class="toggle" type="button" onclick="togglePw('confirm', this)" aria-label="Show or hide password">Show</button>
+            <div class="err" id="cfErr">Passwords do not match.</div>
           </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/f4.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/f5.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/f6.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/f7.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/f8.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
+
+          <label class="terms">
+            <input id="agree" type="checkbox" required>
+            <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</span>
+          </label>
+
+          <button id="createBtn" class="btn" type="submit">Create account</button>
+          <p class="tiny">Already have an account? <a href="./login.html">Sign in</a></p>
+        </form>
       </div>
     </section>
+  </main>
 
-    <section id="banner" class="section-m1">
-      <h4>Repair Services</h4>
-      <h2>Up to <span>70% Off</span> - All t-Shirts & Accessories</h2>
-      <button class="normal">Explore More</button>
-    </section>
+  <script>
+    // Toggle show/hide password
+    function togglePw(id, btnEl){
+      const el = document.getElementById(id);
+      const show = el.type === 'password';
+      el.type = show ? 'text' : 'password';
+      if (btnEl) btnEl.textContent = show ? 'Hide' : 'Show';
+    }
 
-    <section id="product1" class="section-p1">
-      <h2>New Arrivals</h2>
-      <p>Summer Collection New Modern Design</p>
-      <div class="pro-container">
-        <div class="pro">
-          <img src="/assets/img/products/n1.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/n2.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/n3.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/n4.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/n5.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/n6.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/n7.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="/assets/img/products/n8.jpg" alt="" />
-          <div class="des">
-            <span>adidas</span>
-            <h5>Cartoon Astronaut T-Shirts</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>$78</h4>
-            <a href="#"><i class="fa-solid fa-cart-shopping cart"></i></a>
-          </div>
-        </div>
-      </div>
-    </section>
+    const form = document.getElementById('registerForm');
+    const first = document.getElementById('first');
+    const last = document.getElementById('last');
+    const email = document.getElementById('regEmail');
+    const password = document.getElementById('regPassword');
+    const confirmPw = document.getElementById('confirm');
+    const agree = document.getElementById('agree');
+    const createBtn = document.getElementById('createBtn');
 
-    <section id="sm-banner" class="section-p1">
-      <div class="banner-box">
-        <h4>crazy deals</h4>
-        <h2>buy 1 get 1 free</h2>
-        <span>The best classic dress is on sale at cara</span>
-        <button class="white">Learn more</button>
-      </div>
-      <div class="banner-box banner-box2">
-        <h4>spring/summer</h4>
-        <h2>upcoming season</h2>
-        <span>The best classic dress is on sale at cara</span>
-        <button class="white">Collection</button>
-      </div>
-    </section>
+    const emailErr = document.getElementById('emailErr');
+    const pwErr = document.getElementById('pwErr');
+    const cfErr = document.getElementById('cfErr');
+    const meter = document.getElementById('meter');
 
-    <section id="banner3">
-      <div class="banner-box">
-        <h2>SEASONAL SALE</h2>
-        <h3>Winter Collection - 50% OFF</h3>
-      </div>
-      <div class="banner-box banner-box2">
-        <h2>NEW FOOTWEAR COLLECTION</h2>
-        <h3>Spring/Summer 2022</h3>
-      </div>
-      <div class="banner-box banner-box3">
-        <h2>T-SHIRTS</h2>
-        <h3>New Trendy Print</h3>
-      </div>
-    </section>
+    // Đánh giá độ mạnh mật khẩu
+    function strength(pw){
+      let s = 0;
+      if (pw.length >= 6) s++;
+      if (/[A-Z]/.test(pw)) s++;
+      if (/[0-9]/.test(pw)) s++;
+      if (/[^A-Za-z0-9]/.test(pw)) s++;
+      return s; // 0..4
+    }
 
-    <section id="newsletter" class="section-p1 section-m1">
-        <div class="newstext">
-            <h4>Sign Up For Newsletters</h4>
-            <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
-        </div>
-        <div class="form">
-            <input type="text" placeholder="Your email address">
-            <button class="normal">Sign up</button>
-        </div>
-    </section>
+    password.addEventListener('input', () => {
+      const s = strength(password.value);
+      const w = [0, 25, 50, 75, 100][s];
+      meter.style.width = w + '%';
+      meter.style.background = s <= 1 ? '#ef4444' : (s === 2 ? '#f59e0b' : '#10b981');
+    });
 
-    <footer class="section-p1">
-      <div class="col">
-        <img class="logo" src="/assets/img/logo.png" alt="logo">
-        <h4>Contact</h4>
-        <p><strong>Address:</strong> 562 Wellington Road, Street 32, San Francisco</p>
-        <p><strong>Phone:</strong> +01 2222 365 /(+91) 01 2345 6789</p>
-        <p><strong>Hours:</strong> 10:00 - 18:00, Mon -Sat</p>
-        <div class="follow">
-          <h4>Follow us</h4>
-          <div class="icon">
-            <i class="fa-brands fa-facebook-f"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-pinterest"></i>
-            <i class="fa-brands fa-youtube"></i>
-          </div>
-        </div>
-      </div>
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-      <div class="col">
-        <h4>About</h4>
-        <a href="#">About us</a>
-        <a href="#">Delivery Information</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Contact Us</a>
-      </div>
-      <div class="col">
-        <h4>My Account</h4>
-        <a href="#">Sign In</a>
-        <a href="#">View Cart</a>
-        <a href="#">My Wishlist</a>
-        <a href="#">Track My Order</a>
-        <a href="#">Help</a>
-      </div>
+      // Reset lỗi
+      emailErr.classList.remove('show');
+      pwErr.classList.remove('show');
+      cfErr.classList.remove('show');
 
-      <div class="col install">
-        <h4>Install App</h4>
-        <p>From App Store or Google Play</p>
-        <div class="row">
-          <img src="/assets/img/pay/app.jpg" alt="app">
-          <img src="/assets/img/pay/play.jpg" alt="play">
-        </div>
-        <p>Secured Payment Gateways</p>
-        <img src="/assets/img/pay/pay.png" alt="page">
-      </div>
+      let ok = true;
 
-      <div class="copyright">
-        <p>Copyright © 2013-2025 HAODK.VN. All rights reserved.</p>
-      </div>
-    </footer>
+      // Validate email
+      if(!email.value || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value)){
+        emailErr.classList.add('show');
+        ok = false;
+      }
 
-    <script src="assets/js/script.js"></script>
-  </body>
+      // Validate mật khẩu (>=6, có chữ & số)
+      const validPw = password.value.length >= 6 && /[A-Za-z]/.test(password.value) && /[0-9]/.test(password.value);
+      if(!validPw){
+        pwErr.classList.add('show');
+        ok = false;
+      }
+
+      // Confirm password
+      if(password.value !== confirmPw.value){
+        cfErr.classList.add('show');
+        ok = false;
+      }
+
+      // Điều khoản
+      if(!agree.checked){
+        alert('Please agree to the Terms & Privacy Policy.');
+        ok = false;
+      }
+
+      if(ok){
+        createBtn.disabled = true;
+        createBtn.textContent = 'Creating…';
+        setTimeout(() => {
+          createBtn.disabled = false;
+          createBtn.textContent = 'Create account';
+          alert('Account created! (demo)');
+          // window.location.href = './login.html'; // bật nếu muốn quay về login
+        }, 900);
+      }
+    });
+  </script>
+</body>
 </html>
