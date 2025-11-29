@@ -22,7 +22,7 @@ html, body {
   padding: 24px;
 }
 
-/* ================= SHELL ================= */
+/* SHELL  */
 .shell {
   width: min(960px, 100%);
   border-radius: 20px;
@@ -33,7 +33,7 @@ html, body {
   grid-template-columns: 1.1fr 1fr;
 }
 
-/* =============== LEFT PANEL ================= */
+/* LEFT PANEL */
 .visual {
   background: var(--panel-bg);
   padding: 56px;
@@ -94,7 +94,7 @@ html, body {
   color: #3b3f45;
 }
 
-/* ================= RIGHT PANEL ================= */
+/*  RIGHT PANEL */
 .panel {
   background: var(--panel-bg);
   display: grid;
@@ -121,7 +121,7 @@ html, body {
   color: var(--muted);
 }
 
-/* ================= FORM ================= */
+/*  FORM  */
 form {
   display: grid;
   gap: 14px;
@@ -175,11 +175,15 @@ form {
   font-size: 12px;
 }
 
-/* ================= ROW ================= */
+/*  ROW  */
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.row a{
+  font-size: 14px;
 }
 
 .remember {
@@ -188,7 +192,7 @@ form {
   font-size: 13px;
 }
 
-/* ================= BUTTON MAIN ================= */
+/* BUTTON MAIN  */
 .btn {
   height: 50px;
   width: 100%;
@@ -204,7 +208,7 @@ form {
   opacity: 0.9;
 }
 
-/* ================= DIVIDER ================= */
+/*  DIVIDER */
 .or {
   display: flex;
   align-items: center;
@@ -225,7 +229,7 @@ form {
   color: var(--muted);
 }
 
-/* ================= OAUTH BUTTONS ================= */
+/*  OAUTH BUTTONS  */
 .oauth {
   display: grid;
   grid-template-columns: 1fr 1fr;
