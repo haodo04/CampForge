@@ -1,0 +1,431 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý người dùng</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/admin/users.css">
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" class="sidebar-title">Admin Panel</a>
+      <a href="dashboard.jsp">Tổng quan</a>
+      <a href="products.jsp">Quản lý sản phẩm</a>
+      <a href="orders.jsp">Quản lý đơn hàng</a>
+      <a href="#">Quản lý người dùng</a>
+      <a href="previews.jsp">Quản lý đánh giá</a>
+      <a href="discounts.jsp">Quản lý giảm giá</a>
+      <a href="vouchers.jsp">Quản lý voucher</a>
+      <a href="warehouse.jsp">Quản lý kho</a>
+      <a href="logs.jsp">Nhật ký</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Quản lý người dùng -->
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white" style="background: #088178 !important;">
+          <h4>Người dùng</h4>
+        </div>
+        <div class="card-body">
+          <table id="users" class="table table-bordered display">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+              Thêm người dùng
+            </button>
+            <thead>
+              <tr>
+                <th>Mã người dùng</th>
+                <th>Tên đăng nhập</th>
+                <th>Tên đầy đủ</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Trạng thái</th>
+                <th>Quyền</th>
+                <th>Hành Động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Example User -->
+              <tr>
+                <td>001</td>
+                <td>user01</td>
+                <td>Nguyễn Văn A</td>
+                <td>user01@example.com</td>
+                <td>0123456789</td>
+                <td>Hoạt động</td>
+                <td>Admin</td>
+                <td>
+                  <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewEditUserModal" data-user-id="001">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUsersModal" data-user-id="001">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button class="btn btn-warning btn-sm change-password-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal" data-user-id="001">
+                    <i class="fas fa-key"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>001</td>
+                <td>user01</td>
+                <td>Nguyễn Văn A</td>
+                <td>user01@example.com</td>
+                <td>0123456789</td>
+                <td>Hoạt động</td>
+                <td>User</td>
+                <td>
+                  <button class="btn btn-info btn-sm view-user" data-bs-toggle="modal" data-bs-target="#viewEditUserModal" data-user-id="001">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm delete-user" data-bs-toggle="modal" data-bs-target="#deleteUsersModal" data-user-id="001">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button class="btn btn-warning btn-sm change-password-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal" data-user-id="001">
+                    <i class="fas fa-key"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>002</td>
+                <td>user02</td>
+                <td>Nguyễn Văn B</td>
+                <td>user02@example.com</td>
+                <td>0123456789</td>
+                <td>Hoạt động</td>
+                <td>User</td>
+                <td>
+                  <button class="btn btn-info btn-sm view-user" data-bs-toggle="modal" data-bs-target="#viewEditUserModal" data-user-id="001">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm delete-user" data-bs-toggle="modal" data-bs-target="#deleteUsersModal" data-user-id="001">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button class="btn btn-warning btn-sm change-password-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal" data-user-id="001">
+                    <i class="fas fa-key"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>003</td>
+                <td>user03</td>
+                <td>Nguyễn Văn C</td>
+                <td>user03@example.com</td>
+                <td>0123456789</td>
+                <td>Hoạt động</td>
+                <td>User</td>
+                <td>
+                  <button class="btn btn-info btn-sm view-user" data-bs-toggle="modal" data-bs-target="#viewEditUserModal" data-user-id="001">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm delete-user" data-bs-toggle="modal" data-bs-target="#deleteUsersModal" data-user-id="001">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button class="btn btn-warning btn-sm change-password-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal" data-user-id="001">
+                    <i class="fas fa-key"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>004</td>
+                <td>user04</td>
+                <td>Nguyễn Văn D</td>
+                <td>user04@example.com</td>
+                <td>0123456789</td>
+                <td>Hoạt động</td>
+                <td>User</td>
+                <td>
+                  <button class="btn btn-info btn-sm view-user" data-bs-toggle="modal" data-bs-target="#viewEditUserModal" data-user-id="001">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm delete-user" data-bs-toggle="modal" data-bs-target="#deleteUsersModal" data-user-id="001">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button class="btn btn-warning btn-sm change-password-btn" data-bs-toggle="modal" data-bs-target="#changePasswordModal" data-user-id="001">
+                    <i class="fas fa-key"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Bảng Role và Permission -->
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+          <h4>Quyền và Phân quyền</h4>
+        </div>
+        <div class="card-body">
+          <table id="roles" class="table table-bordered display">
+            <thead>
+              <tr>
+                <th>ID Role</th>
+                <th>Tên Role</th>
+                <th>Permissions</th>
+                <th>Hành Động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>User</td>
+                <td>Quản lý người dùng, Quản lý sản phẩm</td>
+                <td>
+                  <button class="btn btn-info btn-sm">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Editor</td>
+                <td>Chỉnh sửa sản phẩm, Xem đơn hàng</td>
+                <td>
+                  <button class="btn btn-info btn-sm">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Bảng Tài Khoản đã xóa -->
+      <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+          <h4>Các tài khoản đã xóa</h4>
+        </div>
+        <div class="card-body">
+          <table id="deletedUsers" class="table table-bordered display">
+            <thead>
+              <tr>
+                <th>Mã người dùng</th>
+                <th>Tên đăng nhập</th>
+                <th>Tên đầy đủ</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Trạng thái</th>
+                <th>Quyền</th>
+                <th>Hành Động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>005</td>
+                <td>deleted01</td>
+                <td>Nguyễn Văn E</td>
+                <td>deleted01@example.com</td>
+                <td>0123456789</td>
+                <td>Đã xóa</td>
+                <td>Admin</td>
+                <td>
+                  <button class="btn btn-success btn-sm restore-user-btn" data-user-id="005">
+                    <i class="fas fa-undo"></i> Khôi phục
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>006</td>
+                <td>deleted02</td>
+                <td>Trần Thị F</td>
+                <td>deleted02@example.com</td>
+                <td>0987654321</td>
+                <td>Đã xóa</td>
+                <td>Editor</td>
+                <td>
+                  <button class="btn btn-success btn-sm restore-user-btn" data-user-id="006">
+                    <i class="fas fa-undo"></i> Khôi phục
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Modal: Thêm người dùng -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="addUserForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addUserLabel">Thêm người dùng</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-2">
+            <label class="form-label">Tên đăng nhập</label>
+            <input type="text" class="form-control" name="username" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Họ tên</label>
+            <input type="text" class="form-control" name="fullName" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Số điện thoại</label>
+            <input type="tel" class="form-control" name="phone" pattern="[0-9]{10}">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Quyền</label>
+            <select class="form-select" name="role">
+              <option>User</option>
+              <option>Editor</option>
+              <option>Admin</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Mật khẩu</label>
+            <input type="password" class="form-control" name="password" minlength="6" required>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" id="isActive" name="isActive" checked>
+            <label class="form-check-label" for="isActive">Hoạt động</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Đóng</button>
+          <button class="btn btn-primary" type="submit">Thêm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Đổi mật khẩu -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePwLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="changePasswordForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changePwLabel">Đổi mật khẩu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="changePwUserId" name="userId">
+          <div class="mb-2">
+            <label class="form-label">Mật khẩu mới</label>
+            <input type="password" class="form-control" id="newPassword" name="newPassword" minlength="6" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Nhập lại mật khẩu</label>
+            <input type="password" class="form-control" id="rePassword" name="rePassword" minlength="6" required>
+          </div>
+          <small class="text-muted">Yêu cầu tối thiểu 6 ký tự. Nên dùng chữ hoa/thường + số + ký tự đặc biệt.</small>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Hủy</button>
+          <button class="btn btn-warning" type="submit">Đổi mật khẩu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Modal Xóa Người Dùng -->
+    <div class="modal fade" id="deleteUsersModal" tabindex="-1" aria-labelledby="deleteUsersModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteUsersModalLabel">Xác nhận xóa</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <p>Bạn có chắc chắn muốn xóa người dùng này?</p>
+              <input type="hidden" id="userIdToDelete" name="userId" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+              <button type="submit" class="btn btn-danger">Xóa</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Sửa Người Dùng -->
+    <div class="modal fade" id="viewEditUserModal" tabindex="-1" aria-labelledby="userDetailModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userDetailModalLabel">Thông Tin Chi Tiết Người Dùng</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="userDetailForm">
+              <div class="row mb-3">
+                <input type="hidden" id="editUserId" name="id" value="002" />
+                <div class="col-md-6">
+                  <label for="changUsername" class="form-label">Tên đăng nhập <span style="color: red">*</span></label>
+                  <input type="text" class="form-control" id="changUsername" name="username" value="user02" required />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="changeName" class="form-label">Tên Đầy Đủ <span style="color: red">*</span></label>
+                  <input type="text" class="form-control" id="changeName" name="fullName" value="Trần Thị B" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="changeEmail" class="form-label">Email <span style="color: red">*</span></label>
+                  <input type="email" class="form-control" id="changeEmail" name="email" value="user02@example.com" required />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="changePhone" class="form-label">Số Điện Thoại</label>
+                  <input type="tel" class="form-control" id="changePhone" name="phone" pattern="[0-9]{10}" />
+                </div>
+                <div class="col-md-6">
+                  <label for="status" class="form-label">Trạng Thái</label>
+                  <select class="form-control" id="status" name="status">
+                    <option value="Hoạt động">Hoạt động</option>
+                    <option value="Chưa kích hoạt">Chưa kích hoạt</option>
+                    <option value="Bị khóa">Bị khóa</option>
+                    <option value="Chờ xóa">Chờ xóa</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="submit" form="userDetailForm" class="btn btn-primary">Lưu Thay Đổi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

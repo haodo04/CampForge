@@ -1,0 +1,181 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/admin/dashboard.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <a href="#" class="sidebar-title">Admin</a>
+    <a href="./dashboard.html">Tổng quan</a>
+    <a href="products.jsp">Quản lý sản phẩm</a>
+    <a href="orders.jsp">Quản lý đơn hàng</a>
+    <a href="users.jsp">Quản lý người dùng</a>
+    <a href="previews.jsp">Quản lý đánh giá</a>
+    <a href="discounts.jsp">Quản lý giảm giá</a>
+    <a href="vouchers.jsp">Quản lý voucher</a>
+    <a href="warehouse.jsp">Quản lý kho</a>
+    <a href="logs.jsp">Nhật ký</a>
+</div>
+
+
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="d-none">
+    <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+    <div class="row mb-4 align-items-end">
+        <div class="col-md-4">
+            <label for="startDate" class="form-label"><strong>Từ ngày:</strong></label>
+            <input type="date" id="startDate" class="form-control input-sm">
+        </div>
+        <div class="col-md-4">
+            <label for="endDate" class="form-label"><strong>Đến ngày:</strong></label>
+            <input type="date" id="endDate" class="form-control input-sm">
+        </div>
+        <div class="col-md-4 text-end">
+            <button id="filterBtn" class="btn btn-primary btn-sm">Lọc thống kê</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="mb-4">Tổng quan</h2>
+        
+        <!-- Biểu đồ -->
+        <div class="row mb-4">
+            <!-- Doanh Thu Theo Sản Phẩm Cắm Trại -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Doanh thu theo sản phẩm cắm trại</h5>
+                        <div class="chart-container">
+                            <canvas id="revenueByArtistChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trạng Thái Đơn Hàng -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Trạng thái đơn hàng</h5>
+                        <div class="chart-container">
+                            <canvas id="orderStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <!-- Thống Kê Đánh Giá -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Thống kê đánh giá sản phẩm</h5>
+                        <div class="chart-container">
+                            <canvas id="ratingChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản Phẩm Bán Chạy -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Sản phẩm cắm trại bán chạy</h5>
+                        <div class="chart-container">
+                            <canvas id="bestSaleChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng Sản Phẩm Cần Nhập Hàng -->
+        <h2>Sản phẩm cắm trại cần nhập hàng</h2>
+        <table id="reorderTable" class="display">
+            <thead>
+                <tr>
+                    <th>ID Sản Phẩm</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Loại</th>
+                    <th>Số lượng còn</th>
+                    <th>Trung bình bán/ngày</th>
+                    <th>Ngưỡng cần nhập</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Lều cắm trại 2 người</td>
+                    <td>Lều</td>
+                    <td>5</td>
+                    <td>2</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Đèn pin dã ngoại chống nước</td>
+                    <td>Đèn</td>
+                    <td>12</td>
+                    <td>4</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Balo trekking 40L</td>
+                    <td>Balo</td>
+                    <td>20</td>
+                    <td>6</td>
+                    <td>30</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Bảng Sản Phẩm Bán Chậm -->
+        <h2>Sản phẩm cắm trại bán chậm</h2>
+        <table id="slowSellingTable" class="display">
+            <thead>
+                <tr>
+                    <th>ID Sản Phẩm</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Loại</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>4</td>
+                    <td>Đệm hơi cắm trại</td>
+                    <td>Đệm</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Bếp gas mini du lịch</td>
+                    <td>Bếp</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="../assets/js/admin/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

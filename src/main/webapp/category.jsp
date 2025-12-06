@@ -1,0 +1,650 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sản phẩm</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link href="./assets/css/category.css" rel="stylesheet" />
+    <link href="./assets/css/styles.css" rel="stylesheet" />
+      <link rel="stylesheet" href="assets/css/search.css">
+      <script src="assets/js/search.js"></script>
+  </head>
+  <style>
+      ul{
+          padding-left: 0;
+          position: relative;
+          left: -5px;
+          top: 1px;
+      }
+      #navbar li{
+          padding: 10px 10px 0 0;
+          margin: 10px 5px 5px 25px;
+      }
+      #navbar li a{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          width: 100%;
+      }
+      #navbar li a:hover,
+      #navbar li a.active {
+          color: #088178;
+      }
+      #navbar li a.active::after,
+      #navbar li a:hover::after {
+          content: "";
+          width: 40px;
+          height: 2px;
+          background: #088178;
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+      }
+  </style>
+  <body>
+  <div class="header-top"></div>
+  <section id="header">
+      <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
+      <ul id="navbar">
+          <li><a href="index.jsp">Trang chủ</a></li>
+          <li><a class="active" href="category.html">Danh mục</a></li>
+          <li><a href="blog.jsp">Blog</a></li>
+          <li><a href="about.jsp">Giới thiệu</a></li>
+          <li><a href="contact.jsp">Liên hệ</a></li>
+      </ul>
+      <div id="right-icons">
+          <div id="search-box">
+              <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
+              <button id="searchBtn"><i class="fa fa-search"></i></button>
+          </div>
+          <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+          <div class="auth-buttons">
+              <a href="login.jsp" class="btn-login">Đăng nhập</a>
+              <a href="register.jsp" class="btn-register">Đăng ký</a>
+          </div>
+      </div>
+  </section>
+
+  <nav aria-label="breadcrumb" class="bg-light py-3">
+  <div class="container">
+    <ol class="breadcrumb m-0">
+      <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Danh mục</li>
+    </ol>
+  </div>
+</nav>
+
+
+  <main class="shop-page py-3">
+      <div class="container">
+        <div class="row g-4">
+          <!-- filter -->
+          <aside class="col-12 col-lg-3">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h5 class="m-0">Bộ lọc sản phẩm</h5>
+                  <button class="btn btn-sm btn-warning">Đặt lại</button>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="mb-2">Giá (VNĐ)</h6>
+                  <div class="d-flex align-items-center">
+                    <div class="input-group me-2">
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Từ"
+                      />
+                      <span class="input-group-text">đ</span>
+                    </div>
+                    <span class="mx-2">–</span>
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Đến"
+                      />
+                      <span class="input-group-text">đ</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="mb-2">Kích thước</h6>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="s1"
+                    /><label class="form-check-label" for="s1">2×3 m</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="s2"
+                    /><label class="form-check-label" for="s2">3×4 m</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="s3"
+                    /><label class="form-check-label" for="s3">4×6 m</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="s4"
+                    /><label class="form-check-label" for="s4">6×9 m</label>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="mb-2">Chủ đề</h6>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="t1"
+                    /><label class="form-check-label" for="t1"
+                      >Cắm Trại</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="t2"
+                    /><label class="form-check-label" for="t2">Du Lịch</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="t3"
+                    /><label class="form-check-label" for="t3"
+                      >Leo Núi</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="t4"
+                    /><label class="form-check-label" for="t4"
+                      >Dã Ngoại</label
+                    >
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="mb-2">Brand</h6>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="a1"
+                    /><label class="form-check-label" for="a1">BLACKDOG</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="a2"
+                    /><label class="form-check-label" for="a2">MADFOX</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="a3"
+                    /><label class="form-check-label" for="a3">NATUREHIKE</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="a4"
+                    /><label class="form-check-label" for="a4">JACK WOLFSKIN</label>
+                  </div>
+                </div>
+
+                <div class="form-check mb-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="sortRating"
+                  />
+                  <label class="form-check-label" for="sortRating"
+                    >Đánh giá cao <i class="fa-solid fa-star text-warning"></i
+                  ></label>
+                </div>
+                <div class="form-check mb-4">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="sortNew"
+                  />
+                  <label class="form-check-label" for="sortNew"
+                    >Sản phẩm mới nhất</label
+                  >
+                </div>
+
+                <!-- Theo ngày -->
+                <div class="card p-3 mb-3">
+                  <h6 class="mb-3">Sản phẩm theo ngày</h6>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <label class="form-label" for="d1">Từ ngày</label>
+                      <input
+                        type="date"
+                        id="d1"
+                        class="form-control form-control-sm"
+                      />
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label" for="d2">Đến ngày</label>
+                      <input
+                        type="date"
+                        id="d2"
+                        class="form-control form-control-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-primary w-100">
+                  Áp dụng
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          <section class="col-12 col-lg-9">
+            <div id="product-grid" class="row g-3">
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/n1.jpg"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>adidas</span>
+                    <h5>Nồi Titanium dã ngoại 1300ML</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>120.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/n5.jpg"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>adidas</span>
+                    <h5>Bếp cồn Trekking dã ngoại</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>150.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/f2.png"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>BLACKDOG</span>
+                    <h5>Lều 6 người BLACKDOG</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>2.300.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/f5.jpg"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>BLACKDOG</span>
+                    <h5>Lều 2 - 3 người, 2 lớp</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>3.100.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <a href="sproduct.jsp">
+                    <img
+                    src="/assets/img/products/f7.jpg"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  </a>
+                  <div class="des">
+                    <span>BLACKDOG</span>
+                    <h5>Lều trung tâm (lều tăng)</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>2.500.000đ</h4>
+                    <a href="sproduct.jsp" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <a href="sproduct.jsp">
+                    <img
+                    src="/assets/img/products/f1.jpg"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  </a>
+                  <div class="des">
+                    <span>BLACKDOG</span>
+                    <h5>Lều trung tâm</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>3.700.000đ</h4>
+                    <a href="sproduct.jsp" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/f3.jpg"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>BLACKDOG</span>
+                    <h5>Cartoon Astronaut T-Shirts</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>2.100.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/f4.png"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>BLACKDOG</span>
+                    <h5>Cartoon Astronaut T-Shirts</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>3.000.000</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/balo5.png"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>MADFOX</span>
+                    <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>1.200.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/balo6.png"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>MADFOX</span>
+                    <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>1.300.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/balo1.jpg"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>adidas</span>
+                    <h5>Áo mưa trùm ba lô 35L</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>100.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-3">
+                <div class="pro">
+                  <img
+                    src="/assets/img/products/n2.png"
+                    alt="Cartoon Astronaut T-Shirts"
+                  />
+                  <div class="des">
+                    <span>adidas</span>
+                    <h5>Bộ nồi nhôm dã ngoại xếp gọn 4 món</h5>
+                    <div class="star" aria-label="Đánh giá 5/5">
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i
+                      ><i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h4>400.000đ</h4>
+                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                      ><i class="fa-solid fa-cart-shopping cart"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- lặp thêm các col sản phẩm -->
+            </div>
+
+            <!-- Pagination -->
+            <nav class="mt-4" aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">«</a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">»</a></li>
+              </ul>
+            </nav>
+          </section>
+        </div>
+      </div>
+    </main>
+
+<section id="newsletter" class="section-p1">
+    <div class="newstext">
+        <h4>Đăng ký nhận tin</h4>
+        <p>Nhập email về cập nhật mới nhất <span>ưu đãi đặc biệt.</span></p>
+    </div>
+    <div class="form">
+        <input type="text" placeholder="Nhập email của bạn">
+        <button class="normal">Đăng ký</button>
+    </div>
+</section>
+
+<footer class="section-p1">
+      <div class="col">
+        <h4>Liên hệ</h4>
+        <p>
+          <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
+          Đức, HCM
+        </p>
+        <p><strong>Điện thoại: </strong> +01 2222 365 /(+91) 01 2345 6789</p>
+        <p><strong>Giờ mở cửa: </strong> 10:00 - 18:00, T2 - T7</p>
+        <div class="follow">
+          <h4>Theo dõi chúng tôi</h4>
+          <div class="icon">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-pinterest-p"></i>
+            <i class="fab fa-youtube"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <h4>Giới thiệu</h4>
+        <a href="#">Về chúng tôi</a>
+        <a href="#">Thông tin giao hàng</a>
+        <a href="#">Chính sách</a>
+        <a href="#">Điều khoản</a>
+        <a href="#">Liên hệ</a>
+      </div>
+      <div class="col">
+        <h4>Tài khoản</h4>
+        <a href="#">Đăng ký</a>
+        <a href="#">Giỏ hàng</a>
+        <a href="#">Yêu thích</a>
+        <a href="#">Đơn hàng</a>
+        <a href="#">Trợ giúp</a>
+      </div>
+      <div class="col install">
+        <h4>Tải ứng dụng</h4>
+        <p>Trên App Store hoặc Google Play</p>
+        <div class="app-row">
+          <img src="/assets/img/pay/app.jpg" alt="" />
+          <img src="/assets/img/pay/play.jpg" alt="" />
+        </div>
+        <p>Bảo mật cổng thanh toán</p>
+        <img src="/assets/img/pay/pay.png" alt="" />
+      </div>
+      <div class="copyright">
+        <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
+      </div>
+</footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

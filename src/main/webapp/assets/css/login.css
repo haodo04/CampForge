@@ -1,0 +1,284 @@
+:root {
+  --bg: #f3f5f9;          /* nền ngoài */
+  --panel-bg: #edf0fb;    /* nền cho visual + panel + card */
+  --text: #16181d;
+  --muted: #69707a;
+  --line: #d4d7df;        /* viền nhẹ */
+  --brand: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color: var(--text);
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+/* SHELL  */
+.shell {
+  width: min(960px, 100%);
+  border-radius: 20px;
+  background: white;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+/* LEFT PANEL */
+.visual {
+  background: var(--panel-bg);
+  padding: 56px;
+  position: relative;
+  border-right: 1px solid var(--line);
+}
+
+/* Bỏ hết shadow */
+.visual::before,
+.visual::after {
+  display: none;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand img {
+  width: 95px;
+  height: 115px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.tag {
+  margin-top: 90px;
+}
+
+.tag h2 {
+  font-size: 28px;
+  margin: 0 0 10px;
+}
+
+.tag p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.badges {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-size: 13px;
+  color: #3b3f45;
+}
+
+/*  RIGHT PANEL */
+.panel {
+  background: var(--panel-bg);
+  display: grid;
+  place-items: center;
+  padding: 40px 28px;
+}
+
+.card {
+  width: min(440px, 92%);
+  padding: 32px 28px;
+  border-radius: 18px;
+  background: var(--panel-bg);
+  border: 1px solid var(--line);
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.sub {
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/*  FORM  */
+form {
+  display: grid;
+  gap: 14px;
+}
+
+.field {
+  position: relative;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  padding: 24px 48px 8px 16px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  outline: none;
+}
+
+.label {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-size: 13px;
+  color: #6b7280;
+  transition: .18s ease;
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: 6px;
+  font-size: 11px;
+  color: #4b5563;
+}
+
+/* Toggle password */
+.toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 10px;
+  height: 34px;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/*  ROW  */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row a{
+  font-size: 14px;
+}
+
+.remember {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+}
+
+/* BUTTON MAIN  */
+.btn {
+  height: 50px;
+  width: 100%;
+  border-radius: 14px;
+  border: none;
+  background: var(--brand);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/*  DIVIDER */
+.or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.or::before,
+.or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.or span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/*  OAUTH BUTTONS  */
+.oauth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.sbtn {
+  height: 46px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.sbtn i {
+  font-size: 18px;
+}
+
+/* Facebook */
+.fb {
+  color: #1877f2;
+  font-weight: 600;
+}
+
+/* Google */
+.gg {
+  color: #d93025;
+  font-weight: 600;
+}
+
+/* FOOTER */
+.tiny {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .visual {
+    display: none;
+  }
+}
