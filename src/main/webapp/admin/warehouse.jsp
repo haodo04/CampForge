@@ -1,0 +1,138 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản Lý Xuất Nhập Kho</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/admin/warehouse.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+      <a href="#" class="sidebar-title">Admin Panel</a>
+      <a href="dashboard.jsp">Tổng quan</a>
+      <a href="products.jsp">Quản lý sản phẩm</a>
+      <a href="orders.jsp">Quản lý đơn hàng</a>
+      <a href="users.jsp">Quản lý người dùng</a>
+      <a href="#">Quản lý đánh giá</a>
+      <a href="discounts.jsp">Quản lý giảm giá</a>
+      <a href="vouchers.jsp">Quản lý voucher</a>
+      <a href="#">Quản lý kho</a>
+      <a href="logs.jsp">Nhật ký</a>
+    </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white" style="background: #088178 !important;">
+        <h4>Quản lý xuất nhập kho</h4>
+      </div>
+      <div class="card-body">
+        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addStockModal">
+          + Thêm Phiếu Nhập kho
+        </button>
+        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addStockOutModal">
+          + Thêm Phiếu Xuất kho
+        </button>
+
+        <div class="table-section">
+          <div class="card-header bg-success text-white mt-4" style="background: #198754 !important;">
+            <h5>Nhập Kho</h5>
+          </div>
+          <table id="importTable" class="table table-bordered display">
+            <thead>
+              <tr>
+                <th>Mã Phiếu</th>
+                <th>Ngày Tạo</th>
+                <th>Người tạo</th>
+                <th>Nhà cung cấp</th>
+                <th>Tổng Tiền</th>
+                <th>Ghi Chú</th>
+                <th>Hành Động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PN001</td>
+                <td>2023-11-01</td>
+                <td>Nguyễn Văn A</td>
+                <td>ABC Corp</td>
+                <td>500,000₫</td>
+                <td>Giao hàng theo hợp đồng</td>
+                <td>
+                  <button class="btn btn-sm btn-info">Chi tiết</button>
+                  <button class="btn btn-sm btn-danger">Xoá</button>
+                </td>
+              </tr>
+              <tr>
+                <td>PN002</td>
+                <td>2023-11-05</td>
+                <td>Trần Thị B</td>
+                <td>XYZ Ltd.</td>
+                <td>750,000₫</td>
+                <td>Nhập kho từ nhà cung cấp</td>
+                <td>
+                  <button class="btn btn-sm btn-info">Chi tiết</button>
+                  <button class="btn btn-sm btn-danger">Xoá</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-section">
+          <div class="card-header bg-success text-white mt-4" style="background: #198754 !important;">
+            <h5>Xuất Kho</h5>
+          </div>
+          <table id="exportTable" class="table table-bordered display">
+            <thead>
+              <tr>
+                <th>Mã Phiếu</th>
+                <th>Ngày Tạo</th>
+                <th>Người tạo</th>
+                <th>Lý do</th>
+                <th>Tổng Tiền</th>
+                <th>Ghi Chú</th>
+                <th>Hành Động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PX001</td>
+                <td>2023-11-10</td>
+                <td>Nguyễn Văn A</td>
+                <td>Giao hàng</td>
+                <td>200,000₫</td>
+                <td>Giao hàng cho khách</td>
+                <td>
+                  <button class="btn btn-sm btn-info">Chi tiết</button>
+                  <button class="btn btn-sm btn-danger">Xoá</button>
+                </td>
+              </tr>
+              <tr>
+                <td>PX002</td>
+                <td>2023-11-12</td>
+                <td>Trần Thị B</td>
+                <td>Khác</td>
+                <td>300,000₫</td>
+                <td>Xuất kho do lỗi sản phẩm</td>
+                <td>
+                  <button class="btn btn-sm btn-info">Chi tiết</button>
+                  <button class="btn btn-sm btn-danger">Xoá</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/js/admin/warehouse.js"></script>
+</body>
+</html>
