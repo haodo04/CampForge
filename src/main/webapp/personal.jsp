@@ -27,8 +27,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"
     />
-    <link rel="stylesheet" href="/assets/css/styles.css" />
-    <link rel="stylesheet" href="/assets/css/personal.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/personal.css" />
       <link rel="stylesheet" href="assets/css/search.css">
   </head>
   <body>
@@ -48,7 +48,7 @@
 
       <div id="right-icons">
         <a href="#"><i class="fa fa-search"></i></a>
-        <a href="personal.html"><i class="fa-solid fa-user"></i></a>
+        <a href="personal.jsp"><i class="fa-solid fa-user"></i></a>
         <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
 
         <div class="auth-buttons">
@@ -705,11 +705,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>

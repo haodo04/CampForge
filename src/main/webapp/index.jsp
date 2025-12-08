@@ -15,17 +15,63 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"
     />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link rel="stylesheet" href="./assets/css/search.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/search.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-      
+
+    <style>
+      #hero {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner11.jpg");
+      }
+
+      #hero button {
+        background-image: url("${pageContext.request.contextPath}/assets/img/button.png");
+      }
+
+      .title-decor::before {
+        content: "";
+        background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
+      }
+
+      .title-decor::after {
+        content: "";
+        background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
+      }
+
+      #banner {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner13.jfif");
+      }
+
+      #sm-banner .banner-box {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner04.png");
+      }
+
+      #sm-banner .banner-box2 {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner06.png");
+      }
+      #banner3 .banner-box {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner03.jpg");
+      }
+      #banner3 .banner-box2 {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner05.png");
+      }
+
+      #banner3 .banner-box3 {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner01.jpeg");
+      }
+
+      #newsletter {
+        background-image: url("${pageContext.request.contextPath}/assets/img/banner/b14.png");
+      }
+    </style>
+
   </head>
   <body>
   <div class="header-top"></div>
   <section id="header">
-      <a href="index.html"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
+      <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
-          <li><a href="index.html" class="active">Trang chủ</a></li>
+          <li><a href="index.jsp" class="active">Trang chủ</a></li>
           <li><a href="category.jsp">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
           <li><a href="about.jsp">Giới thiệu</a></li>
@@ -115,7 +161,7 @@
       <p>Bộ sưu tập mùa hè với thiết kế mới</p>
       <div class="pro-container">
         <div class="pro">
-          <a href="sproduct.jsp"><img src="/assets/img/products/f1.jpg" alt="" /></a>
+          <a href="sproduct.jsp"><img src="./assets/img/products/f1.jpg" alt="" /></a>
           <div class="des">
             <span>BLACKDOG</span>
             <h5>Lều trung tâm (lều tăng) BLACKDOG</h5>
@@ -133,7 +179,7 @@
           </div>
         </div>
         <div class="pro">
-          <a href="sproduct.jsp"><img src="/assets/img/products/f2.png" alt="" /></a>
+          <a href="sproduct.jsp"><img src="./assets/img/products/f2.png" alt="" /></a>
           <div class="des">
             <span>adidas</span>
             <h5>Lều 6 người BLACKDOG Mountain Garden</h5>
@@ -149,7 +195,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/balo1.jpg" alt="" />
+          <img src="./assets/img/products/balo1.jpg" alt="" />
           <div class="des">
             <span>MADFOX</span>
             <h5>Áo mưa trùm ba lô 35L MADFOX RC35B</h5>
@@ -165,7 +211,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/f4.png" alt="" />
+          <img src="./assets/img/products/f4.png" alt="" />
           <div class="des">
             <span>NATUREHIKE</span>
             <h5>Lều 2 - 3 người, 2 lớp Naturehike</h5>
@@ -181,7 +227,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/f5.jpg" alt="" />
+          <img src="./assets/img/products/f5.jpg" alt="" />
           <div class="des">
             <span>NATUREHIKE</span>
             <h5>Lều 2 - 3 người, 2 lớp Naturehike</h5>
@@ -197,7 +243,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/f7.jpg" alt="" />
+          <img src="./assets/img/products/f7.jpg" alt="" />
           <div class="des">
             <span>BLACKDOG</span>
             <h5>Lều trung tâm (lều tăng) BLACKDOG</h5>
@@ -213,7 +259,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/n1.jpg" alt="" />
+          <img src="./assets/img/products/n1.jpg" alt="" />
           <div class="des">
             <span>NATUREHIKE</span>
             <h5>Nồi Titanium dã ngoại 1300ML Naturehike</h5>
@@ -229,7 +275,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/balo5.png" alt="" />
+          <img src="./assets/img/products/balo5.png" alt="" />
           <div class="des">
             <span>JACK WOLFSKIN</span>
             <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
@@ -258,7 +304,7 @@
       <p>Các sản phẩm cửa hàng mới nhập</p>
       <div class="pro-container">
         <div class="pro">
-          <img src="/assets/img/products/n1.jpg" alt="" />
+          <img src="./assets/img/products/n1.jpg" alt="" />
           <div class="des">
             <span>NATUREHIKE</span>
             <h5>Nồi Titanium dã ngoại 1300ML Naturehike</h5>
@@ -274,7 +320,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/n2.png" alt="" />
+          <img src="./assets/img/products/n2.png" alt="" />
           <div class="des">
             <span>NATUREHIKE</span>
             <h5>Bộ nồi nhôm dã ngoại xếp gọn 4 món Naturehike</h5>
@@ -290,7 +336,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/n3.jpg" alt="" />
+          <img src="./assets/img/products/n3.jpg" alt="" />
           <div class="des">
             <span>VULTURA</span>
             <h5>Ấm nhôm đun nước dã ngoại cắm trại Vultura 0.8L - 1.6L</h5>
@@ -306,7 +352,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/n4.jpg" alt="" />
+          <img src="./assets/img/products/n4.jpg" alt="" />
           <div class="des">
             <span>VULTURA</span>
             <h5>Bếp cồn Trekking dã ngoại Vultura</h5>
@@ -322,7 +368,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/n5.jpg" alt="" />
+          <img src="./assets/img/products/n5.jpg" alt="" />
           <div class="des">
             <span>VULTURA</span>
             <h5>Bếp cồn Trekking dã ngoại Vultura</h5>
@@ -338,7 +384,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/balo3.jpg" alt="" />
+          <img src="./assets/img/products/balo3.jpg" alt="" />
           <div class="des">
             <span>MADFOX</span>
             <h5>Áo mưa trùm ba lô 35L MADFOX RC35B</h5>
@@ -354,7 +400,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/balo7.png" alt="" />
+          <img src="./assets/img/products/balo7.png" alt="" />
           <div class="des">
             <span>JACK WOLFSKIN</span>
             <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
@@ -370,7 +416,7 @@
           </div>
         </div>
         <div class="pro">
-          <img src="/assets/img/products/balo8.png" alt="" />
+          <img src="./assets/img/products/balo8.png" alt="" />
           <div class="des">
             <span>JACK WOLFSKIN</span>
             <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
@@ -469,11 +515,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>

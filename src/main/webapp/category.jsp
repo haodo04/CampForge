@@ -59,7 +59,7 @@
       <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
           <li><a href="index.jsp">Trang chủ</a></li>
-          <li><a class="active" href="category.html">Danh mục</a></li>
+          <li><a class="active" href="category.jsp">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
           <li><a href="about.jsp">Giới thiệu</a></li>
           <li><a href="contact.jsp">Liên hệ</a></li>
@@ -282,7 +282,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/n1.jpg"
+                    src="./assets/img/products/n1.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -305,7 +305,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/n5.jpg"
+                    src="./assets/img/products/n5.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -328,7 +328,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/f2.png"
+                    src="./assets/img/products/f2.png"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -351,7 +351,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/f5.jpg"
+                    src="./assets/img/products/f5.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -375,7 +375,7 @@
                 <div class="pro">
                   <a href="sproduct.jsp">
                     <img
-                    src="/assets/img/products/f7.jpg"
+                    src="./assets/img/products/f7.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   </a>
@@ -400,7 +400,7 @@
                 <div class="pro">
                   <a href="sproduct.jsp">
                     <img
-                    src="/assets/img/products/f1.jpg"
+                    src="./assets/img/products/f1.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   </a>
@@ -424,7 +424,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/f3.jpg"
+                    src="./assets/img/products/f3.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -447,7 +447,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/f4.png"
+                    src="./assets/img/products/f4.png"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -470,7 +470,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/balo5.png"
+                    src="./assets/img/products/balo5.png"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -493,7 +493,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/balo6.png"
+                    src="./assets/img/products/balo6.png"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -516,7 +516,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/balo1.jpg"
+                    src="./assets/img/products/balo1.jpg"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -539,7 +539,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <div class="pro">
                   <img
-                    src="/assets/img/products/n2.png"
+                    src="./assets/img/products/n2.png"
                     alt="Cartoon Astronaut T-Shirts"
                   />
                   <div class="des">
@@ -633,11 +633,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>

@@ -12,9 +12,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     />
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="/assets/css/styles.css" />
-    <link rel="stylesheet" href="/assets/css/about.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/about.css" />
       <link rel="stylesheet" href="assets/css/search.css">
+      <style>
+          #page-header.about-header {
+              background-image: url("${pageContext.request.contextPath}/assets/img/about/a9.jpg");
+          }
+      </style>
   </head>
   <body>
   <div class="header-top"></div>
@@ -27,7 +32,7 @@
           <li><a href="index.jsp">Trang chủ</a></li>
           <li><a href="category.jsp">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
-          <li><a class="active" href="about.html">Giới thiệu</a></li>
+          <li><a class="active" href="about.jsp">Giới thiệu</a></li>
           <li><a href="contact.jsp">Liên hệ</a></li>
       </ul>
 
@@ -55,7 +60,7 @@
         </marquee>
     </section>
     <section id="about-head" class="section-p1">
-      <img src="/assets/img/about/a7.jpg" alt="" />
+      <img src="./assets/img/about/a7.jpg" alt="" />
       <div class="about-text">
         <h2>Giới thiệu CAMP</h2>
         <p>
@@ -75,7 +80,7 @@
               Mỗi sản phẩm của chúng tôi đều được lựa chọn kỹ lưỡng để mang lại sự tiện lợi và trải nghiệm tốt nhất cho khách hàng.
           </p>
       </div>
-      <img src="/assets/img/about/a9.jpg" alt="" />
+      <img src="./assets/img/about/a9.jpg" alt="" />
   </section>
 
 <!--    <section id="about-app" class="section-p1">-->
@@ -87,27 +92,27 @@
 
     <section id="feature" class="section-p1">
       <div class="fe-box">
-        <img src="/assets/img/features/f1.png" alt="" />
+        <img src="./assets/img/features/f1.png" alt="" />
         <h6>Miễn phí giao hàng</h6>
       </div>
       <div class="fe-box">
-        <img src="/assets/img/features/f2.png" alt="" />
+        <img src="./assets/img/features/f2.png" alt="" />
         <h6>Đặt hàng online</h6>
       </div>
       <div class="fe-box">
-        <img src="/assets/img/features/f3.png" alt="" />
+        <img src="./assets/img/features/f3.png" alt="" />
         <h6>Tiết kiệm</h6>
       </div>
       <div class="fe-box">
-        <img src="/assets/img/features/f4.png" alt="" />
+        <img src="./assets/img/features/f4.png" alt="" />
         <h6>Khuyến mãi</h6>
       </div>
       <div class="fe-box">
-        <img src="/assets/img/features/f5.png" alt="" />
+        <img src="./assets/img/features/f5.png" alt="" />
         <h6>Niềm vui mua sắm</h6>
       </div>
       <div class="fe-box">
-        <img src="/assets/img/features/f6.png" alt="" />
+        <img src="./assets/img/features/f6.png" alt="" />
         <h6>Hỗ trợ 24/7</h6>
       </div>
     </section>
@@ -163,11 +168,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>

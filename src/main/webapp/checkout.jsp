@@ -104,7 +104,7 @@
             <h3>Đơn hàng của bạn</h3>
 
             <div class="cart-item">
-                <img src="/assets/img/products/balo1.jpg" alt="Sofa">
+                <img src="./assets/img/products/balo1.jpg" alt="Sofa">
                 <div class="details">
                     <p class="name">Balo leo nui</p>
                     <p class="color">Màu xanh</p>
@@ -115,7 +115,7 @@
             </div>
 
             <div class="cart-item">
-                <img src="/assets/img/products/n5.jpg" alt="Desk">
+                <img src="./assets/img/products/n5.jpg" alt="Desk">
                 <div class="details">
                     <p class="name">Bộ dụng cụ đánh lửa</p>
                     <p class="price">225,000 đ</p>
@@ -187,11 +187,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
