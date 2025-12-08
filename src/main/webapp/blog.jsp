@@ -9,9 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/blog.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/blog.css">
     <link rel="stylesheet" href="assets/css/search.css">
+    <style>
+        #page-header.blog-header {
+            background-image: url("${pageContext.request.contextPath}/assets/img/blog/b1.jpg");
+        }
+    </style>
 </head>
 <body>
 <div class="header-top"></div>
@@ -23,7 +28,7 @@
     <ul id="navbar">
         <li><a href="index.jsp">Trang chủ</a></li>
         <li><a href="category.jsp">Danh mục</a></li>
-        <li><a class="active" href="blog.html">Blog</a></li>
+        <li><a class="active" href="blog.jsp">Blog</a></li>
         <li><a href="about.jsp">Giới thiệu</a></li>
         <li><a href="contact.jsp">Liên hệ</a></li>
     </ul>
@@ -51,7 +56,7 @@
 <section id="blog">
     <div class="blog-box">
         <div class="blog-img">
-            <img src="/assets/img/blog/b1.jpg" alt="">
+            <img src="./assets/img/blog/b1.jpg" alt="">
         </div>
         <div class="blog-details">
             <h4>Dụng cụ sinh tồn đánh lửa chọn loại nào phù hợp</h4>
@@ -62,7 +67,7 @@
     </div>
     <div class="blog-box">
         <div class="blog-img">
-            <img src="/assets/img/blog/b2.png" alt="">
+            <img src="./assets/img/blog/b2.png" alt="">
         </div>
         <div class="blog-details">
             <h4>BA LÔ CỦA BẠN NÊN NẶNG BAO NHIÊU</h4>
@@ -75,7 +80,7 @@
     </div>
     <div class="blog-box">
         <div class="blog-img">
-            <img src="/assets/img/blog/b3.png" alt="">
+            <img src="./assets/img/blog/b3.png" alt="">
         </div>
         <div class="blog-details">
             <h4>Kinh nghiệm đi leo núi một mình - Độc hành an toàn</h4>
@@ -91,7 +96,7 @@
     </div>
     <div class="blog-box">
         <div class="blog-img">
-            <img src="/assets/img/blog/b4.jpg" alt="">
+            <img src="./assets/img/blog/b4.jpg" alt="">
         </div>
         <div class="blog-details">
             <h4>Chỉ số chống thấm nước của vải, rất quan trọng với dân Outdoor</h4>
@@ -153,11 +158,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>

@@ -12,9 +12,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     />
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="/assets/css/styles.css" />
-    <link rel="stylesheet" href="/assets/css/contact.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/contact.css" />
       <link rel="stylesheet" href="assets/css/search.css">
+      <style>
+          #page-header {
+              background-image: url("${pageContext.request.contextPath}/assets/img/banner/b1.jpg");
+          }
+      </style>
   </head>
   <body>
   <div class="header-top"></div> 
@@ -28,7 +33,7 @@
         <li><a href="category.jsp">Danh mục</a></li>
         <li><a href="blog.jsp">Blog</a></li>
         <li><a href="about.jsp">Giới thiệu</a></li>
-        <li><a class="active" href="contact.html">Liên hệ</a></li>
+        <li><a class="active" href="contact.jsp">Liên hệ</a></li>
       </ul>
 
       <div id="right-icons">
@@ -93,17 +98,17 @@
 
         <div class="people">
             <div>
-                <img src="/assets/img/people/1.png" alt="">
+                <img src="./assets/img/people/1.png" alt="">
                 <p><span>Anh Tuấn</span> Senior Marketing Manager <br> Phone: + 000 123 
                 000 77 88 <br>Email: contact@example.com</p>
             </div>
             <div>
-                <img src="/assets/img/people/2.png" alt="">
+                <img src="./assets/img/people/2.png" alt="">
                 <p><span>Văn An</span> Senior Marketing Manager <br> Phone: + 000 123 
                 000 77 88 <br>Email: contact@example.com</p>
             </div>
             <div>
-                <img src="/assets/img/people/3.png" alt="">
+                <img src="./assets/img/people/3.png" alt="">
                 <p><span>Chí Sơn</span> Senior Marketing Manager <br> Phone: + 000 123 
                 000 77 88 <br>Email: contact@example.com</p>
             </div>
@@ -161,11 +166,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>

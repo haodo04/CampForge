@@ -135,7 +135,7 @@ body {
   font-size: 18px;
   font-weight: 400;
   color: #1a1a1a;
-  transition: 0.3 ease;
+  transition: 0.3s ease;
 }
 
 #navbar li a:hover,
@@ -253,7 +253,6 @@ body {
 /* home page */
 
 #hero {
-    background-image: url("/assets/img/banner/banner11.jpg");
     height: 90vh;
     width: 100%;
     background-size: cover;
@@ -274,7 +273,6 @@ body {
 }
 
 #hero button {
-    background-image: url("/assets/img/button.png");
     background-color: transparent;
     color: white;
     border: 0;
@@ -399,8 +397,6 @@ body {
 }
 
 .title-decor::before {
-    content: "";
-    background-image: url('/assets/img/decor-left.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 130px;     
@@ -412,8 +408,6 @@ body {
 }
 
 .title-decor::after {
-    content: "";
-    background-image: url('/assets/img/decor-left.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 130px;
@@ -515,7 +509,6 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-image: url("/assets/img/banner/banner13.jfif");
   width: 100%;
   height: 40vh;
   background-size: cover;
@@ -555,7 +548,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background-image: url("/assets/img/banner/banner04.png");
   width: 49%;
   height: 50vh;
   background-size: cover;
@@ -564,7 +556,7 @@ body {
 }
 
 #sm-banner .banner-box2 {
-  background-image: url("/assets/img/banner/banner06.png");
+
 }
 
 #sm-banner h4 {
@@ -608,21 +600,12 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background-image: url("/assets/img/banner/banner03.jpg");
   min-width: 30%;
   height: 30vh;
   background-size: cover;
   background-position: center;
   padding: 20px;
   margin-bottom: 20px;
-}
-
-#banner3 .banner-box2 {
-  background-image: url("/assets/img/banner/banner05.png");
-}
-
-#banner3 .banner-box3 {
-  background-image: url("/assets/img/banner/banner01.jpeg");
 }
 
 #banner3 h2 {
@@ -642,7 +625,6 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  background-image: url("/assets/img/banner/b14.png");
   background-repeat: no-repeat;
   background-position: 20% 30%;
   background-color: #041e42;
@@ -711,7 +693,6 @@ footer .install .app-row img {
 }
 /*cart-banner*/
 #page-header {
-    background-image: url("/assets/img/banner/b1.jpg");
     width: 100%;
     height: 40vh;
     background-size: cover;
@@ -949,7 +930,6 @@ footer .install .app-row img {
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-    background-image: url("/assets/img/banner/b14.png");
     background-repeat: no-repeat;
     background-position: 20% 30%;
     background-color: #041e42;

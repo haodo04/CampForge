@@ -34,7 +34,7 @@
             <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
             <button id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
-        <a href="cart.html"><i class="fa fa-shopping-cart"></i></a>
+        <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
 
         <div class="auth-buttons">
             <a href="login.jsp" class="btn-login">Đăng nhập</a>
@@ -155,17 +155,17 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
       </div>
 </footer>
 
-<script src="assets/js/cart.js"></script>
+<script src="./assets/js/cart.js"></script>
 </body>
 </html>

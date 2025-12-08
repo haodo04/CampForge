@@ -62,7 +62,7 @@
     <div class="pro-container">
         <div class="pro">
             <span class="sale-badge">-30%</span>
-            <img src="/assets/img/products/f1.jpg" alt="" />
+            <img src="./assets/img/products/f1.jpg" alt="" />
             <div class="des">
                 <span>BLACKDOG</span>
                 <h5>Lều trung tâm (lều tăng) BLACKDOG</h5>
@@ -83,7 +83,7 @@
 
         <div class="pro">
             <span class="sale-badge hot">HOT</span>
-            <img src="/assets/img/products/f2.png" alt="" />
+            <img src="./assets/img/products/f2.png" alt="" />
             <div class="des">
                 <span>adidas</span>
                 <h5>Lều 6 người BLACKDOG Mountain Garden</h5>
@@ -104,7 +104,7 @@
 
         <div class="pro">
             <span class="sale-badge new">NEW</span>
-            <img src="/assets/img/products/balo1.jpg" alt="" />
+            <img src="./assets/img/products/balo1.jpg" alt="" />
             <div class="des">
                 <span>MADFOX</span>
                 <h5>Áo mưa trùm ba lô 35L MADFOX RC35B</h5>
@@ -125,7 +125,7 @@
 
         <div class="pro">
             <span class="sale-badge">-20%</span>
-            <img src="/assets/img/products/f4.png" alt="" />
+            <img src="./assets/img/products/f4.png" alt="" />
             <div class="des">
                 <span>NATUREHIKE</span>
                 <h5>Lều 2 - 3 người, 2 lớp Naturehike</h5>
@@ -146,7 +146,7 @@
 
         <div class="pro">
             <span class="sale-badge hot">HOT DEAL</span>
-            <img src="/assets/img/products/f5.jpg" alt="" />
+            <img src="./assets/img/products/f5.jpg" alt="" />
             <div class="des">
                 <span>NATUREHIKE</span>
                 <h5>Lều 2 - 3 người, 2 lớp Naturehike</h5>
@@ -218,11 +218,11 @@
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="/assets/img/pay/app.jpg" alt="" />
-          <img src="/assets/img/pay/play.jpg" alt="" />
+          <img src="./assets/img/pay/app.jpg" alt="" />
+          <img src="./assets/img/pay/play.jpg" alt="" />
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="/assets/img/pay/pay.png" alt="" />
+        <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
@@ -230,6 +230,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/cart.js"></script>
+<script src="./assets/js/cart.js"></script>
 </body>
 </html>
