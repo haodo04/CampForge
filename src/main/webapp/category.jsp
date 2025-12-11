@@ -283,7 +283,7 @@
                         <div class="col-12 col-sm-6 col-lg-3">
                     <div class="pro">
                       <img
-                        src="${p.image}"
+                        src="${pageContext.request.contextPath}${p.image}"
                         alt="Cartoon Astronaut T-Shirts"
                       />
                       <div class="des">
