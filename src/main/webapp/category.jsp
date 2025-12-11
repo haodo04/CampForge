@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
   <head>
@@ -276,295 +277,38 @@
               </div>
             </div>
           </aside>
-
-          <section class="col-12 col-lg-9">
-            <div id="product-grid" class="row g-3">
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/n1.jpg"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>adidas</span>
-                    <h5>Nồi Titanium dã ngoại 1300ML</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
+            <section class="col-12 col-lg-9">
+                <div id="product-grid" class="row g-3" style="display: flex; flex-wrap: wrap;">
+                    <c:forEach var="p" items="${products}">
+                        <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="pro">
+                      <img
+                        src="${p.image}"
+                        alt="Cartoon Astronaut T-Shirts"
+                      />
+                      <div class="des">
+                        <span>adidas</span>
+                        <h5>${p.proName}</h5>
+                        <div class="star" aria-label="Đánh giá 5/5">
+                          <i class="fa-solid fa-star"></i
+                          ><i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i
+                          ><i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h4>${p.price}</h4>
+                        <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
+                          ><i class="fa-solid fa-cart-shopping cart"></i
+                        ></a>
+                      </div>
                     </div>
-                    <h4>120.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
                   </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/n5.jpg"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>adidas</span>
-                    <h5>Bếp cồn Trekking dã ngoại</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>150.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/f2.png"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>BLACKDOG</span>
-                    <h5>Lều 6 người BLACKDOG</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>2.300.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/f5.jpg"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>BLACKDOG</span>
-                    <h5>Lều 2 - 3 người, 2 lớp</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>3.100.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <a href="sproduct.jsp">
-                    <img
-                    src="./assets/img/products/f7.jpg"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  </a>
-                  <div class="des">
-                    <span>BLACKDOG</span>
-                    <h5>Lều trung tâm (lều tăng)</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>2.500.000đ</h4>
-                    <a href="sproduct.jsp" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <a href="sproduct.jsp">
-                    <img
-                    src="./assets/img/products/f1.jpg"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  </a>
-                  <div class="des">
-                    <span>BLACKDOG</span>
-                    <h5>Lều trung tâm</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>3.700.000đ</h4>
-                    <a href="sproduct.jsp" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/f3.jpg"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>BLACKDOG</span>
-                    <h5>Cartoon Astronaut T-Shirts</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>2.100.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/f4.png"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>BLACKDOG</span>
-                    <h5>Cartoon Astronaut T-Shirts</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>3.000.000</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/balo5.png"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>MADFOX</span>
-                    <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>1.200.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/balo6.png"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>MADFOX</span>
-                    <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>1.300.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/balo1.jpg"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>adidas</span>
-                    <h5>Áo mưa trùm ba lô 35L</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>100.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-lg-3">
-                <div class="pro">
-                  <img
-                    src="./assets/img/products/n2.png"
-                    alt="Cartoon Astronaut T-Shirts"
-                  />
-                  <div class="des">
-                    <span>adidas</span>
-                    <h5>Bộ nồi nhôm dã ngoại xếp gọn 4 món</h5>
-                    <div class="star" aria-label="Đánh giá 5/5">
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i
-                      ><i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                    </div>
-                    <h4>400.000đ</h4>
-                    <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                      ><i class="fa-solid fa-cart-shopping cart"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-
               <!-- lặp thêm các col sản phẩm -->
-            </div>
+                    </c:forEach>
+                </div>
 
-            <!-- Pagination -->
-            <nav class="mt-4" aria-label="Page navigation">
+                <!-- Pagination -->
+                <nav class="mt-4" aria-label="Page navigation">
               <ul class="pagination justify-content-center">
                 <li class="page-item disabled">
                   <a class="page-link" href="#" tabindex="-1">«</a>

@@ -72,7 +72,7 @@
       <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
           <li><a href="index.jsp" class="active">Trang chủ</a></li>
-          <li><a href="category.jsp">Danh mục</a></li>
+          <li><a href="category">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
           <li><a href="about.jsp">Giới thiệu</a></li>
           <li><a href="contact.jsp">Liên hệ</a></li>

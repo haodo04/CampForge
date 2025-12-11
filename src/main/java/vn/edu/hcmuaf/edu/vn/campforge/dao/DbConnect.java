@@ -35,7 +35,7 @@ public class DbConnect {
 
     public static void main(String[] args) throws SQLException {
         System.out.println(getConnection());
-
+        System.out.println(url);
     }
 }
 
