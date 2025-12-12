@@ -60,7 +60,7 @@
       <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
           <li><a href="index.jsp">Trang chủ</a></li>
-          <li><a class="active" href="category.jsp">Danh mục</a></li>
+          <li><a class="active" href="category">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
           <li><a href="about.jsp">Giới thiệu</a></li>
           <li><a href="contact.jsp">Liên hệ</a></li>
@@ -183,38 +183,84 @@
                   </div>
                 </form>
 
+                <form action="category" method="get">
+                  <div class="mb-4">
+                    <h6 class="mb-2">Brand</h6>
 
-                <div class="mb-4">
-                  <h6 class="mb-2">Brand</h6>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="a1"
-                    /><label class="form-check-label" for="a1">BLACKDOG</label>
+                    <div class="form-check mb-2">
+                      <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="a1"
+                              name="brandId"
+                              value="1"
+                              onchange="this.form.submit()"
+                      />
+                      <label class="form-check-label" for="a1">BLACKDOG</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="a2"
+                              name="brandId"
+                              value="2"
+                              onchange="this.form.submit()"
+                      />
+                      <label class="form-check-label" for="a2">ADIDAS</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="a3"
+                              name="brandId"
+                              value="3"
+                              onchange="this.form.submit()"
+                      />
+                      <label class="form-check-label" for="a3">MADFOX</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="a4"
+                              name="brandId"
+                              value="4"
+                              onchange="this.form.submit()"
+                      />
+                      <label class="form-check-label" for="a4">NATUREHIKE</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="a5"
+                              name="brandId"
+                              value="5"
+                              onchange="this.form.submit()"
+                      />
+                      <label class="form-check-label" for="a4">JACK WOLFSKIN</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="a6"
+                              name="brandId"
+                              value="6"
+                              onchange="this.form.submit()"
+                      />
+                      <label class="form-check-label" for="a4">VULTURE</label>
+                    </div>
                   </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="a2"
-                    /><label class="form-check-label" for="a2">MADFOX</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="a3"
-                    /><label class="form-check-label" for="a3">NATUREHIKE</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="a4"
-                    /><label class="form-check-label" for="a4">JACK WOLFSKIN</label>
-                  </div>
-                </div>
+                </form>
+
 
                 <div class="form-check mb-2">
                   <input
@@ -276,7 +322,7 @@
                         alt="Cartoon Astronaut T-Shirts"
                       />
                       <div class="des">
-                        <span>adidas</span>
+                        <span>${p.brandName}</span>
                         <h5>${p.proName}</h5>
                         <div class="star" aria-label="Đánh giá 5/5">
                           <i class="fa-solid fa-star"></i
