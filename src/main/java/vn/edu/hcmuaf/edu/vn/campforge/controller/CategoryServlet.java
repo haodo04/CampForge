@@ -16,15 +16,22 @@ public class CategoryServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String cateIdRaw = request.getParameter("id");
-
+        String brandIdRaw = request.getParameter("brandId");
         List<Product> products;
 
-        // Nếu không có id => lấy tất cả sản phẩm
-        if (cateIdRaw == null) {
+        // Không có category và brand => lấy tất cả
+        if (cateIdRaw == null && brandIdRaw == null) {
             products = ProductDAO.getAllProducts();
-        } else {
+        }
+        // Có category => lọc theo category
+        else if (cateIdRaw != null) {
             int cateId = Integer.parseInt(cateIdRaw);
             products = ProductDAO.getProductsByCategory(cateId);
+        }
+        // Có brand => lọc theo brand
+        else {
+            int brandId = Integer.parseInt(brandIdRaw);
+            products = ProductDAO.getProductsByBrand(brandId);
         }
 
         request.setAttribute("products", products);

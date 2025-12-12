@@ -7,16 +7,18 @@ public class Product {
     private String description;
     private int cateId;
     private int brandId;
+    private String brandName;
     private String image; // ảnh đại diện
 
     public Product(int id, String proName, double price,
-                   String description, int cateId, int brandId, String image) {
+                   String description, int cateId, int brandId, String brandName, String image) {
         this.id = id;
         this.proName = proName;
         this.price = price;
         this.description = description;
         this.cateId = cateId;
         this.brandId = brandId;
+        this.brandName = brandName;
         this.image = image;
     }
 
@@ -44,6 +46,10 @@ public class Product {
 
     public int getBrandId() {
         return brandId;
+    }
+
+    public String getBrandName() {
+        return brandName;
     }
 
     public String getImage() {
