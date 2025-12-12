@@ -157,43 +157,32 @@
                   </div>
                 </div>
 
-                <div class="mb-4">
-                  <h6 class="mb-2">Chủ đề</h6>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="t1"
-                    /><label class="form-check-label" for="t1"
-                      >Cắm Trại</label
-                    >
+                <form action="category" method="get">
+                  <div class="mb-4">
+                    <h6 class="mb-2">Chủ đề</h6>
+
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" id="t1" name="id" value="1" onchange="this.form.submit()">
+                      <label class="form-check-label" for="t1">Cắm Trại</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" id="t2" name="id" value="2" onchange="this.form.submit()">
+                      <label class="form-check-label" for="t2">Du Lịch</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" id="t3" name="id" value="3" onchange="this.form.submit()">
+                      <label class="form-check-label" for="t3">Leo Núi</label>
+                    </div>
+
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" id="t4" name="id" value="4" onchange="this.form.submit()">
+                      <label class="form-check-label" for="t4">Dã Ngoại</label>
+                    </div>
                   </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="t2"
-                    /><label class="form-check-label" for="t2">Du Lịch</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="t3"
-                    /><label class="form-check-label" for="t3"
-                      >Leo Núi</label
-                    >
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="t4"
-                    /><label class="form-check-label" for="t4"
-                      >Dã Ngoại</label
-                    >
-                  </div>
-                </div>
+                </form>
+
 
                 <div class="mb-4">
                   <h6 class="mb-2">Brand</h6>
