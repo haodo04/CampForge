@@ -1,4 +1,4 @@
-package vn.edu.hcmuaf.edu.vn.campforge.dao;
+package vn.edu.hcmuaf.edu.vn.campforge.dao.db;
 
 import java.sql.*;
 

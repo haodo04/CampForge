@@ -10,16 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28d061c9-55e0-43ac-84a5-5bdf8e74d32b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/controller/CategoryServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/ProductDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/utils/SessionCleanupListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/DbConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/DbConnect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/category.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/DbConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/db/DbConnect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/DbProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/db/DbProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/ProductDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/model/Product.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +29,7 @@
         <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="Class" />
+        <option value="Listener" />
       </list>
     </option>
   </component>
@@ -76,7 +73,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Tomcat Server.Tomcat 10.1.331.executor": "Run",
     "Tomcat Server.index.jsp.executor": "Run",
-    "git-widget-placeholder": "Merging haodk",
+    "git-widget-placeholder": "haodk",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/LTW-GK/assets/img/about",
     "list.type.of.created.stylesheet": "CSS",
@@ -104,11 +101,11 @@
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 10.1.331">
     <configuration name="DbConnect" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="vn.edu.hcmuaf.edu.vn.campforge.dao.DbConnect" />
+      <option name="MAIN_CLASS_NAME" value="vn.edu.hcmuaf.edu.vn.campforge.dao.db.DbConnect" />
       <module name="campforge" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="vn.edu.hcmuaf.edu.vn.campforge.dao.*" />
+          <option name="PATTERN" value="vn.edu.hcmuaf.edu.vn.campforge.dao.db.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

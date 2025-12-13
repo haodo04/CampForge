@@ -8,7 +8,7 @@ public class Product {
     private int cateId;
     private int brandId;
     private String brandName;
-    private String image; // ảnh đại diện
+    private String image;
 
     public Product(int id, String proName, double price,
                    String description, int cateId, int brandId, String brandName, String image) {
@@ -21,8 +21,6 @@ public class Product {
         this.brandName = brandName;
         this.image = image;
     }
-
-    // GETTER SETTER ...
 
     public int getId() {
         return id;
