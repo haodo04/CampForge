@@ -339,7 +339,7 @@
                           ><i class="fa-solid fa-star"></i>
                           <i class="fa-solid fa-star"></i>
                         </div>
-                        <h4>${p.price}</h4>
+                        <h4>${p.getFormattedPrice()}</h4>
                         <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
                           ><i class="fa-solid fa-cart-shopping cart"></i
                         ></a>

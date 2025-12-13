@@ -53,4 +53,8 @@ public class Product {
     public String getImage() {
         return image;
     }
+
+    public String getFormattedPrice() {
+        return String.format("%,.0f đ", price);
+    }
 }
