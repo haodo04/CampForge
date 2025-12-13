@@ -11,9 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28d061c9-55e0-43ac-84a5-5bdf8e74d32b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/controller/CategoryServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/controller/CategoryServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/ProductDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vn/edu/hcmuaf/edu/vn/campforge/dao/ProductDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/category.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +228,7 @@
       <workItem from="1764410356421" duration="6187000" />
       <workItem from="1765443174371" duration="1862000" />
       <workItem from="1765542799864" duration="8650000" />
-      <workItem from="1765641115838" duration="752000" />
+      <workItem from="1765641115838" duration="1101000" />
     </task>
     <servers />
   </component>

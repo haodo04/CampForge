@@ -135,8 +135,8 @@ public class ProductDAO {
 
         String sql = """
         SELECT p.id, p.proName, p.price, p.description, p.cateId, p.brandId,
-               b.name AS brandName,
-               i.path AS image
+               i.path AS image,
+                b.name AS brandName
         FROM products p
         LEFT JOIN product_imgs i 
                ON p.id = i.product_id AND i.position = 1
@@ -161,8 +161,8 @@ public class ProductDAO {
                         rs.getString("description"),
                         rs.getInt("cateId"),
                         rs.getInt("brandId"),
-                        rs.getString("image"),
-                        rs.getString("brandName")
+                        rs.getString("brandName"),
+                        rs.getString("image")
                 );
                 list.add(p);
             }
