@@ -102,30 +102,38 @@
                   <button class="btn btn-sm btn-warning">Đặt lại</button>
                 </div>
 
-                <div class="mb-4">
-                  <h6 class="mb-2">Giá (VNĐ)</h6>
-                  <div class="d-flex align-items-center">
-                    <div class="input-group me-2">
-                      <input
-                        type="number"
-                        class="form-control"
-                        placeholder="Từ"
-                      />
-                      <span class="input-group-text">đ</span>
-                    </div>
-                    <span class="mx-2">–</span>
-                    <div class="input-group">
-                      <input
-                        type="number"
-                        class="form-control"
-                        placeholder="Đến"
-                      />
-                      <span class="input-group-text">đ</span>
-                    </div>
-                  </div>
-                </div>
+                  <form action="category" method="get">
+                      <div class="mb-4">
+                          <h6 class="mb-2">Giá (VNĐ)</h6>
 
-                <div class="mb-4">
+                          <div class="d-flex align-items-center">
+                              <div class="input-group me-2">
+                                  <input
+                                          type="number"
+                                          class="form-control"
+                                          name="minPrice"
+                                          placeholder="Từ"
+                                  />
+                                  <span class="input-group-text">đ</span>
+                              </div>
+
+                              <span class="mx-2">–</span>
+
+                              <div class="input-group">
+                                  <input
+                                          type="number"
+                                          class="form-control"
+                                          name="maxPrice"
+                                          placeholder="Đến"
+                                          onchange="this.form.submit()"
+                                  />
+                                  <span class="input-group-text">đ</span>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+
+                  <div class="mb-4">
                   <h6 class="mb-2">Kích thước</h6>
                   <div class="form-check mb-2">
                     <input
