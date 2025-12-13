@@ -11,18 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="28d061c9-55e0-43ac-84a5-5bdf8e74d32b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/about.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/about.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/about.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/assets/css/about.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/assets/css/blog.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/assets/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/blog.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/blog.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/cart.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/cart.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/category.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/category.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/checkout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/checkout.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/contact.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/contact.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/personal.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/personal.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/promotion.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/promotion.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/sproduct.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/sproduct.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -245,7 +233,8 @@
       <workItem from="1764317005358" duration="4386000" />
       <workItem from="1764405186475" duration="4836000" />
       <workItem from="1764410356421" duration="6187000" />
-      <workItem from="1765196364908" duration="5125000" />
+      <workItem from="1765196364908" duration="6031000" />
+      <workItem from="1765267845626" duration="2486000" />
     </task>
     <servers />
   </component>
