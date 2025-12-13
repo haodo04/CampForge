@@ -6,6 +6,8 @@ import vn.edu.hcmuaf.edu.vn.campforge.model.Product;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.edu.vn.campforge.service.ProductService;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,21 +19,30 @@ public class CategoryServlet extends HttpServlet {
 
         String cateIdRaw = request.getParameter("id");
         String brandIdRaw = request.getParameter("brandId");
+        String minRaw = request.getParameter("minPrice");
+        String maxRaw = request.getParameter("maxPrice");
+
         List<Product> products;
 
         // Không có category và brand => lấy tất cả
         if (cateIdRaw == null && brandIdRaw == null) {
-            products = ProductDAO.getAllProducts();
+            products = ProductService.getAllProducts();
         }
         // Có category => lọc theo category
         else if (cateIdRaw != null) {
             int cateId = Integer.parseInt(cateIdRaw);
-            products = ProductDAO.getProductsByCategory(cateId);
+            products = ProductService.getByCategory(cateId);
         }
         // Có brand => lọc theo brand
         else {
             int brandId = Integer.parseInt(brandIdRaw);
-            products = ProductDAO.getProductsByBrand(brandId);
+            products = ProductService.getByBrand(brandId);
+        }
+
+        if (minRaw != null && maxRaw != null) {
+            double min = Double.parseDouble(minRaw);
+            double max = Double.parseDouble(maxRaw);
+            products = ProductService.getByPrice(min, max);
         }
 
         request.setAttribute("products", products);
