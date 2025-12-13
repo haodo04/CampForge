@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.edu.vn.campforge.dao;
 
+import vn.edu.hcmuaf.edu.vn.campforge.dao.db.DbConnect;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Product;
 
 import java.sql.*;

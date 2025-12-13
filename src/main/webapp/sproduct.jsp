@@ -172,131 +172,56 @@
     </div>
 </section>
 
-<footer class="section-p1">
+  <footer class="section-p1">
       <div class="col">
-        <h4>Liên hệ</h4>
-        <p>
-          <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
-          Đức, HCM
-        </p>
-        <p><strong>Điện thoại: </strong> +01 2222 365 /(+91) 01 2345 6789</p>
-        <p><strong>Giờ mở cửa: </strong> 10:00 - 18:00, T2 - T7</p>
-        <div class="follow">
-          <h4>Theo dõi chúng tôi</h4>
-          <div class="icon">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-pinterest-p"></i>
-            <i class="fab fa-youtube"></i>
+          <h4>Liên hệ</h4>
+          <p>
+              <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
+              Đức, HCM
+          </p>
+          <p><strong>Điện thoại: </strong> +01 2222 365 /(+91) 01 2345 6789</p>
+          <p><strong>Giờ mở cửa: </strong> 10:00 - 18:00, T2 - T7</p>
+          <div class="follow">
+              <h4>Theo dõi chúng tôi</h4>
+              <div class="icon">
+                  <i class="fab fa-facebook-f"></i>
+                  <i class="fab fa-twitter"></i>
+                  <i class="fab fa-instagram"></i>
+                  <i class="fab fa-pinterest-p"></i>
+                  <i class="fab fa-youtube"></i>
+              </div>
           </div>
-        </div>
       </div>
       <div class="col">
-        <h4>Giới thiệu</h4>
-        <a href="#">Về chúng tôi</a>
-        <a href="#">Thông tin giao hàng</a>
-        <a href="#">Chính sách</a>
-        <a href="#">Điều khoản</a>
-        <a href="#">Liên hệ</a>
+          <h4>Giới thiệu</h4>
+          <a href="#">Về chúng tôi</a>
+          <a href="#">Thông tin giao hàng</a>
+          <a href="#">Chính sách</a>
+          <a href="#">Điều khoản</a>
+          <a href="#">Liên hệ</a>
       </div>
       <div class="col">
-        <h4>Tài khoản</h4>
-        <a href="#">Đăng ký</a>
-        <a href="#">Giỏ hàng</a>
-        <a href="#">Yêu thích</a>
-        <a href="#">Đơn hàng</a>
-        <a href="#">Trợ giúp</a>
+          <h4>Tài khoản</h4>
+          <a href="#">Đăng ký</a>
+          <a href="#">Giỏ hàng</a>
+          <a href="#">Yêu thích</a>
+          <a href="#">Đơn hàng</a>
+          <a href="#">Trợ giúp</a>
       </div>
       <div class="col install">
-        <h4>Tải ứng dụng</h4>
-        <p>Trên App Store hoặc Google Play</p>
-        <div class="app-row">
-          <img src="./assets/img/pay/app.jpg" alt="" />
-          <img src="./assets/img/pay/play.jpg" alt="" />
-        </div>
-        <p>Bảo mật cổng thanh toán</p>
-        <img src="./assets/img/pay/pay.png" alt="" />
+          <h4>Tải ứng dụng</h4>
+          <p>Trên App Store hoặc Google Play</p>
+          <div class="app-row">
+              <img src="./assets/img/pay/app.jpg" alt="" />
+              <img src="./assets/img/pay/play.jpg" alt="" />
+          </div>
+          <p>Bảo mật cổng thanh toán</p>
+          <img src="./assets/img/pay/pay.png" alt="" />
       </div>
       <div class="copyright">
-        <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
+          <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
       </div>
-</footer>
+  </footer>
 
-    <script>
-      var MainImg = document.getElementById("MainImg");
-      var smallimg = document.getElementsByClassName("small-img");
-
-      smallimg[0].onclick = function() {
-        MainImg.src = smallimg[0].src;
-      }
-      smallimg[1].onclick = function() {
-        MainImg.src = smallimg[1].src;
-      }
-      smallimg[2].onclick = function() {
-        MainImg.src = smallimg[2].src;
-      }
-      smallimg[3].onclick = function() {
-        MainImg.src = smallimg[3].src;
-      }
-      document.addEventListener("DOMContentLoaded", function () {
-          const addBtn = document.querySelector(".add-to-cart");
-
-          const formatPrice = (value) =>
-              value.toLocaleString("vi-VN") + "đ";
-
-          addBtn.addEventListener("click", () => {
-              const name = document.querySelector(".single-pro-details h4").innerText;
-              const priceText = document.querySelector(".single-pro-details h2").innerText;
-
-              // Chuẩn hóa giá
-              const price = parseInt(
-                  priceText.replace(/\./g, "").replace("đ", "").trim()
-              );
-
-              const image = document.getElementById("MainImg").src;
-              const quantity = parseInt(document.querySelector(".single-pro-details input").value);
-
-              const product = { name, price, image, quantity };
-              let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-              const existing = cart.find(p => p.name === name);
-              if (existing) existing.quantity += quantity;
-              else cart.push(product);
-
-              localStorage.setItem("cart", JSON.stringify(cart));
-
-              // Hiển thị mini cart
-              const miniCart = document.getElementById("mini-cart");
-              const miniCartItems = document.getElementById("mini-cart-items");
-              const cartCount = document.getElementById("cart-count");
-              const miniCartTotal = document.getElementById("mini-cart-total");
-
-              if (miniCart && miniCartItems) {
-                  miniCartItems.innerHTML = "";
-                  let total = 0, count = 0;
-
-                  cart.forEach(item => {
-                      total += item.price * item.quantity;
-                      count += item.quantity;
-
-                      miniCartItems.innerHTML += `
-                    <div class="mini-cart-item">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div>
-                            <p>${item.name}</p>
-                            <p>${formatPrice(item.price)} x ${item.quantity}</p>
-                        </div>
-                    </div>
-                `;
-                  });
-
-                  miniCartTotal.textContent = formatPrice(total);
-                  cartCount.textContent = count;
-                  miniCart.classList.add("show");
-              }
-          });
-      });
-    </script>
   </body>
 </html>
