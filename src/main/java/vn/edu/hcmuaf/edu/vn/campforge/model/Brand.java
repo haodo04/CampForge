@@ -3,12 +3,12 @@ package vn.edu.hcmuaf.edu.vn.campforge.model;
 public class Brand {
     private int id;
     private String name;
-    private String description;
+    private String imgUrl;
 
-    public Brand(int id, String name, String description) {
+    public Brand(int id, String name, String imgUrl) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.imgUrl = imgUrl;
     }
 
     public Brand() {
@@ -30,11 +30,11 @@ public class Brand {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
