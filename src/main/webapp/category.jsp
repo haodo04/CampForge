@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
   <head>
@@ -321,50 +322,148 @@
             </div>
           </aside>
             <section class="col-12 col-lg-9">
+
                 <div id="product-grid" class="row g-3" style="display: flex; flex-wrap: wrap;">
-                    <c:forEach var="p" items="${products}">
-                        <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="pro">
-                      <img
-                        src="${pageContext.request.contextPath}${p.image}"
-                        alt="Cartoon Astronaut T-Shirts"
-                      />
-                      <div class="des">
-                        <span>${p.brandName}</span>
-                        <h5>${p.proName}</h5>
-                        <div class="star" aria-label="Đánh giá 5/5">
-                          <i class="fa-solid fa-star"></i
-                          ><i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i
-                          ><i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                        </div>
-                        <h4>${p.getFormattedPrice()}</h4>
-                        <a href="#" class="add-cart" aria-label="Thêm vào giỏ"
-                          ><i class="fa-solid fa-cart-shopping cart"></i
-                        ></a>
-                      </div>
-                    </div>
-                  </div>
-              <!-- lặp thêm các col sản phẩm -->
-                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${empty products}">
+                            <div class="col-12">
+                                <p>Không có sản phẩm phù hợp.</p>
+                            </div>
+                        </c:when>
+
+                        <c:otherwise>
+                            <c:forEach var="p" items="${products}">
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="pro">
+
+                                        <c:choose>
+                                            <c:when test="${not empty p.image}">
+                                                <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png" alt="${p.proName}" />
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                        <div class="des">
+                <span>
+                  <c:out value="${p.brandName}" default="(Không rõ hãng)"/>
+                </span>
+
+                                            <h5><c:out value="${p.proName}" /></h5>
+
+                                            <div class="star" aria-label="Đánh giá 5/5">
+                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                            </div>
+
+                                            <h4>${p.formattedPrice}</h4>
+
+                                            <a href="${pageContext.request.contextPath}/sproduct?id=${p.id}"
+                                               class="add-cart" aria-label="Thêm vào giỏ">
+                                                <i class="fa-solid fa-cart-shopping cart"></i>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
-                <!-- Pagination -->
-                <nav class="mt-4" aria-label="Page navigation">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1">«</a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">»</a></li>
-              </ul>
-            </nav>
-          </section>
+                <c:if test="${totalPages > 1}">
+
+                    <c:url var="baseUrl" value="/category">
+                        <c:if test="${not empty cateId}">
+                            <c:param name="id" value="${cateId}" />
+                        </c:if>
+                        <c:if test="${not empty brandId}">
+                            <c:param name="brandId" value="${brandId}" />
+                        </c:if>
+
+                        <c:if test="${not empty minPrice}">
+                            <c:param name="minPrice" value="${minPrice}" />
+                        </c:if>
+                        <c:if test="${not empty maxPrice}">
+                            <c:param name="maxPrice" value="${maxPrice}" />
+                        </c:if>
+                    </c:url>
+
+                    <c:set var="startPage" value="${page - 2}" />
+                    <c:set var="endPage" value="${page + 2}" />
+
+                    <c:if test="${startPage < 1}">
+                        <c:set var="endPage" value="${endPage + (1 - startPage)}" />
+                        <c:set var="startPage" value="1" />
+                    </c:if>
+
+                    <c:if test="${endPage > totalPages}">
+                        <c:set var="startPage" value="${startPage - (endPage - totalPages)}" />
+                        <c:set var="endPage" value="${totalPages}" />
+                    </c:if>
+
+                    <c:if test="${startPage < 1}">
+                        <c:set var="startPage" value="1" />
+                    </c:if>
+
+                    <nav class="mt-4" aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+
+                            <c:url var="prevUrl" value="${baseUrl}">
+                                <c:param name="page" value="${page - 1}" />
+                            </c:url>
+                            <li class="page-item ${page <= 1 ? 'disabled' : ''}">
+                                <a class="page-link" href="${page <= 1 ? '#' : prevUrl}" tabindex="${page <= 1 ? '-1' : '0'}">«</a>
+                            </li>
+
+                            <c:if test="${startPage > 1}">
+                                <c:url var="firstUrl" value="${baseUrl}">
+                                    <c:param name="page" value="1" />
+                                </c:url>
+                                <li class="page-item ${page == 1 ? 'active' : ''}">
+                                    <a class="page-link" href="${firstUrl}">1</a>
+                                </li>
+                                <c:if test="${startPage > 2}">
+                                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                                </c:if>
+                            </c:if>
+
+                            <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                                <c:url var="pageUrl" value="${baseUrl}">
+                                    <c:param name="page" value="${i}" />
+                                </c:url>
+                                <li class="page-item ${i == page ? 'active' : ''}">
+                                    <a class="page-link" href="${pageUrl}">${i}</a>
+                                </li>
+                            </c:forEach>
+
+                            <c:if test="${endPage < totalPages}">
+                                <c:if test="${endPage < totalPages - 1}">
+                                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                                </c:if>
+                                <c:url var="lastUrl" value="${baseUrl}">
+                                    <c:param name="page" value="${totalPages}" />
+                                </c:url>
+                                <li class="page-item ${page == totalPages ? 'active' : ''}">
+                                    <a class="page-link" href="${lastUrl}">${totalPages}</a>
+                                </li>
+                            </c:if>
+
+                            <c:url var="nextUrl" value="${baseUrl}">
+                                <c:param name="page" value="${page + 1}" />
+                            </c:url>
+                            <li class="page-item ${page >= totalPages ? 'disabled' : ''}">
+                                <a class="page-link" href="${page >= totalPages ? '#' : nextUrl}">»</a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </c:if>
+
+            </section>
+
         </div>
       </div>
     </main>
