@@ -46,6 +46,10 @@ public class ProductService {
         if (min != null && max != null && max < min) return 0;
         return ProductDAO.countProducts(cateId, brandId, min, max);
     }
+
+    public static List<Product> getLatestProducts(int limit) {
+        return ProductDAO.getLatestProducts(limit);
+    }
 }
 
 

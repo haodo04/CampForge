@@ -48,7 +48,9 @@ public class CategoryServlet extends HttpServlet {
         int offset = (page - 1) * PAGE_SIZE;
 
         List<Product> products = ProductService.findProducts(cateId, brandId, min, max, PAGE_SIZE, offset);
+        List<Product> latestProducts = ProductService.getLatestProducts(12);
 
+        request.setAttribute("latestProducts", latestProducts);
         request.setAttribute("products", products);
 
         request.setAttribute("page", page);

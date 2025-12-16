@@ -134,4 +134,48 @@ public class ProductDAO {
         }
         return 0;
     }
+
+    public static List<Product> getLatestProducts(int limit) {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+        SELECT 
+            p.id, p.cateId, p.brandId, p.proName, p.price,
+            p.description, p.sold, p.createAt, p.isDelete,
+            p.image, b.brandName, c.cateName
+        FROM products p
+        JOIN brands b ON p.brandId = b.id
+        JOIN categories c ON p.cateId = c.id
+        WHERE p.isDelete = 0
+        ORDER BY p.createAt DESC, p.id DESC
+        LIMIT ?
+    """;
+
+        try (Connection conn = DbConnect.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product p = new Product(
+                        rs.getInt("id"),
+                        rs.getInt("cateId"),
+                        rs.getInt("brandId"),
+                        rs.getString("proName"),
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("sold"),
+                        rs.getTimestamp("createAt"),
+                        rs.getInt("isDelete"),
+                        rs.getString("image"),
+                        rs.getString("brandName"),
+                        rs.getString("cateName")
+                );
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

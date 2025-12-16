@@ -281,18 +281,26 @@
                     >Đánh giá cao <i class="fa-solid fa-star text-warning"></i
                   ></label>
                 </div>
-                <div class="form-check mb-4">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="sortNew"
-                  />
-                  <label class="form-check-label" for="sortNew"
-                    >Sản phẩm mới nhất</label
-                  >
-                </div>
+                  <form action="category" method="get">
+                      <input type="hidden" name="cateId" value="${param.cateId}">
 
-                <!-- Theo ngày -->
+                      <div class="form-check mb-4">
+                          <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="sortNew"
+                                  name="sort"
+                                  value="new"
+                                  <c:if test="${param.sort eq 'new'}">checked</c:if>
+                                  onchange="this.form.submit()"
+                          />
+                          <label class="form-check-label" for="sortNew">
+                              Sản phẩm mới nhất
+                          </label>
+                      </div>
+                  </form>
+
+                  <!-- Theo ngày -->
                 <div class="card p-3 mb-3">
                   <h6 class="mb-3">Sản phẩm theo ngày</h6>
                   <div class="row g-2">
