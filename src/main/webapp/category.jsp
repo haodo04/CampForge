@@ -301,31 +301,41 @@
                   </form>
 
                   <!-- Theo ngày -->
-                <div class="card p-3 mb-3">
-                  <h6 class="mb-3">Sản phẩm theo ngày</h6>
-                  <div class="row g-2">
-                    <div class="col-6">
-                      <label class="form-label" for="d1">Từ ngày</label>
-                      <input
-                        type="date"
-                        id="d1"
-                        class="form-control form-control-sm"
-                      />
-                    </div>
-                    <div class="col-6">
-                      <label class="form-label" for="d2">Đến ngày</label>
-                      <input
-                        type="date"
-                        id="d2"
-                        class="form-control form-control-sm"
-                      />
-                    </div>
-                  </div>
-                </div>
+                  <form action="category" method="get">
 
-                <button type="button" class="btn btn-primary w-100">
-                  Áp dụng
-                </button>
+                      <div class="card p-3 mb-3">
+                          <h6 class="mb-3">Sản phẩm theo ngày</h6>
+
+                          <div class="row g-2">
+                              <div class="col-6">
+                                  <label class="form-label" for="fromDate">Từ ngày</label>
+                                  <input
+                                          type="date"
+                                          id="fromDate"
+                                          name="fromDate"
+                                          class="form-control form-control-sm"
+                                          value="${param.fromDate}"
+                                  />
+                              </div>
+
+                              <div class="col-6">
+                                  <label class="form-label" for="toDate">Đến ngày</label>
+                                  <input
+                                          type="date"
+                                          id="toDate"
+                                          name="toDate"
+                                          class="form-control form-control-sm"
+                                          value="${param.toDate}"
+                                  />
+                              </div>
+                          </div>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary w-100">
+                          Áp dụng
+                      </button>
+                  </form>
+
               </div>
             </div>
           </aside>
