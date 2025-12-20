@@ -334,7 +334,7 @@ body {
 
 
 #feature {
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: space-between;
 }
@@ -385,6 +385,33 @@ body {
 
 #feature .fe-box:nth-child(6) h6 {
     background-color: #fff2e5;
+}
+
+#feature .section-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+#feature .section-title h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #222;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+#feature .section-title p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+}
+
+#feature .feature-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 

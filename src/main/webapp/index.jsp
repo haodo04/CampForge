@@ -75,8 +75,8 @@
   <section id="header">
       <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
-          <li><a href="index.jsp" class="active">Trang chủ</a></li>
-          <li><a href="category">Danh mục</a></li>
+          <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
+          <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
           <li><a href="about.jsp">Giới thiệu</a></li>
           <li><a href="contact.jsp">Liên hệ</a></li>
@@ -134,30 +134,18 @@
     </div>
 
     <section id="feature" class="section-p1">
-      <div class="fe-box">
-        <img src="./assets/img/features/leu.png" alt="" />
-        <h6>Cắm Trại & Leo Núi</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/balo.png" alt="" />
-        <h6>Balo $ Túi</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/dientu.png" alt="" />
-        <h6>Đèn</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/giay.png" alt="" />
-        <h6>Giày</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/dungcu.png" alt="" />
-        <h6>Dụng cụ dã ngoại</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/ao.png" alt="" />
-        <h6>Trang phục dã ngoại</h6>
-      </div>
+        <div class="section-title">
+            <h2>DANH MỤC NỔI BẬT</h2>
+            <p>Khám phá các nhóm sản phẩm dã ngoại & cắm trại phổ biến</p>
+        </div>
+        <div class="feature-list">
+            <c:forEach items="${featuredCategories}" var="c">
+                <a href="${pageContext.request.contextPath}/category?id=${c.id}" class="fe-box">
+                    <img src="${pageContext.request.contextPath}${c.image}" alt="${c.cateName}" />
+                    <h6>${c.cateName}</h6>
+                </a>
+            </c:forEach>
+        </div>
     </section>
 
     <section id="product1" class="section-p1">

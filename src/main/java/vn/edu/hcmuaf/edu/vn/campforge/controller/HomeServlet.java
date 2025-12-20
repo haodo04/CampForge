@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Product;
+import vn.edu.hcmuaf.edu.vn.campforge.service.CateService;
 import vn.edu.hcmuaf.edu.vn.campforge.service.ProductService;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class HomeServlet extends HttpServlet {
 
         request.setAttribute("latestProducts", latestProducts);
         request.setAttribute("bestSellerProducts", bestSellerProducts);
+        request.setAttribute("featuredCategories", CateService.getFeaturedCategories()
+        );
 
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
