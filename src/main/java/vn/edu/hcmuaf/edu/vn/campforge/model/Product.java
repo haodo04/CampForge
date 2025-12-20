@@ -1,8 +1,9 @@
 package vn.edu.hcmuaf.edu.vn.campforge.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Product {
+public class Product implements Serializable {
     private int id;
     private int cateId;
     private int brandId;

@@ -27,9 +27,6 @@ public class ProductService {
         return ProductDAO.findProducts(null, null, min, max, Integer.MAX_VALUE, 0);
     }
 
-    // ===================== CATEGORY (PAGING) =====================
-
-    // Hàm cũ – GIỮ LẠI để không vỡ code
     public static List<Product> findProducts(
             Integer cateId,
             Integer brandId,
@@ -74,7 +71,6 @@ public class ProductService {
         );
     }
 
-    // ===================== COUNT =====================
 
     public static int countProducts(
             Integer cateId,
@@ -112,4 +108,18 @@ public class ProductService {
     public static List<Product> getLatestProducts(int limit) {
         return ProductDAO.getLatestProducts(limit);
     }
+
+    public static List<Product> getBestSellerProducts(int limit) {
+        if (limit <= 0) limit = 8;
+        return ProductDAO.getBestSellerProducts(limit);
+    }
+
+    public static List<Product> getHomeLatest(int limit) {
+        return getLatestProducts(limit);
+    }
+
+    public static List<Product> getHomeBestSeller(int limit) {
+        return getBestSellerProducts(limit);
+    }
+
 }

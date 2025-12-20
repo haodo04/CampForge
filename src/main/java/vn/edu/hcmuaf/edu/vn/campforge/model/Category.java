@@ -3,6 +3,13 @@ package vn.edu.hcmuaf.edu.vn.campforge.model;
 public class Category {
     private int id;
     private String cateName;
+    private String image;
+
+    public Category(int id, String cateName, String image) {
+        this.id = id;
+        this.cateName = cateName;
+        this.image = image;
+    }
 
     public Category(int id, String cateName) {
         this.id = id;
@@ -26,5 +33,13 @@ public class Category {
 
     public void setCateName(String cateName) {
         this.cateName = cateName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

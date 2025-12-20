@@ -116,9 +116,6 @@ public class ProductDAO {
         return findProducts(cateId, brandId, min, max, null, null, limit, offset);
     }
 
-    /* =======================
-       COUNT PRODUCTS (FULL)
-    ======================= */
     public static int countProducts(
             Integer cateId,
             Integer brandId,
@@ -193,4 +190,43 @@ public class ProductDAO {
     public static List<Product> getLatestProducts(int limit) {
         return findProducts(null, null, null, null, null, null, limit, 0);
     }
+
+    // San pham ban chay
+    public static List<Product> getBestSellerProducts(int limit) {
+        List<Product> list = new ArrayList<>();
+
+        String sql = """
+        SELECT
+            p.id, p.cateId, p.brandId, p.proName, p.price,
+            p.description, p.sold, p.createAt, p.isDelete,
+            i.path AS image,
+            b.name AS brandName,
+            c.cateName AS cateName
+        FROM products p
+        LEFT JOIN product_imgs i ON p.id = i.product_id AND i.position = 1
+        LEFT JOIN brand b ON p.brandId = b.id
+        LEFT JOIN categories c ON p.cateId = c.id
+        WHERE p.isDelete = 0
+        ORDER BY p.sold DESC, p.createAt DESC, p.id DESC
+        LIMIT ?
+    """;
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, limit);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }

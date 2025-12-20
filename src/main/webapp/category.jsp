@@ -60,8 +60,8 @@
   <section id="header">
       <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
-          <li><a href="index.jsp">Trang chủ</a></li>
-          <li><a class="active" href="category">Danh mục</a></li>
+          <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+          <li><a class="active" href="${pageContext.request.contextPath}/category">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
           <li><a href="about.jsp">Giới thiệu</a></li>
           <li><a href="contact.jsp">Liên hệ</a></li>
