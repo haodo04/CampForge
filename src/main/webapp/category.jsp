@@ -93,252 +93,144 @@
       <div class="container">
         <div class="row g-4">
           <!-- filter -->
-          <aside class="col-12 col-lg-3">
-            <div class="card">
-              <div class="card-body">
-                <div
-                  class="d-flex justify-content-between align-items-center mb-3"
-                >
-                  <h5 class="m-0">Bộ lọc sản phẩm</h5>
-                  <button class="btn btn-sm btn-warning">Đặt lại</button>
+            <aside class="col-12 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="m-0">Bộ lọc sản phẩm</h5>
+                            <a href="category" class="btn btn-sm btn-warning">Đặt lại</a>
+                        </div>
+
+                        <!-- FORM DUY NHẤT -->
+                        <form action="category" method="get">
+
+                            <!-- GIÁ -->
+                            <div class="mb-4">
+                                <h6 class="mb-2">Giá (VNĐ)</h6>
+                                <div class="d-flex align-items-center">
+                                    <div class="input-group me-2">
+                                        <input type="number" class="form-control" name="minPrice"
+                                               placeholder="Từ" value="${param.minPrice}">
+                                        <span class="input-group-text">đ</span>
+                                    </div>
+
+                                    <span class="mx-2">–</span>
+
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" name="maxPrice"
+                                               placeholder="Đến" value="${param.maxPrice}">
+                                        <span class="input-group-text">đ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- KÍCH THƯỚC -->
+                            <div class="mb-4">
+                                <h6 class="mb-2">Kích thước</h6>
+
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="size" value="2x3" id="s1">
+                                    <label class="form-check-label" for="s1">2×3 m</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="size" value="3x4" id="s2">
+                                    <label class="form-check-label" for="s2">3×4 m</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="size" value="4x6" id="s3">
+                                    <label class="form-check-label" for="s3">4×6 m</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="size" value="6x9" id="s4">
+                                    <label class="form-check-label" for="s4">6×9 m</label>
+                                </div>
+                            </div>
+
+                            <!-- CHỦ ĐỀ -->
+                            <div class="mb-4">
+                                <h6 class="mb-2">Chủ đề</h6>
+
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="id" value="1" id="t1">
+                                    <label class="form-check-label" for="t1">Cắm Trại</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="id" value="2" id="t2">
+                                    <label class="form-check-label" for="t2">Du Lịch</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="id" value="3" id="t3">
+                                    <label class="form-check-label" for="t3">Leo Núi</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="id" value="4" id="t4">
+                                    <label class="form-check-label" for="t4">Dã Ngoại</label>
+                                </div>
+                            </div>
+
+                            <!-- BRAND -->
+                            <div class="mb-4">
+                                <h6 class="mb-2">Brand</h6>
+
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="brandId" value="1" id="a1">
+                                    <label class="form-check-label" for="a1">BLACKDOG</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="brandId" value="2" id="a2">
+                                    <label class="form-check-label" for="a2">ADIDAS</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="brandId" value="3" id="a3">
+                                    <label class="form-check-label" for="a3">MADFOX</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="brandId" value="4" id="a4">
+                                    <label class="form-check-label" for="a4">NATUREHIKE</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="brandId" value="5" id="a5">
+                                    <label class="form-check-label" for="a5">JACK WOLFSKIN</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="brandId" value="6" id="a6">
+                                    <label class="form-check-label" for="a6">VULTURE</label>
+                                </div>
+                            </div>
+
+                            <!-- SORT -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" name="sort" value="new" id="sortNew">
+                                <label class="form-check-label" for="sortNew">Sản phẩm mới nhất</label>
+                            </div>
+
+                            <!-- THEO NGÀY -->
+                            <div class="card p-3 mb-3">
+                                <h6 class="mb-3">Sản phẩm theo ngày</h6>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label class="form-label">Từ ngày</label>
+                                        <input type="date" name="fromDate" class="form-control form-control-sm"
+                                               value="${param.fromDate}">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Đến ngày</label>
+                                        <input type="date" name="toDate" class="form-control form-control-sm"
+                                               value="${param.toDate}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- APPLY -->
+                            <button type="submit" class="btn btn-primary w-100">
+                                Áp dụng
+                            </button>
+
+                        </form>
+                    </div>
                 </div>
-
-                  <form action="category" method="get">
-                      <div class="mb-4">
-                          <h6 class="mb-2">Giá (VNĐ)</h6>
-
-                          <div class="d-flex align-items-center">
-                              <div class="input-group me-2">
-                                  <input
-                                          type="number"
-                                          class="form-control"
-                                          name="minPrice"
-                                          placeholder="Từ"
-                                  />
-                                  <span class="input-group-text">đ</span>
-                              </div>
-
-                              <span class="mx-2">–</span>
-
-                              <div class="input-group">
-                                  <input
-                                          type="number"
-                                          class="form-control"
-                                          name="maxPrice"
-                                          placeholder="Đến"
-                                          onchange="this.form.submit()"
-                                  />
-                                  <span class="input-group-text">đ</span>
-                              </div>
-                          </div>
-                      </div>
-                  </form>
-
-                  <div class="mb-4">
-                  <h6 class="mb-2">Kích thước</h6>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="s1"
-                    /><label class="form-check-label" for="s1">2×3 m</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="s2"
-                    /><label class="form-check-label" for="s2">3×4 m</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="s3"
-                    /><label class="form-check-label" for="s3">4×6 m</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="s4"
-                    /><label class="form-check-label" for="s4">6×9 m</label>
-                  </div>
-                </div>
-
-                <form action="category" method="get">
-                  <div class="mb-4">
-                    <h6 class="mb-2">Chủ đề</h6>
-
-                    <div class="form-check mb-2">
-                      <input type="checkbox" class="form-check-input" id="t1" name="id" value="1" onchange="this.form.submit()">
-                      <label class="form-check-label" for="t1">Cắm Trại</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input type="checkbox" class="form-check-input" id="t2" name="id" value="2" onchange="this.form.submit()">
-                      <label class="form-check-label" for="t2">Du Lịch</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input type="checkbox" class="form-check-input" id="t3" name="id" value="3" onchange="this.form.submit()">
-                      <label class="form-check-label" for="t3">Leo Núi</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input type="checkbox" class="form-check-input" id="t4" name="id" value="4" onchange="this.form.submit()">
-                      <label class="form-check-label" for="t4">Dã Ngoại</label>
-                    </div>
-                  </div>
-                </form>
-
-                <form action="category" method="get">
-                  <div class="mb-4">
-                    <h6 class="mb-2">Brand</h6>
-
-                    <div class="form-check mb-2">
-                      <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="a1"
-                              name="brandId"
-                              value="1"
-                              onchange="this.form.submit()"
-                      />
-                      <label class="form-check-label" for="a1">BLACKDOG</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="a2"
-                              name="brandId"
-                              value="2"
-                              onchange="this.form.submit()"
-                      />
-                      <label class="form-check-label" for="a2">ADIDAS</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="a3"
-                              name="brandId"
-                              value="3"
-                              onchange="this.form.submit()"
-                      />
-                      <label class="form-check-label" for="a3">MADFOX</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="a4"
-                              name="brandId"
-                              value="4"
-                              onchange="this.form.submit()"
-                      />
-                      <label class="form-check-label" for="a4">NATUREHIKE</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="a5"
-                              name="brandId"
-                              value="5"
-                              onchange="this.form.submit()"
-                      />
-                      <label class="form-check-label" for="a4">JACK WOLFSKIN</label>
-                    </div>
-
-                    <div class="form-check mb-2">
-                      <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="a6"
-                              name="brandId"
-                              value="6"
-                              onchange="this.form.submit()"
-                      />
-                      <label class="form-check-label" for="a4">VULTURE</label>
-                    </div>
-                  </div>
-                </form>
-
-
-                <div class="form-check mb-2">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="sortRating"
-                  />
-                  <label class="form-check-label" for="sortRating"
-                    >Đánh giá cao <i class="fa-solid fa-star text-warning"></i
-                  ></label>
-                </div>
-                  <form action="category" method="get">
-                      <input type="hidden" name="cateId" value="${param.cateId}">
-
-                      <div class="form-check mb-4">
-                          <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                  id="sortNew"
-                                  name="sort"
-                                  value="new"
-                                  <c:if test="${param.sort eq 'new'}">checked</c:if>
-                                  onchange="this.form.submit()"
-                          />
-                          <label class="form-check-label" for="sortNew">
-                              Sản phẩm mới nhất
-                          </label>
-                      </div>
-                  </form>
-
-                  <!-- Theo ngày -->
-                  <form action="category" method="get">
-
-                      <div class="card p-3 mb-3">
-                          <h6 class="mb-3">Sản phẩm theo ngày</h6>
-
-                          <div class="row g-2">
-                              <div class="col-6">
-                                  <label class="form-label" for="fromDate">Từ ngày</label>
-                                  <input
-                                          type="date"
-                                          id="fromDate"
-                                          name="fromDate"
-                                          class="form-control form-control-sm"
-                                          value="${param.fromDate}"
-                                  />
-                              </div>
-
-                              <div class="col-6">
-                                  <label class="form-label" for="toDate">Đến ngày</label>
-                                  <input
-                                          type="date"
-                                          id="toDate"
-                                          name="toDate"
-                                          class="form-control form-control-sm"
-                                          value="${param.toDate}"
-                                  />
-                              </div>
-                          </div>
-                      </div>
-
-                      <button type="submit" class="btn btn-primary w-100">
-                          Áp dụng
-                      </button>
-                  </form>
-
-              </div>
-            </div>
-          </aside>
+            </aside>
             <section class="col-12 col-lg-9">
 
                 <div id="product-grid" class="row g-3" style="display: flex; flex-wrap: wrap;">
