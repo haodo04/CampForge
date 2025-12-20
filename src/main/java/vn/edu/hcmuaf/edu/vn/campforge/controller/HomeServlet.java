@@ -11,7 +11,7 @@ import vn.edu.hcmuaf.edu.vn.campforge.service.ProductService;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet({"/", "/home"})
+@WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
     @Override

@@ -116,9 +116,6 @@ public class ProductDAO {
         return findProducts(cateId, brandId, min, max, null, null, limit, offset);
     }
 
-    /* =======================
-       COUNT PRODUCTS (FULL)
-    ======================= */
     public static int countProducts(
             Integer cateId,
             Integer brandId,
