@@ -3,15 +3,23 @@ package vn.edu.hcmuaf.edu.vn.campforge.dao.db;
 import java.sql.*;
 
 public class DbConnect {
-    static String url = "jdbc:mysql://" + DbProperties.host() + ":" + DbProperties.port() + "/" + DbProperties.dbname() + "?" + DbProperties.option();
+    static String url = "jdbc:mysql://" + DbProperties.host() + ":" + DbProperties.port() + "/" +
+            DbProperties.dbname() + "?" + DbProperties.option();
+
     static Connection conn;
     private static final ThreadLocal<Connection> threadLocal = new ThreadLocal<>();
+    private static volatile boolean printed = false;
 
     public static Connection getConnection() {
         try {
             if (conn == null || conn.isClosed()) {
                 conn = makeConnect();
                 threadLocal.set(conn);
+
+                if (!printed) {
+                    printed = true;
+                    System.out.println("DB connected.");
+                }
             }
             return conn;
         } catch (SQLException | ClassNotFoundException e) {
@@ -20,22 +28,8 @@ public class DbConnect {
         }
     }
 
-
-
     private static Connection makeConnect() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(url, DbProperties.username(), DbProperties.password());
-        if (conn != null) {
-            System.out.println("Connection established successfully.");
-        } else {
-            System.out.println("Failed to establish connection.");
-        }
-        return conn;
-    }
-
-    public static void main(String[] args) throws SQLException {
-        System.out.println(getConnection());
-        System.out.println(url);
+        return DriverManager.getConnection(url, DbProperties.username(), DbProperties.password());
     }
 }
-

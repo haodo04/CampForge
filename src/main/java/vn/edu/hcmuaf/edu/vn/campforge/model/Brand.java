@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.edu.vn.campforge.model;
 
-public class Brand {
+import java.io.Serializable;
+
+public class Brand implements Serializable {
     private int id;
     private String name;
     private String imgUrl;

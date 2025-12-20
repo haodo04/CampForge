@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<fmt:setLocale value="vi_VN" />
 <!DOCTYPE html>
 <html>
   <head>
@@ -73,8 +75,8 @@
   <section id="header">
       <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
       <ul id="navbar">
-          <li><a href="index.jsp" class="active">Trang chủ</a></li>
-          <li><a href="category">Danh mục</a></li>
+          <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
+          <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
           <li><a href="blog.jsp">Blog</a></li>
           <li><a href="about.jsp">Giới thiệu</a></li>
           <li><a href="contact.jsp">Liên hệ</a></li>
@@ -132,166 +134,64 @@
     </div>
 
     <section id="feature" class="section-p1">
-      <div class="fe-box">
-        <img src="./assets/img/features/leu.png" alt="" />
-        <h6>Cắm Trại & Leo Núi</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/balo.png" alt="" />
-        <h6>Balo $ Túi</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/dientu.png" alt="" />
-        <h6>Đèn</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/giay.png" alt="" />
-        <h6>Giày</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/dungcu.png" alt="" />
-        <h6>Dụng cụ dã ngoại</h6>
-      </div>
-      <div class="fe-box">
-        <img src="./assets/img/features/ao.png" alt="" />
-        <h6>Trang phục dã ngoại</h6>
-      </div>
+        <div class="section-title">
+            <h2>DANH MỤC NỔI BẬT</h2>
+            <p>Khám phá các nhóm sản phẩm dã ngoại & cắm trại phổ biến</p>
+        </div>
+        <div class="feature-list">
+            <c:forEach items="${featuredCategories}" var="c">
+                <a href="${pageContext.request.contextPath}/category?id=${c.id}" class="fe-box">
+                    <img src="${pageContext.request.contextPath}${c.image}" alt="${c.cateName}" />
+                    <h6>${c.cateName}</h6>
+                </a>
+            </c:forEach>
+        </div>
     </section>
 
     <section id="product1" class="section-p1">
       <h3 class="title-decor">SẢN PHẨM MỚI NHẤT</h3>
       <p>Bộ sưu tập mùa hè với thiết kế mới</p>
       <div class="pro-container">
-        <div class="pro">
-          <a href="sproduct.jsp"><img src="./assets/img/products/f1.jpg" alt="" /></a>
-          <div class="des">
-            <span>BLACKDOG</span>
-            <h5>Lều trung tâm (lều tăng) BLACKDOG</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
+        <c:forEach items="${latestProducts}" var="p">
+          <div class="pro">
+            <a href="${pageContext.request.contextPath}/product?id=${p.id}">
+              <c:choose>
+                <c:when test="${empty p.image}">
+                  <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png" alt="${p.proName}" />
+                </c:when>
+
+                <c:when test="${fn:startsWith(p.image, 'http')}">
+                  <img src="${p.image}" alt="${p.proName}" />
+                </c:when>
+
+                <c:otherwise>
+                  <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}" />
+                </c:otherwise>
+              </c:choose>
+            </a>
+
+            <div class="des">
+              <span><c:out value="${p.brandName}" default="(Không rõ hãng)"/></span>
+              <h5><c:out value="${p.proName}"/></h5>
+
+              <div class="star">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+
+              <h4>
+                <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/>đ
+              </h4>
             </div>
-            <h4>1.750.000đ</h4>
-            <a href="sproduct.jsp"
-              ><i class="cart fi fi-sr-shopping-cart"></i
-            ></a>
+
+            <a href="${pageContext.request.contextPath}/cart?action=add&productId=${p.id}">
+              <i class="cart fi fi-sr-shopping-cart"></i>
+            </a>
           </div>
-        </div>
-        <div class="pro">
-          <a href="sproduct.jsp"><img src="./assets/img/products/f2.png" alt="" /></a>
-          <div class="des">
-            <span>adidas</span>
-            <h5>Lều 6 người BLACKDOG Mountain Garden</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>1.550.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/balo1.jpg" alt="" />
-          <div class="des">
-            <span>MADFOX</span>
-            <h5>Áo mưa trùm ba lô 35L MADFOX RC35B</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>1.250.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/f4.png" alt="" />
-          <div class="des">
-            <span>NATUREHIKE</span>
-            <h5>Lều 2 - 3 người, 2 lớp Naturehike</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>1.000.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/f5.jpg" alt="" />
-          <div class="des">
-            <span>NATUREHIKE</span>
-            <h5>Lều 2 - 3 người, 2 lớp Naturehike</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>1.250.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/f7.jpg" alt="" />
-          <div class="des">
-            <span>BLACKDOG</span>
-            <h5>Lều trung tâm (lều tăng) BLACKDOG</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>1.300.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/n1.jpg" alt="" />
-          <div class="des">
-            <span>NATUREHIKE</span>
-            <h5>Nồi Titanium dã ngoại 1300ML Naturehike</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>1.250.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/balo5.png" alt="" />
-          <div class="des">
-            <span>JACK WOLFSKIN</span>
-            <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>1.330.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
+        </c:forEach>
+
+        <c:if test="${empty latestProducts}">
+          <p style="padding:12px 0;">Chưa có sản phẩm mới.</p>
+        </c:if>
       </div>
     </section>
 
@@ -303,136 +203,48 @@
 
     <section id="product1" class="section-p1">
       <h3 class="title-decor">SẢN PHẨM BÁN CHẠY</h3>
-      <p>Các sản phẩm cửa hàng mới nhập</p>
+      <p>Các sản phẩm bán chạy nhất cửa hàng</p>
       <div class="pro-container">
-        <div class="pro">
-          <img src="./assets/img/products/n1.jpg" alt="" />
-          <div class="des">
-            <span>NATUREHIKE</span>
-            <h5>Nồi Titanium dã ngoại 1300ML Naturehike</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
+        <c:forEach items="${bestSellerProducts}" var="p">
+          <div class="pro">
+            <a href="${pageContext.request.contextPath}/product?id=${p.id}">
+              <c:choose>
+                <c:when test="${empty p.image}">
+                  <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png" alt="${p.proName}" />
+                </c:when>
+
+                <c:when test="${fn:startsWith(p.image, 'http')}">
+                  <img src="${p.image}" alt="${p.proName}" />
+                </c:when>
+
+                <c:otherwise>
+                  <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}" />
+                </c:otherwise>
+              </c:choose>
+            </a>
+
+            <div class="des">
+              <span><c:out value="${p.brandName}" default="(Không rõ hãng)"/></span>
+              <h5><c:out value="${p.proName}"/></h5>
+
+              <div class="star">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+
+              <h4>
+                <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/>đ
+              </h4>
             </div>
-            <h4>750.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
+
+            <a href="${pageContext.request.contextPath}/cart?action=add&productId=${p.id}">
+              <i class="cart fi fi-sr-shopping-cart"></i>
+            </a>
           </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/n2.png" alt="" />
-          <div class="des">
-            <span>NATUREHIKE</span>
-            <h5>Bộ nồi nhôm dã ngoại xếp gọn 4 món Naturehike</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>900.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/n3.jpg" alt="" />
-          <div class="des">
-            <span>VULTURA</span>
-            <h5>Ấm nhôm đun nước dã ngoại cắm trại Vultura 0.8L - 1.6L</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>800.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/n4.jpg" alt="" />
-          <div class="des">
-            <span>VULTURA</span>
-            <h5>Bếp cồn Trekking dã ngoại Vultura</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>850.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/n5.jpg" alt="" />
-          <div class="des">
-            <span>VULTURA</span>
-            <h5>Bếp cồn Trekking dã ngoại Vultura</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>650.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/balo3.jpg" alt="" />
-          <div class="des">
-            <span>MADFOX</span>
-            <h5>Áo mưa trùm ba lô 35L MADFOX RC35B</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>500.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/balo7.png" alt="" />
-          <div class="des">
-            <span>JACK WOLFSKIN</span>
-            <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>450.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
-        <div class="pro">
-          <img src="./assets/img/products/balo8.png" alt="" />
-          <div class="des">
-            <span>JACK WOLFSKIN</span>
-            <h5>Ba lô JACK WOLFSKIN MOAB JAM 24</h5>
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h4>650.000đ</h4>
-            <a href="#"><i class="cart fi fi-sr-shopping-cart"></i></a>
-          </div>
-        </div>
+        </c:forEach>
+
+        <c:if test="${empty bestSellerProducts}">
+          <p style="padding:12px 0;">Chưa có sản phẩm bán chạy.</p>
+        </c:if>
       </div>
     </section>
 

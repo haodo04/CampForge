@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.edu.vn.campforge.model;
 
-public class ProductSize {
+import java.io.Serializable;
+
+public class ProductSize implements Serializable {
     private int id;
     private int productId;
     private String sizeName;
