@@ -5,12 +5,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import vn.edu.hcmuaf.edu.vn.campforge.model.Banner;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Product;
+import vn.edu.hcmuaf.edu.vn.campforge.service.BannerService;
 import vn.edu.hcmuaf.edu.vn.campforge.service.CateService;
 import vn.edu.hcmuaf.edu.vn.campforge.service.ProductService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -29,6 +32,9 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("bestSellerProducts", bestSellerProducts);
         request.setAttribute("featuredCategories", CateService.getFeaturedCategories()
         );
+
+        Map<String, Banner> homeBanners = BannerService.getHomeBanners();
+        request.setAttribute("homeBanners", homeBanners);
 
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }

@@ -22,55 +22,40 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/search.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <style>
-      #hero {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner11.jpg");
-      }
-
-      #hero button {
-        background-image: url("${pageContext.request.contextPath}/assets/img/button.png");
-      }
-
-      .title-decor::before {
-        content: "";
-        background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
-      }
-
-      .title-decor::after {
-        content: "";
-        background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
-      }
-
-      #banner {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner13.jfif");
-      }
-
-      #sm-banner .banner-box {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner04.png");
-      }
-
-      #sm-banner .banner-box2 {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner06.png");
-      }
-      #banner3 .banner-box {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner03.jpg");
-      }
-      #banner3 .banner-box2 {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner05.png");
-      }
-
-      #banner3 .banner-box3 {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/banner01.jpeg");
-      }
-
-      #newsletter {
-        background-image: url("${pageContext.request.contextPath}/assets/img/banner/b14.png");
-      }
-    </style>
-
+      <style>
+          .title-decor::before {
+              content: "";
+              background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
+          }
+          #hero button {
+              background-image: url("${pageContext.request.contextPath}/assets/img/button.png");
+          }
+          .title-decor::after {
+              content: "";
+              background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
+          }
+      </style>
   </head>
   <body>
+  <c:set var="hero" value="${homeBanners['home_hero']}" />
+  <c:set var="heroBg" value="${ctx}/assets/img/banner/banner11.jpg" />
+  <c:if test="${not empty b_hero && not empty b_hero.imageUrl}">
+      <c:choose>
+          <c:when test="${fn:startsWith(b_hero.imageUrl,'http')}">
+              <c:set var="heroBg" value="${b_hero.imageUrl}" />
+          </c:when>
+          <c:otherwise>
+              <c:set var="heroBg" value="${ctx}${b_hero.imageUrl}" />
+          </c:otherwise>
+      </c:choose>
+  </c:if>
+
+  <c:set var="heroHref" value="${ctx}/category" />
+  <c:if test="${not empty b_hero && not empty b_hero.linkUrl}">
+      <c:set var="heroHref" value="${ctx}${b_hero.linkUrl}" />
+  </c:if>
+
+
   <div class="header-top"></div>
   <section id="header">
       <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
@@ -95,16 +80,16 @@
   </section>
 
 
-  <section id="hero">
+  <section id="hero" style="background-image: url(${pageContext.request.contextPath}${heroBg});">
       <h1>Ưu đãi cực lớn</h1>
       <p>Giảm giá lên đến 70%!</p>
-      <a href="promotion.jsp"><button>Mua ngay</button></a>
+      <a href="${pageContext.request.contextPath}/promotion"><button>Mua ngay</button></a>
   </section>
 
     <div class="intro-container">
         <div class="intro-row">
             <div class="intro-left">
-                <img 
+                <img
                     src="https://plus.unsplash.com/premium_photo-1681882053622-605daf9b9d73?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Giới thiệu trang web"
                 />
@@ -195,9 +180,17 @@
       </div>
     </section>
 
-    <section id="banner" class="section-m1">
-      <h4>Dịch vụ sửa chữa</h4>
-      <h2>Giảm giá <span>Đến 70%</span> - Lần đầu mua hàng</h2>
+  <c:set var="brandBanner" value="${homeBanners['home_brand']}" />
+
+  <c:set var="brandBg" value="/assets/img/banner/banner03.jpg" />
+  <c:if test="${not empty brandBanner && not empty brandBanner.imageUrl}">
+      <c:set var="brandBg" value="${brandBanner.imageUrl}" />
+  </c:if>
+    <section id="banner"
+           class="section-m1"
+           style="background-image: url(${pageContext.request.contextPath}${brandBg});">
+      <h4>Sản phẩm chính hãng</h4>
+      <h2>Rất nhiều<span>thương hiệu</span> - Nổi tiếng toàn quốc</h2>
       <button class="normal">Xem thêm</button>
     </section>
 
@@ -248,31 +241,68 @@
       </div>
     </section>
 
-    <section id="sm-banner" class="section-p1">
-      <div class="banner-box">
-        <h4>Ưu đãi cực sốc</h4>
-        <h2>Mua 1 tặng 1</h2>
-        <span>Áp dụng cho các sản phẩm cắm trại nổi bật</span>
-        <button class="white"><a href="promotion.jsp">Xem chi tiết</a></button>
+  <c:set var="promoBanner" value="${homeBanners['home_promo']}" />
+  <c:set var="springBanner" value="${homeBanners['home_spring']}" />
+
+  <c:set var="promoBg" value="/assets/img/banner/banner04.png" />
+  <c:if test="${not empty promoBanner && not empty promoBanner.imageUrl}">
+      <c:set var="promoBg" value="${promoBanner.imageUrl}" />
+  </c:if>
+
+  <c:set var="springBg" value="/assets/img/banner/banner06.png" />
+  <c:if test="${not empty springBanner && not empty springBanner.imageUrl}">
+      <c:set var="springBg" value="${springBanner.imageUrl}" />
+  </c:if>
+
+  <section id="sm-banner" class="section-p1">
+      <div class="banner-box"
+           style="background-image: url(${pageContext.request.contextPath}${promoBg});">
+          <h4>Ưu đãi cực sốc</h4>
+          <h2>Mua 1 tặng 1</h2>
+          <span>Áp dụng cho các sản phẩm cắm trại nổi bật</span>
+          <button class="white"><a href="promotion.jsp">Xem chi tiết</a></button>
       </div>
-      <div class="banner-box banner-box2">
-        <h4>Xuân – Hè</h4>
-        <h2>Bộ sưu tập mới</h2>
-        <span>Trang bị đầy đủ cho mùa trekking sắp tới</span>
-        <button class="white">Khám phá ngay</button>
+      <div class="banner-box banner-box2"
+           style="background-image: url(${pageContext.request.contextPath}${springBg});">
+          <h4>Xuân – Hè</h4>
+          <h2>Bộ sưu tập mới</h2>
+          <span>Trang bị đầy đủ cho mùa trekking sắp tới</span>
+          <button class="white">Khám phá ngay</button>
       </div>
-    </section>
+  </section>
+
+  <c:set var="seasonBanner" value="${homeBanners['home_season']}" />
+  <c:set var="outdoorBanner" value="${homeBanners['home_outdoor']}" />
+  <c:set var="pinicBanner" value="${homeBanners['home_pinic']}" />
+
+  <c:set var="seasonBg" value="/assets/img/banner/banner03.jpg" />
+  <c:if test="${not empty seasonBanner && not empty seasonBanner.imageUrl}">
+      <c:set var="seasonBg" value="${seasonBanner.imageUrl}" />
+  </c:if>
+
+  <c:set var="outdoorBg" value="/assets/img/banner/banner05.png" />
+  <c:if test="${not empty outdoorBanner && not empty outdoorBanner.imageUrl}">
+      <c:set var="outdoorBg" value="${outdoorBanner.imageUrl}" />
+  </c:if>
+
+  <c:set var="pinicBg" value="/assets/img/banner/banner01.jpeg" />
+  <c:if test="${not empty pinicBanner && not empty pinicBanner.imageUrl}">
+      <c:set var="pinicBg" value="${pinicBanner.imageUrl}" />
+  </c:if>
 
     <section id="banner3">
-      <div class="banner-box">
+        <div class="banner-box"
+             style="background-image: url(${pageContext.request.contextPath}${seasonBg});">
         <h2>GIẢM GIÁ THEO MÙA</h2>
         <h3>Bộ sưu tập mùa đông – giảm đến 50%</h3>
       </div>
-      <div class="banner-box banner-box2">
+      <div class="banner-box banner-box2"
+           style="background-image: url(${pageContext.request.contextPath}${outdoorBg});">
         <h2>BỘ SƯU TẬP GIÀY – DÉP OUTDOOR</h2>
         <h3>Xuân – Hè 2025</h3>
       </div>
-      <div class="banner-box banner-box3">
+      <div class="banner-box banner-box3"
+           style="background-image: url(${pageContext.request.contextPath}${pinicBg});">
         <h2>ÁO THUN DÃ NGOẠI</h2>
         <h3>Xu hướng thiết kế mới</h3>
       </div>
