@@ -59,3 +59,46 @@
     line-height: 25px;
 }
 
+/* NEW: sku/stock row */
+.pd-row{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    margin:8px 0 10px;
+}
+.pd-kv{
+    font-size:13px;
+    color:#555;
+}
+.pd-kv b{ color:#111; }
+
+/* NEW: chips */
+.pd-option{ margin: 10px 0; }
+.pd-option-head{
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    margin-bottom:8px;
+    font-size:14px;
+}
+.pd-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+.chip{
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid #ddd;
+    background:#fff;
+    cursor:pointer;
+    font-size:13px;
+}
+.chip.is-active{
+    border-color:#088178;
+    background:#e8f6ea;
+    color:#088178;
+    font-weight:600;
+}
+
+
