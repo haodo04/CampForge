@@ -18,35 +18,15 @@ public class ProductImg implements Serializable {
     public ProductImg() {
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public int getProductId() { return productId; }
+    public void setProductId(int productId) { this.productId = productId; }
 
-    public int getProductId() {
-        return productId;
-    }
+    public String getPath() { return path; }
+    public void setPath(String path) { this.path = path; }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
+    public int getPosition() { return position; }
+    public void setPosition(int position) { this.position = position; }
 }
