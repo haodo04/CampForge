@@ -6,11 +6,12 @@ import vn.edu.hcmuaf.edu.vn.campforge.model.Banner;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 public class BannerDAO {
 
-    private static Banner mapRow(ResultSet rs) throws Exception {
+    private static Banner mapRow(ResultSet rs) throws SQLException {
         Banner b = new Banner();
         b.setId(rs.getInt("id"));
         b.setPlacement(rs.getString("placement"));
@@ -39,12 +40,15 @@ public class BannerDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, placement.trim());
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) return mapRow(rs);
             }
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -52,9 +56,19 @@ public class BannerDAO {
         Map<String, Banner> result = new HashMap<>();
         if (placements == null || placements.isEmpty()) return result;
 
-        // tạo ?,?,?,...
+        List<String> cleaned = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
+        for (String p : placements) {
+            if (p == null) continue;
+            String t = p.trim();
+            if (t.isEmpty()) continue;
+            if (seen.add(t)) cleaned.add(t);
+        }
+        if (cleaned.isEmpty()) return result;
+
+        // tạo (?, ?, ?, ...)
         StringJoiner sj = new StringJoiner(",", "(", ")");
-        for (int i = 0; i < placements.size(); i++) sj.add("?");
+        for (int i = 0; i < cleaned.size(); i++) sj.add("?");
 
         String sql = """
             SELECT id, placement, title, image_url, link_url, btn_text, sort_order, is_active
@@ -67,18 +81,18 @@ public class BannerDAO {
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            for (int i = 0; i < placements.size(); i++) {
-                ps.setString(i + 1, placements.get(i));
+            for (int i = 0; i < cleaned.size(); i++) {
+                ps.setString(i + 1, cleaned.get(i));
             }
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Banner b = mapRow(rs);
-                    // Chỉ lấy banner đầu tiên cho mỗi placement
                     result.putIfAbsent(b.getPlacement(), b);
                 }
             }
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

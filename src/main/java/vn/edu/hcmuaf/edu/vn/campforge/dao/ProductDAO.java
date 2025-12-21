@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.Date;
 
 public class ProductDAO {
-
     private static Product mapRow(ResultSet rs) throws SQLException {
         Product p = new Product();
         p.setId(rs.getInt("id"));
@@ -95,13 +94,16 @@ public class ProductDAO {
                 ps.setObject(i + 1, params.get(i));
             }
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(mapRow(rs));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
             }
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return list;
     }
 
@@ -169,12 +171,14 @@ public class ProductDAO {
                 ps.setObject(i + 1, params.get(i));
             }
 
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt(1);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return 0;
     }
 
@@ -190,26 +194,24 @@ public class ProductDAO {
     public static List<Product> getLatestProducts(int limit) {
         return findProducts(null, null, null, null, null, null, limit, 0);
     }
-
-    // San pham ban chay
     public static List<Product> getBestSellerProducts(int limit) {
         List<Product> list = new ArrayList<>();
 
         String sql = """
-        SELECT
-            p.id, p.cateId, p.brandId, p.proName, p.price,
-            p.description, p.sold, p.createAt, p.isDelete,
-            i.path AS image,
-            b.name AS brandName,
-            c.cateName AS cateName
-        FROM products p
-        LEFT JOIN product_imgs i ON p.id = i.product_id AND i.position = 1
-        LEFT JOIN brand b ON p.brandId = b.id
-        LEFT JOIN categories c ON p.cateId = c.id
-        WHERE p.isDelete = 0
-        ORDER BY p.sold DESC, p.createAt DESC, p.id DESC
-        LIMIT ?
-    """;
+            SELECT
+                p.id, p.cateId, p.brandId, p.proName, p.price,
+                p.description, p.sold, p.createAt, p.isDelete,
+                i.path AS image,
+                b.name AS brandName,
+                c.cateName AS cateName
+            FROM products p
+            LEFT JOIN product_imgs i ON p.id = i.product_id AND i.position = 1
+            LEFT JOIN brand b ON p.brandId = b.id
+            LEFT JOIN categories c ON p.cateId = c.id
+            WHERE p.isDelete = 0
+            ORDER BY p.sold DESC, p.createAt DESC, p.id DESC
+            LIMIT ?
+        """;
 
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -222,11 +224,10 @@ public class ProductDAO {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return list;
     }
-
 }

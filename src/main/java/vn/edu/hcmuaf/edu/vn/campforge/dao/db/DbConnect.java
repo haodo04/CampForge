@@ -33,6 +33,7 @@ public class DbConnect {
         cfg.setIdleTimeout(300000);
         cfg.setMaxLifetime(1800000);
 
+        cfg.setDriverClassName("com.mysql.cj.jdbc.Driver");
         // cfg.setLeakDetectionThreshold(20000);
 
         DATA_SOURCE = new HikariDataSource(cfg);
