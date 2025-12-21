@@ -230,4 +230,48 @@ public class ProductDAO {
 
         return list;
     }
+
+    public static Product findById(int productId) {
+        String sql = """
+        SELECT
+            p.id, p.cateId, p.brandId, p.proName, p.price,
+            p.description, p.sold, p.createAt, p.isDelete,
+            b.name AS brandName,
+            c.cateName AS cateName
+        FROM products p
+        LEFT JOIN brand b ON p.brandId = b.id
+        LEFT JOIN categories c ON p.cateId = c.id
+        WHERE p.isDelete = 0
+          AND p.id = ?
+        LIMIT 1
+    """;
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, productId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Product p = new Product();
+                    p.setId(rs.getInt("id"));
+                    p.setCateId(rs.getInt("cateId"));
+                    p.setBrandId(rs.getInt("brandId"));
+                    p.setProName(rs.getString("proName"));
+                    p.setPrice(rs.getDouble("price"));
+                    p.setDescription(rs.getString("description"));
+                    p.setSold(rs.getInt("sold"));
+                    p.setCreateAt(rs.getTimestamp("createAt"));
+                    p.setIsDelete(rs.getInt("isDelete"));
+                    p.setBrandName(rs.getString("brandName"));
+                    p.setCateName(rs.getString("cateName"));
+                    return p;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
