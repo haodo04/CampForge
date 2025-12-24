@@ -26,7 +26,7 @@
     </a>
 
     <ul id="navbar">
-        <li><a class="active" href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+        <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
         <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
         <li><a href="blog.jsp">Blog</a></li>
         <li><a href="about.jsp">Giới thiệu</a></li>
@@ -115,11 +115,9 @@
     </div>
 
     <div class="single-pro-details">
-
         <h4 id="pdName">
             <c:out value="${p.proName}"/>
         </h4>
-
         <div class="pd-row">
             <div class="pd-kv">
                 <span>Mã (SKU):</span>
@@ -227,15 +225,16 @@
                 <a href="${pageContext.request.contextPath}/product?id=${p.id}" onclick="event.stopPropagation();">
                     <c:choose>
                         <c:when test="${empty p.image}">
-                            <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png" alt="${p.proName}" />
+                            <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png"
+                                 alt="${p.proName}"/>
                         </c:when>
 
                         <c:when test="${fn:startsWith(p.image, 'http')}">
-                            <img src="${p.image}" alt="${p.proName}" />
+                            <img src="${p.image}" alt="${p.proName}"/>
                         </c:when>
 
                         <c:otherwise>
-                            <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}" />
+                            <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}"/>
                         </c:otherwise>
                     </c:choose>
                 </a>
@@ -245,7 +244,8 @@
                     <h5><c:out value="${p.proName}"/></h5>
 
                     <div class="star">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
 
                     <h4>
@@ -278,6 +278,51 @@
 </section>
 
 <footer class="section-p1">
+    <div class="col">
+        <h4>Liên hệ</h4>
+        <p>
+            <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
+            Đức, HCM
+        </p>
+        <p><strong>Điện thoại: </strong> +01 2222 365 /(+91) 01 2345 6789</p>
+        <p><strong>Giờ mở cửa: </strong> 10:00 - 18:00, T2 - T7</p>
+        <div class="follow">
+            <h4>Theo dõi chúng tôi</h4>
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-pinterest-p"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h4>Giới thiệu</h4>
+        <a href="#">Về chúng tôi</a>
+        <a href="#">Thông tin giao hàng</a>
+        <a href="#">Chính sách</a>
+        <a href="#">Điều khoản</a>
+        <a href="#">Liên hệ</a>
+    </div>
+    <div class="col">
+        <h4>Tài khoản</h4>
+        <a href="#">Đăng ký</a>
+        <a href="#">Giỏ hàng</a>
+        <a href="#">Yêu thích</a>
+        <a href="#">Đơn hàng</a>
+        <a href="#">Trợ giúp</a>
+    </div>
+    <div class="col install">
+        <h4>Tải ứng dụng</h4>
+        <p>Trên App Store hoặc Google Play</p>
+        <div class="app-row">
+            <img src="./assets/img/pay/app.jpg" alt=""/>
+            <img src="./assets/img/pay/play.jpg" alt=""/>
+        </div>
+        <p>Bảo mật cổng thanh toán</p>
+        <img src="./assets/img/pay/pay.png" alt=""/>
+    </div>
     <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
     </div>
