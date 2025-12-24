@@ -296,14 +296,14 @@
 
                 <c:if test="${totalPages >= 1}">
 
-                    <c:url var="baseUrl" value="/category">
-                        <c:if test="${not empty cateId}">
-                            <c:param name="id" value="${cateId}" />
+                    <!-- Base URL giữ filter -->
+                    <c:url var="baseUrl" value="category">
+                        <c:if test="${not empty id}">
+                            <c:param name="id" value="${id}" />
                         </c:if>
                         <c:if test="${not empty brandId}">
                             <c:param name="brandId" value="${brandId}" />
                         </c:if>
-
                         <c:if test="${not empty minPrice}">
                             <c:param name="minPrice" value="${minPrice}" />
                         </c:if>
@@ -312,76 +312,46 @@
                         </c:if>
                     </c:url>
 
-                    <c:set var="startPage" value="${page - 2}" />
-                    <c:set var="endPage" value="${page + 2}" />
-
-                    <c:if test="${startPage < 1}">
-                        <c:set var="endPage" value="${endPage + (1 - startPage)}" />
-                        <c:set var="startPage" value="1" />
-                    </c:if>
-
-                    <c:if test="${endPage > totalPages}">
-                        <c:set var="startPage" value="${startPage - (endPage - totalPages)}" />
-                        <c:set var="endPage" value="${totalPages}" />
-                    </c:if>
-
-                    <c:if test="${startPage < 1}">
-                        <c:set var="startPage" value="1" />
-                    </c:if>
-
-                    <nav class="mt-4" aria-label="Page navigation">
+                    <nav class="mt-4">
                         <ul class="pagination justify-content-center">
 
-                            <c:url var="prevUrl" value="${baseUrl}">
-                                <c:param name="page" value="${page - 1}" />
-                            </c:url>
-                            <li class="page-item ${page <= 1 ? 'disabled' : ''}">
-                                <a class="page-link" href="${page <= 1 ? '#' : prevUrl}" tabindex="${page <= 1 ? '-1' : '0'}">«</a>
+                            <!-- PREVIOUS -->
+                            <li class="page-item ${page == 1 ? 'disabled' : ''}">
+                                <c:url var="prevUrl" value="${baseUrl}">
+                                    <c:param name="page" value="${page - 1}" />
+                                </c:url>
+                                <a class="page-link" href="${prevUrl}" aria-label="Previous">
+                                    &laquo;
+                                </a>
                             </li>
 
-                            <c:if test="${startPage > 1}">
-                                <c:url var="firstUrl" value="${baseUrl}">
-                                    <c:param name="page" value="1" />
-                                </c:url>
-                                <li class="page-item ${page == 1 ? 'active' : ''}">
-                                    <a class="page-link" href="${firstUrl}">1</a>
-                                </li>
-                                <c:if test="${startPage > 2}">
-                                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                                </c:if>
-                            </c:if>
-
-                            <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                            <!-- PAGE NUMBER -->
+                            <c:forEach var="i" begin="1" end="${totalPages}">
                                 <c:url var="pageUrl" value="${baseUrl}">
                                     <c:param name="page" value="${i}" />
                                 </c:url>
+
                                 <li class="page-item ${i == page ? 'active' : ''}">
                                     <a class="page-link" href="${pageUrl}">${i}</a>
                                 </li>
                             </c:forEach>
 
-                            <c:if test="${endPage < totalPages}">
-                                <c:if test="${endPage < totalPages - 1}">
-                                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                                </c:if>
-                                <c:url var="lastUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${totalPages}" />
+                            <!-- NEXT -->
+                            <li class="page-item ${page == totalPages ? 'disabled' : ''}">
+                                <c:url var="nextUrl" value="${baseUrl}">
+                                    <c:param name="page" value="${page + 1}" />
                                 </c:url>
-                                <li class="page-item ${page == totalPages ? 'active' : ''}">
-                                    <a class="page-link" href="${lastUrl}">${totalPages}</a>
-                                </li>
-                            </c:if>
-
-                            <c:url var="nextUrl" value="${baseUrl}">
-                                <c:param name="page" value="${page + 1}" />
-                            </c:url>
-                            <li class="page-item ${page >= totalPages ? 'disabled' : ''}">
-                                <a class="page-link" href="${page >= totalPages ? '#' : nextUrl}">»</a>
+                                <a class="page-link" href="${nextUrl}" aria-label="Next">
+                                    &raquo;
+                                </a>
                             </li>
 
                         </ul>
                     </nav>
+
                 </c:if>
+
+
 
             </section>
 
