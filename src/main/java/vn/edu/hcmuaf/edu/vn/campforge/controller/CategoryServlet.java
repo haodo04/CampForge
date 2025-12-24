@@ -88,7 +88,6 @@ public class CategoryServlet extends HttpServlet {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("totalItems", totalItems);
 
-        // ĐỔI TÊN BIẾN Ở ĐÂY ĐỂ KHỚP VỚI JSP
         request.setAttribute("id", cateId);
         request.setAttribute("brandId", brandId);
         request.setAttribute("minPrice", minPrice);
