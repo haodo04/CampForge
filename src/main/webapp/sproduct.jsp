@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Product Details</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link rel="stylesheet" href="./assets/css/sproduct.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css"/>
+    <link rel="stylesheet" href="./assets/css/sproduct.css"/>
     <link rel="stylesheet" href="assets/css/search.css">
 </head>
 
@@ -36,7 +36,7 @@
 
     <div id="right-icons">
         <div id="search-box">
-            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
+            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
             <button id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
         <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
@@ -48,45 +48,67 @@
     </div>
 </section>
 
-<c:set var="p" value="${product}" />
-<c:set var="selectedId" value="${selectedVariantId}" />
-<c:set var="selectedVariant" value="${null}" />
+<c:set var="p" value="${product}"/>
+<c:set var="selectedId" value="${selectedVariantId}"/>
+<c:set var="selectedVariant" value="${null}"/>
 
 <c:forEach var="v" items="${variants}">
     <c:if test="${v.id == selectedId}">
-        <c:set var="selectedVariant" value="${v}" />
+        <c:set var="selectedVariant" value="${v}"/>
     </c:if>
 </c:forEach>
+
+<nav class="sp-breadcrumb-wrap">
+    <ol class="sp-breadcrumb">
+        <li>
+            <a href="${pageContext.request.contextPath}/">Trang chủ</a>
+        </li>
+        <li class="active">
+            Chạy bộ
+        </li>
+    </ol>
+</nav>
 
 <section id="prodetails" class="section-p1" data-product-id="${p.id}">
     <div class="single-pro-image">
 
-        <c:set var="ctx" value="${pageContext.request.contextPath}" />
+        <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
-        <c:set var="mainImgPath" value="" />
+        <c:set var="mainImgPath" value=""/>
         <c:forEach var="img" items="${images}">
             <c:if test="${img.position == 1 && empty mainImgPath}">
-                <c:set var="mainImgPath" value="${img.path}" />
+                <c:set var="mainImgPath" value="${img.path}"/>
             </c:if>
         </c:forEach>
 
         <c:if test="${empty mainImgPath}">
             <c:if test="${not empty images}">
-                <c:set var="mainImgPath" value="${images[0].path}" />
+                <c:set var="mainImgPath" value="${images[0].path}"/>
             </c:if>
         </c:if>
 
         <c:if test="${empty mainImgPath}">
-            <c:set var="mainImgPath" value="/assets/img/products/no-image.png" />
+            <c:set var="mainImgPath" value="/assets/img/products/no-image.png"/>
         </c:if>
 
-        <img src="<c:url value='${mainImgPath}'/>" width="100%" id="MainImg" alt="">
+        <img src="<c:url value='${mainImgPath}'/>" width="100%" id="MainImg" data-all = "1" alt="">
+        <button type="button" class="sp-nav sp-prev" aria-label="Ảnh trước">
+            <span aria-hidden="true">‹</span>
+        </button>
+        <button type="button" class="sp-nav sp-next" aria-label="Ảnh sau">
+            <span aria-hidden="true">›</span>
+        </button>
 
         <div class="small-img-group" id="thumbList">
             <c:forEach var="img" items="${images}">
                 <c:if test="${img.position >= 2}">
                     <div class="small-img-col">
-                        <img src="${ctx}${img.path}" width="100%" class="small-img" alt="">
+                        <img
+                                src="${ctx}${img.path}"
+                                width="100%"
+                                class="small-img"
+                                data-pos="${img.position}"
+                                alt="">
                     </div>
                 </c:if>
             </c:forEach>
@@ -94,10 +116,6 @@
     </div>
 
     <div class="single-pro-details">
-        <h6>
-            Home /
-            <c:out value="${p.cateName}" default="Sản phẩm"/>
-        </h6>
 
         <h4 id="pdName">
             <c:out value="${p.proName}"/>
@@ -119,11 +137,12 @@
         </div>
 
         <h2 id="pdPrice">
-            <fmt:formatNumber value="${selectedVariant != null ? selectedVariant.finalPrice : p.price}" type="number" maxFractionDigits="0"/>
+            <fmt:formatNumber value="${selectedVariant != null ? selectedVariant.finalPrice : p.price}" type="number"
+                              maxFractionDigits="0"/>
             đ
         </h2>
 
-        <c:set var="colorSet" value="${empty colorSet ? '' : colorSet}" />
+        <c:set var="colorSet" value="${empty colorSet ? '' : colorSet}"/>
         <div class="pd-option">
             <div class="pd-option-head">
                 <span>Màu:</span>
@@ -132,19 +151,19 @@
 
             <div class="pd-chips" id="colorChips">
                 <c:forEach var="v" items="${variants}">
-                    <c:set var="opts" value="${optionMap[v.id]}" />
-                    <c:set var="colorVal" value="" />
+                    <c:set var="opts" value="${optionMap[v.id]}"/>
+                    <c:set var="colorVal" value=""/>
 
                     <c:forEach var="o" items="${opts}">
                         <c:if test="${o.attrCode == 'color' || o.attrName == 'Color' || o.attrName == 'Màu'}">
-                            <c:set var="colorVal" value="${o.value}" />
+                            <c:set var="colorVal" value="${o.value}"/>
                         </c:if>
                     </c:forEach>
 
                     <c:if test="${not empty colorVal}">
                         <!-- unique color -->
                         <c:if test="${!fn:contains(colorSet, '|' += colorVal += '|')}">
-                            <c:set var="colorSet" value="${colorSet}${'|'}${colorVal}${'|'}" />
+                            <c:set var="colorSet" value="${colorSet}${'|'}${colorVal}${'|'}"/>
 
                             <button type="button"
                                     class="chip ${v.id == selectedId ? 'is-active' : ''}"
@@ -162,12 +181,12 @@
             <option value="">Select Size</option>
 
             <c:forEach var="v" items="${variants}">
-                <c:set var="opts" value="${optionMap[v.id]}" />
-                <c:set var="sizeVal" value="" />
+                <c:set var="opts" value="${optionMap[v.id]}"/>
+                <c:set var="sizeVal" value=""/>
 
                 <c:forEach var="o" items="${opts}">
                     <c:if test="${o.attrCode == 'size' || o.attrName == 'Size'}">
-                        <c:set var="sizeVal" value="${o.value}" />
+                        <c:set var="sizeVal" value="${o.value}"/>
                     </c:if>
                 </c:forEach>
 
@@ -252,6 +271,6 @@
         });
     });
 </script>
-
+<script src="./assets/js/sproduct.js"></script>
 </body>
 </html>
