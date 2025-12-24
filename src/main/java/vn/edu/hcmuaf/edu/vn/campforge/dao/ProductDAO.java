@@ -274,4 +274,44 @@ public class ProductDAO {
         return null;
     }
 
+
+    public static List<Product> getRelatedProducts(int cateId, int excludeProductId, int limit) {
+        List<Product> list = new ArrayList<>();
+
+        String sql = """
+        SELECT
+            p.id, p.cateId, p.brandId, p.proName, p.price,
+            p.description, p.sold, p.createAt, p.isDelete,
+            i.path AS image,
+            b.name AS brandName,
+            c.cateName AS cateName
+        FROM products p
+        LEFT JOIN product_imgs i ON p.id = i.product_id AND i.position = 1
+        LEFT JOIN brand b ON p.brandId = b.id
+        LEFT JOIN categories c ON p.cateId = c.id
+        WHERE p.isDelete = 0
+          AND p.cateId = ?
+          AND p.id <> ?
+        ORDER BY p.createAt DESC, p.sold DESC, p.id DESC
+        LIMIT ?
+    """;
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, cateId);
+            ps.setInt(2, excludeProductId);
+            ps.setInt(3, limit);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(mapRow(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }

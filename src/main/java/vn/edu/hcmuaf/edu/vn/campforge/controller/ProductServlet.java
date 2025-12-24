@@ -43,12 +43,14 @@ public class ProductServlet extends HttpServlet {
         }
 
         List<ProductImg> images = detailService.getImages(productId);
+        List<Product> relatedProducts = detailService.getRelatedProducts(productId, 8);
 
         req.setAttribute("product", product);
         req.setAttribute("variants", variants);
         req.setAttribute("optionMap", optionMap);
         req.setAttribute("selectedVariantId", selectedVariantId);
         req.setAttribute("images", images);
+        req.setAttribute("relatedProducts", relatedProducts);
 
         req.getRequestDispatcher("/sproduct.jsp").forward(req, resp);
     }

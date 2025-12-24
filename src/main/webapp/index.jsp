@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
-<fmt:setLocale value="vi_VN" />
 <!DOCTYPE html>
 <html>
   <head>
@@ -37,6 +36,7 @@
       </style>
   </head>
   <body>
+  <fmt:setLocale value="vi_VN" />
   <c:set var="hero" value="${homeBanners['home_hero']}" />
   <c:set var="heroBg" value="${ctx}/assets/img/banner/banner11.jpg" />
   <c:if test="${not empty b_hero && not empty b_hero.imageUrl}">

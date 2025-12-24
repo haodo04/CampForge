@@ -17,10 +17,9 @@
     <link rel="stylesheet" href="./assets/css/sproduct.css"/>
     <link rel="stylesheet" href="assets/css/search.css">
 </head>
-
 <body>
+<fmt:setLocale value="vi_VN"/>
 <div class="header-top"></div>
-
 <section id="header">
     <a href="${pageContext.request.contextPath}/home">
         <img class="logo_img" src="./assets/img/logo_new.png" alt="logo"/>
@@ -91,7 +90,7 @@
             <c:set var="mainImgPath" value="/assets/img/products/no-image.png"/>
         </c:if>
 
-        <img src="<c:url value='${mainImgPath}'/>" width="100%" id="MainImg" data-all = "1" alt="">
+        <img src="<c:url value='${mainImgPath}'/>" width="100%" id="MainImg" data-all="1" alt="">
         <button type="button" class="sp-nav sp-prev" aria-label="Ảnh trước">
             <span aria-hidden="true">‹</span>
         </button>
@@ -219,9 +218,51 @@
 </section>
 
 <section id="product1" class="section-p1">
-    <h2>Sản Phẩm Liên Quan</h2>
-    <p>Bộ sưu tập lều mới</p>
+    <h2>SẢN PHẨM LIÊN QUAN</h2>
+
     <div class="pro-container">
+        <c:forEach var="p" items="${relatedProducts}">
+            <div class="pro" onclick="window.location.href='${pageContext.request.contextPath}/product?id=${p.id}'">
+
+                <a href="${pageContext.request.contextPath}/product?id=${p.id}" onclick="event.stopPropagation();">
+                    <c:choose>
+                        <c:when test="${empty p.image}">
+                            <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png" alt="${p.proName}" />
+                        </c:when>
+
+                        <c:when test="${fn:startsWith(p.image, 'http')}">
+                            <img src="${p.image}" alt="${p.proName}" />
+                        </c:when>
+
+                        <c:otherwise>
+                            <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}" />
+                        </c:otherwise>
+                    </c:choose>
+                </a>
+
+                <div class="des">
+                    <span><c:out value="${p.brandName}" default="(Không rõ hãng)"/></span>
+                    <h5><c:out value="${p.proName}"/></h5>
+
+                    <div class="star">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+
+                    <h4>
+                        <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/>đ
+                    </h4>
+                </div>
+
+                <a href="${pageContext.request.contextPath}/cart?action=add&productId=${p.id}"
+                   onclick="event.stopPropagation();">
+                    <i class="cart fi fi-sr-shopping-cart"></i>
+                </a>
+            </div>
+        </c:forEach>
+
+        <c:if test="${empty relatedProducts}">
+            <p style="padding:12px 0;">Không tìm được sản phẩm liên quan.</p>
+        </c:if>
     </div>
 </section>
 
