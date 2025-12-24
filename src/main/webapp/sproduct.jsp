@@ -5,29 +5,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>Product Details</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link rel="stylesheet" href="./assets/css/sproduct.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css"/>
+    <link rel="stylesheet" href="./assets/css/sproduct.css"/>
     <link rel="stylesheet" href="assets/css/search.css">
 </head>
-
 <body>
+<fmt:setLocale value="vi_VN"/>
 <div class="header-top"></div>
-
 <section id="header">
     <a href="${pageContext.request.contextPath}/home">
         <img class="logo_img" src="./assets/img/logo_new.png" alt="logo"/>
     </a>
 
     <ul id="navbar">
-        <li><a class="active" href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+        <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
         <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
         <li><a href="blog.jsp">Blog</a></li>
         <li><a href="about.jsp">Giới thiệu</a></li>
@@ -36,7 +35,7 @@
 
     <div id="right-icons">
         <div id="search-box">
-            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
+            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
             <button id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
         <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
@@ -48,45 +47,67 @@
     </div>
 </section>
 
-<c:set var="p" value="${product}" />
-<c:set var="selectedId" value="${selectedVariantId}" />
-<c:set var="selectedVariant" value="${null}" />
+<c:set var="p" value="${product}"/>
+<c:set var="selectedId" value="${selectedVariantId}"/>
+<c:set var="selectedVariant" value="${null}"/>
 
 <c:forEach var="v" items="${variants}">
     <c:if test="${v.id == selectedId}">
-        <c:set var="selectedVariant" value="${v}" />
+        <c:set var="selectedVariant" value="${v}"/>
     </c:if>
 </c:forEach>
+
+<nav class="sp-breadcrumb-wrap">
+    <ol class="sp-breadcrumb">
+        <li>
+            <a href="${pageContext.request.contextPath}/">Trang chủ</a>
+        </li>
+        <li class="active">
+            Chạy bộ
+        </li>
+    </ol>
+</nav>
 
 <section id="prodetails" class="section-p1" data-product-id="${p.id}">
     <div class="single-pro-image">
 
-        <c:set var="ctx" value="${pageContext.request.contextPath}" />
+        <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
-        <c:set var="mainImgPath" value="" />
+        <c:set var="mainImgPath" value=""/>
         <c:forEach var="img" items="${images}">
             <c:if test="${img.position == 1 && empty mainImgPath}">
-                <c:set var="mainImgPath" value="${img.path}" />
+                <c:set var="mainImgPath" value="${img.path}"/>
             </c:if>
         </c:forEach>
 
         <c:if test="${empty mainImgPath}">
             <c:if test="${not empty images}">
-                <c:set var="mainImgPath" value="${images[0].path}" />
+                <c:set var="mainImgPath" value="${images[0].path}"/>
             </c:if>
         </c:if>
 
         <c:if test="${empty mainImgPath}">
-            <c:set var="mainImgPath" value="/assets/img/products/no-image.png" />
+            <c:set var="mainImgPath" value="/assets/img/products/no-image.png"/>
         </c:if>
 
-        <img src="<c:url value='${mainImgPath}'/>" width="100%" id="MainImg" alt="">
+        <img src="<c:url value='${mainImgPath}'/>" width="100%" id="MainImg" data-all="1" alt="">
+        <button type="button" class="sp-nav sp-prev" aria-label="Ảnh trước">
+            <span aria-hidden="true">‹</span>
+        </button>
+        <button type="button" class="sp-nav sp-next" aria-label="Ảnh sau">
+            <span aria-hidden="true">›</span>
+        </button>
 
         <div class="small-img-group" id="thumbList">
             <c:forEach var="img" items="${images}">
                 <c:if test="${img.position >= 2}">
                     <div class="small-img-col">
-                        <img src="${ctx}${img.path}" width="100%" class="small-img" alt="">
+                        <img
+                                src="${ctx}${img.path}"
+                                width="100%"
+                                class="small-img"
+                                data-pos="${img.position}"
+                                alt="">
                     </div>
                 </c:if>
             </c:forEach>
@@ -94,15 +115,9 @@
     </div>
 
     <div class="single-pro-details">
-        <h6>
-            Home /
-            <c:out value="${p.cateName}" default="Sản phẩm"/>
-        </h6>
-
         <h4 id="pdName">
             <c:out value="${p.proName}"/>
         </h4>
-
         <div class="pd-row">
             <div class="pd-kv">
                 <span>Mã (SKU):</span>
@@ -119,11 +134,12 @@
         </div>
 
         <h2 id="pdPrice">
-            <fmt:formatNumber value="${selectedVariant != null ? selectedVariant.finalPrice : p.price}" type="number" maxFractionDigits="0"/>
+            <fmt:formatNumber value="${selectedVariant != null ? selectedVariant.finalPrice : p.price}" type="number"
+                              maxFractionDigits="0"/>
             đ
         </h2>
 
-        <c:set var="colorSet" value="${empty colorSet ? '' : colorSet}" />
+        <c:set var="colorSet" value="${empty colorSet ? '' : colorSet}"/>
         <div class="pd-option">
             <div class="pd-option-head">
                 <span>Màu:</span>
@@ -132,19 +148,19 @@
 
             <div class="pd-chips" id="colorChips">
                 <c:forEach var="v" items="${variants}">
-                    <c:set var="opts" value="${optionMap[v.id]}" />
-                    <c:set var="colorVal" value="" />
+                    <c:set var="opts" value="${optionMap[v.id]}"/>
+                    <c:set var="colorVal" value=""/>
 
                     <c:forEach var="o" items="${opts}">
                         <c:if test="${o.attrCode == 'color' || o.attrName == 'Color' || o.attrName == 'Màu'}">
-                            <c:set var="colorVal" value="${o.value}" />
+                            <c:set var="colorVal" value="${o.value}"/>
                         </c:if>
                     </c:forEach>
 
                     <c:if test="${not empty colorVal}">
                         <!-- unique color -->
                         <c:if test="${!fn:contains(colorSet, '|' += colorVal += '|')}">
-                            <c:set var="colorSet" value="${colorSet}${'|'}${colorVal}${'|'}" />
+                            <c:set var="colorSet" value="${colorSet}${'|'}${colorVal}${'|'}"/>
 
                             <button type="button"
                                     class="chip ${v.id == selectedId ? 'is-active' : ''}"
@@ -162,12 +178,12 @@
             <option value="">Select Size</option>
 
             <c:forEach var="v" items="${variants}">
-                <c:set var="opts" value="${optionMap[v.id]}" />
-                <c:set var="sizeVal" value="" />
+                <c:set var="opts" value="${optionMap[v.id]}"/>
+                <c:set var="sizeVal" value=""/>
 
                 <c:forEach var="o" items="${opts}">
                     <c:if test="${o.attrCode == 'size' || o.attrName == 'Size'}">
-                        <c:set var="sizeVal" value="${o.value}" />
+                        <c:set var="sizeVal" value="${o.value}"/>
                     </c:if>
                 </c:forEach>
 
@@ -200,9 +216,53 @@
 </section>
 
 <section id="product1" class="section-p1">
-    <h2>Sản Phẩm Liên Quan</h2>
-    <p>Bộ sưu tập lều mới</p>
+    <h2>SẢN PHẨM LIÊN QUAN</h2>
+
     <div class="pro-container">
+        <c:forEach var="p" items="${relatedProducts}">
+            <div class="pro" onclick="window.location.href='${pageContext.request.contextPath}/product?id=${p.id}'">
+
+                <a href="${pageContext.request.contextPath}/product?id=${p.id}" onclick="event.stopPropagation();">
+                    <c:choose>
+                        <c:when test="${empty p.image}">
+                            <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png"
+                                 alt="${p.proName}"/>
+                        </c:when>
+
+                        <c:when test="${fn:startsWith(p.image, 'http')}">
+                            <img src="${p.image}" alt="${p.proName}"/>
+                        </c:when>
+
+                        <c:otherwise>
+                            <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </a>
+
+                <div class="des">
+                    <span><c:out value="${p.brandName}" default="(Không rõ hãng)"/></span>
+                    <h5><c:out value="${p.proName}"/></h5>
+
+                    <div class="star">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+
+                    <h4>
+                        <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/>đ
+                    </h4>
+                </div>
+
+                <a href="${pageContext.request.contextPath}/cart?action=add&productId=${p.id}"
+                   onclick="event.stopPropagation();">
+                    <i class="cart fi fi-sr-shopping-cart"></i>
+                </a>
+            </div>
+        </c:forEach>
+
+        <c:if test="${empty relatedProducts}">
+            <p style="padding:12px 0;">Không tìm được sản phẩm liên quan.</p>
+        </c:if>
     </div>
 </section>
 
@@ -218,6 +278,51 @@
 </section>
 
 <footer class="section-p1">
+    <div class="col">
+        <h4>Liên hệ</h4>
+        <p>
+            <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
+            Đức, HCM
+        </p>
+        <p><strong>Điện thoại: </strong> +01 2222 365 /(+91) 01 2345 6789</p>
+        <p><strong>Giờ mở cửa: </strong> 10:00 - 18:00, T2 - T7</p>
+        <div class="follow">
+            <h4>Theo dõi chúng tôi</h4>
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-pinterest-p"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h4>Giới thiệu</h4>
+        <a href="#">Về chúng tôi</a>
+        <a href="#">Thông tin giao hàng</a>
+        <a href="#">Chính sách</a>
+        <a href="#">Điều khoản</a>
+        <a href="#">Liên hệ</a>
+    </div>
+    <div class="col">
+        <h4>Tài khoản</h4>
+        <a href="#">Đăng ký</a>
+        <a href="#">Giỏ hàng</a>
+        <a href="#">Yêu thích</a>
+        <a href="#">Đơn hàng</a>
+        <a href="#">Trợ giúp</a>
+    </div>
+    <div class="col install">
+        <h4>Tải ứng dụng</h4>
+        <p>Trên App Store hoặc Google Play</p>
+        <div class="app-row">
+            <img src="./assets/img/pay/app.jpg" alt=""/>
+            <img src="./assets/img/pay/play.jpg" alt=""/>
+        </div>
+        <p>Bảo mật cổng thanh toán</p>
+        <img src="./assets/img/pay/pay.png" alt=""/>
+    </div>
     <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
     </div>
@@ -252,6 +357,6 @@
         });
     });
 </script>
-
+<script src="./assets/js/sproduct.js"></script>
 </body>
 </html>
