@@ -199,6 +199,17 @@
                                 </div>
                             </div>
 
+                            <div class="form-check mb-2">
+                                <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        id="sortRating"
+                                />
+                                <label class="form-check-label" for="sortRating"
+                                >Đánh giá cao <i class="fa-solid fa-star text-warning"></i
+                                ></label>
+                            </div>
+
                             <!-- SORT -->
                             <div class="form-check mb-4">
                                 <input class="form-check-input" type="checkbox" name="sort" value="new" id="sortNew">
@@ -283,7 +294,7 @@
                     </c:choose>
                 </div>
 
-                <c:if test="${totalPages > 1}">
+                <c:if test="${totalPages >= 1}">
 
                     <c:url var="baseUrl" value="/category">
                         <c:if test="${not empty cateId}">

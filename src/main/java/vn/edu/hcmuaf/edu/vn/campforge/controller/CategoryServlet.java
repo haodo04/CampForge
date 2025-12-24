@@ -88,11 +88,11 @@ public class CategoryServlet extends HttpServlet {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("totalItems", totalItems);
 
-        request.setAttribute("cateId", cateId);
+        // ĐỔI TÊN BIẾN Ở ĐÂY ĐỂ KHỚP VỚI JSP
+        request.setAttribute("id", cateId);
         request.setAttribute("brandId", brandId);
-        request.setAttribute("minPrice", min);
-        request.setAttribute("maxPrice", (max != null && max < Double.MAX_VALUE) ? max : null);
-
+        request.setAttribute("minPrice", minPrice);
+        request.setAttribute("maxPrice", maxPrice);
         request.setAttribute("fromDate", fromDateStr);
         request.setAttribute("toDate", toDateStr);
 
