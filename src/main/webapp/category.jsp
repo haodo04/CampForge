@@ -1,98 +1,104 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<fmt:setLocale value="vi_VN" />
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Sản phẩm</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
     />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+            rel="stylesheet"
     />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link href="./assets/css/category.css" rel="stylesheet" />
-    <link href="./assets/css/styles.css" rel="stylesheet" />
-      <link rel="stylesheet" href="assets/css/search.css">
-      <script src="assets/js/search.js"></script>
-  </head>
-  <style>
-      ul{
-          padding-left: 0;
-          position: relative;
-          left: -5px;
-          top: 1px;
-      }
-      #navbar li{
-          padding: 10px 10px 0 0;
-          margin: 10px 5px 5px 25px;
-      }
-      #navbar li a{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-wrap: wrap;
-          width: 100%;
-      }
-      #navbar li a:hover,
-      #navbar li a.active {
-          color: #088178;
-      }
-      #navbar li a.active::after,
-      #navbar li a:hover::after {
-          content: "";
-          width: 40px;
-          height: 2px;
-          background: #088178;
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-      }
-  </style>
-  <body>
-  <div class="header-top"></div>
-  <section id="header">
-      <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
-      <ul id="navbar">
-          <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
-          <li><a class="active" href="${pageContext.request.contextPath}/category">Danh mục</a></li>
-          <li><a href="blog.jsp">Blog</a></li>
-          <li><a href="about.jsp">Giới thiệu</a></li>
-          <li><a href="contact.jsp">Liên hệ</a></li>
-      </ul>
-      <div id="right-icons">
-          <div id="search-box">
-              <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
-              <button id="searchBtn"><i class="fa fa-search"></i></button>
-          </div>
-          <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
-          <div class="auth-buttons">
-              <a href="login.jsp" class="btn-login">Đăng nhập</a>
-              <a href="register.jsp" class="btn-register">Đăng ký</a>
-          </div>
-      </div>
-  </section>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
+    <link rel="stylesheet" href="./assets/css/styles.css"/>
+    <link href="./assets/css/category.css" rel="stylesheet"/>
+    <link href="./assets/css/styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/search.css">
+    <script src="assets/js/search.js"></script>
+</head>
+<style>
+    ul {
+        padding-left: 0;
+        position: relative;
+        left: -5px;
+        top: 1px;
+    }
 
-  <nav aria-label="breadcrumb" class="bg-light py-3">
-  <div class="container">
-    <ol class="breadcrumb m-0">
-      <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Danh mục</li>
-    </ol>
-  </div>
+    #navbar li {
+        padding: 10px 10px 0 0;
+        margin: 10px 5px 5px 25px;
+    }
+
+    #navbar li a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    #navbar li a:hover,
+    #navbar li a.active {
+        color: #088178;
+    }
+
+    #navbar li a.active::after,
+    #navbar li a:hover::after {
+        content: "";
+        width: 40px;
+        height: 2px;
+        background: #088178;
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+    }
+</style>
+<body>
+<div class="header-top"></div>
+<section id="header">
+    <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
+    <ul id="navbar">
+        <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+        <li><a class="active" href="${pageContext.request.contextPath}/category">Danh mục</a></li>
+        <li><a href="blog.jsp">Blog</a></li>
+        <li><a href="about.jsp">Giới thiệu</a></li>
+        <li><a href="contact.jsp">Liên hệ</a></li>
+    </ul>
+    <div id="right-icons">
+        <div id="search-box">
+            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
+            <button id="searchBtn"><i class="fa fa-search"></i></button>
+        </div>
+        <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+        <div class="auth-buttons">
+            <a href="login.jsp" class="btn-login">Đăng nhập</a>
+            <a href="register.jsp" class="btn-register">Đăng ký</a>
+        </div>
+    </div>
+</section>
+
+<nav aria-label="breadcrumb" class="bg-light py-3">
+    <div class="container">
+        <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="index.jsp">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Danh mục</li>
+        </ol>
+    </div>
 </nav>
 
 
-  <main class="shop-page py-3">
-      <div class="container">
+<main class="shop-page py-3">
+    <div class="container">
         <div class="row g-4">
-          <!-- filter -->
+            <!-- filter -->
             <aside class="col-12 col-lg-3">
                 <div class="card">
                     <div class="card-body">
@@ -255,38 +261,40 @@
                         <c:otherwise>
                             <c:forEach var="p" items="${products}">
                                 <div class="col-12 col-sm-6 col-lg-3">
+                                    <c:set var="ctx" value="${pageContext.request.contextPath}" />
                                     <div class="pro">
+                                        <a class="pro-link" href="${ctx}/product?id=${p.id}">
+                                            <c:choose>
+                                                <c:when test="${not empty p.image}">
+                                                    <img src="${ctx}${p.image}" alt="${p.proName}" />
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${ctx}/assets/img/products/no-image.png" alt="${p.proName}" />
+                                                </c:otherwise>
+                                            </c:choose>
 
-                                        <c:choose>
-                                            <c:when test="${not empty p.image}">
-                                                <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}" />
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png" alt="${p.proName}" />
-                                            </c:otherwise>
-                                        </c:choose>
+                                            <div class="des">
+                                                <span><c:out value="${p.brandName}" default="(Không rõ hãng)"/></span>
+                                                <h5><c:out value="${p.proName}" /></h5>
 
-                                        <div class="des">
-                <span>
-                  <c:out value="${p.brandName}" default="(Không rõ hãng)"/>
-                </span>
+                                                <div class="star" aria-label="Đánh giá 5/5">
+                                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                </div>
 
-                                            <h5><c:out value="${p.proName}" /></h5>
-
-                                            <div class="star" aria-label="Đánh giá 5/5">
-                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
+                                                <h4>
+                                                    <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/>đ
+                                                </h4>
                                             </div>
+                                        </a>
 
-                                            <h4>${p.formattedPrice}</h4>
-
-                                            <a href="${pageContext.request.contextPath}/sproduct?id=${p.id}"
-                                               class="add-cart" aria-label="Thêm vào giỏ">
-                                                <i class="fa-solid fa-cart-shopping cart"></i>
-                                            </a>
-                                        </div>
-
+                                        <a href="${ctx}/cart?action=add&productId=${p.id}"
+                                           class="add-cart"
+                                           aria-label="Thêm vào giỏ"
+                                           onclick="event.stopPropagation();">
+                                            <i class="fa-solid fa-cart-shopping cart"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -299,16 +307,16 @@
                     <!-- Base URL giữ filter -->
                     <c:url var="baseUrl" value="category">
                         <c:if test="${not empty id}">
-                            <c:param name="id" value="${id}" />
+                            <c:param name="id" value="${id}"/>
                         </c:if>
                         <c:if test="${not empty brandId}">
-                            <c:param name="brandId" value="${brandId}" />
+                            <c:param name="brandId" value="${brandId}"/>
                         </c:if>
                         <c:if test="${not empty minPrice}">
-                            <c:param name="minPrice" value="${minPrice}" />
+                            <c:param name="minPrice" value="${minPrice}"/>
                         </c:if>
                         <c:if test="${not empty maxPrice}">
-                            <c:param name="maxPrice" value="${maxPrice}" />
+                            <c:param name="maxPrice" value="${maxPrice}"/>
                         </c:if>
                     </c:url>
 
@@ -316,19 +324,21 @@
                         <ul class="pagination justify-content-center">
 
                             <!-- PREVIOUS -->
-                            <li class="page-item ${page == 1 ? 'disabled' : ''}">
-                                <c:url var="prevUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${page - 1}" />
-                                </c:url>
-                                <a class="page-link" href="${prevUrl}" aria-label="Previous">
-                                    &laquo;
-                                </a>
-                            </li>
+                            <c:if test="${page > 1}">
+                                <li class="page-item">
+                                    <c:url var="prevUrl" value="${baseUrl}">
+                                        <c:param name="page" value="${page - 1}"/>
+                                    </c:url>
+                                    <a class="page-link" href="${prevUrl}" aria-label="Previous">
+                                        &laquo;
+                                    </a>
+                                </li>
+                            </c:if>
 
                             <!-- PAGE NUMBER -->
                             <c:forEach var="i" begin="1" end="${totalPages}">
                                 <c:url var="pageUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${i}" />
+                                    <c:param name="page" value="${i}"/>
                                 </c:url>
 
                                 <li class="page-item ${i == page ? 'active' : ''}">
@@ -339,7 +349,7 @@
                             <!-- NEXT -->
                             <li class="page-item ${page == totalPages ? 'disabled' : ''}">
                                 <c:url var="nextUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${page + 1}" />
+                                    <c:param name="page" value="${page + 1}"/>
                                 </c:url>
                                 <a class="page-link" href="${nextUrl}" aria-label="Next">
                                     &raquo;
@@ -352,12 +362,11 @@
                 </c:if>
 
 
-
             </section>
 
         </div>
-      </div>
-    </main>
+    </div>
+</main>
 
 <section id="newsletter" class="section-p1">
     <div class="newstext">
@@ -371,57 +380,57 @@
 </section>
 
 <footer class="section-p1">
-      <div class="col">
+    <div class="col">
         <h4>Liên hệ</h4>
         <p>
-          <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
-          Đức, HCM
+            <strong>Địa chỉ: </strong> 562 Phường Linh Trung, Khu phố 6, TP.Thủ
+            Đức, HCM
         </p>
         <p><strong>Điện thoại: </strong> +01 2222 365 /(+91) 01 2345 6789</p>
         <p><strong>Giờ mở cửa: </strong> 10:00 - 18:00, T2 - T7</p>
         <div class="follow">
-          <h4>Theo dõi chúng tôi</h4>
-          <div class="icon">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-pinterest-p"></i>
-            <i class="fab fa-youtube"></i>
-          </div>
+            <h4>Theo dõi chúng tôi</h4>
+            <div class="icon">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-pinterest-p"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
         </div>
-      </div>
-      <div class="col">
+    </div>
+    <div class="col">
         <h4>Giới thiệu</h4>
         <a href="#">Về chúng tôi</a>
         <a href="#">Thông tin giao hàng</a>
         <a href="#">Chính sách</a>
         <a href="#">Điều khoản</a>
         <a href="#">Liên hệ</a>
-      </div>
-      <div class="col">
+    </div>
+    <div class="col">
         <h4>Tài khoản</h4>
         <a href="#">Đăng ký</a>
         <a href="#">Giỏ hàng</a>
         <a href="#">Yêu thích</a>
         <a href="#">Đơn hàng</a>
         <a href="#">Trợ giúp</a>
-      </div>
-      <div class="col install">
+    </div>
+    <div class="col install">
         <h4>Tải ứng dụng</h4>
         <p>Trên App Store hoặc Google Play</p>
         <div class="app-row">
-          <img src="./assets/img/pay/app.jpg" alt="" />
-          <img src="./assets/img/pay/play.jpg" alt="" />
+            <img src="./assets/img/pay/app.jpg" alt=""/>
+            <img src="./assets/img/pay/play.jpg" alt=""/>
         </div>
         <p>Bảo mật cổng thanh toán</p>
-        <img src="./assets/img/pay/pay.png" alt="" />
-      </div>
-      <div class="copyright">
+        <img src="./assets/img/pay/pay.png" alt=""/>
+    </div>
+    <div class="copyright">
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
-      </div>
+    </div>
 </footer>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
