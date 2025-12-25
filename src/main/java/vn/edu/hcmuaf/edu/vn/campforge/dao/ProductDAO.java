@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.Date;
 
 public class ProductDAO {
+
     private static Product mapRow(ResultSet rs) throws SQLException {
         Product p = new Product();
         p.setId(rs.getInt("id"));
@@ -32,6 +33,7 @@ public class ProductDAO {
             Double max,
             Date fromDate,
             Date toDate,
+            String keyword,
             int limit,
             int offset
     ) {
@@ -83,6 +85,11 @@ public class ProductDAO {
             params.add(new Timestamp(toDate.getTime()));
         }
 
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND p.proName LIKE ?");
+            params.add("%" + keyword.trim() + "%");
+        }
+
         sql.append(" ORDER BY p.createAt DESC, p.id DESC LIMIT ? OFFSET ?");
         params.add(limit);
         params.add(offset);
@@ -115,7 +122,7 @@ public class ProductDAO {
             int limit,
             int offset
     ) {
-        return findProducts(cateId, brandId, min, max, null, null, limit, offset);
+        return findProducts(cateId, brandId, min, max, null, null, null, limit, offset);
     }
 
     public static int countProducts(
@@ -124,7 +131,8 @@ public class ProductDAO {
             Double min,
             Double max,
             Date fromDate,
-            Date toDate
+            Date toDate,
+            String keyword
     ) {
         StringBuilder sql = new StringBuilder("""
             SELECT COUNT(*)
@@ -164,6 +172,11 @@ public class ProductDAO {
             params.add(new Timestamp(toDate.getTime()));
         }
 
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND p.proName LIKE ?");
+            params.add("%" + keyword.trim() + "%");
+        }
+
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
@@ -188,12 +201,13 @@ public class ProductDAO {
             Double min,
             Double max
     ) {
-        return countProducts(cateId, brandId, min, max, null, null);
+        return countProducts(cateId, brandId, min, max, null, null, null);
     }
 
     public static List<Product> getLatestProducts(int limit) {
-        return findProducts(null, null, null, null, null, null, limit, 0);
+        return findProducts(null, null, null, null, null, null, null, limit, 0);
     }
+
     public static List<Product> getBestSellerProducts(int limit) {
         List<Product> list = new ArrayList<>();
 
@@ -233,18 +247,18 @@ public class ProductDAO {
 
     public static Product findById(int productId) {
         String sql = """
-        SELECT
-            p.id, p.cateId, p.brandId, p.proName, p.price,
-            p.description, p.sold, p.createAt, p.isDelete,
-            b.name AS brandName,
-            c.cateName AS cateName
-        FROM products p
-        LEFT JOIN brand b ON p.brandId = b.id
-        LEFT JOIN categories c ON p.cateId = c.id
-        WHERE p.isDelete = 0
-          AND p.id = ?
-        LIMIT 1
-    """;
+            SELECT
+                p.id, p.cateId, p.brandId, p.proName, p.price,
+                p.description, p.sold, p.createAt, p.isDelete,
+                b.name AS brandName,
+                c.cateName AS cateName
+            FROM products p
+            LEFT JOIN brand b ON p.brandId = b.id
+            LEFT JOIN categories c ON p.cateId = c.id
+            WHERE p.isDelete = 0
+              AND p.id = ?
+            LIMIT 1
+        """;
 
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -268,33 +282,32 @@ public class ProductDAO {
                     return p;
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-
     public static List<Product> getRelatedProducts(int cateId, int excludeProductId, int limit) {
         List<Product> list = new ArrayList<>();
 
         String sql = """
-        SELECT
-            p.id, p.cateId, p.brandId, p.proName, p.price,
-            p.description, p.sold, p.createAt, p.isDelete,
-            i.path AS image,
-            b.name AS brandName,
-            c.cateName AS cateName
-        FROM products p
-        LEFT JOIN product_imgs i ON p.id = i.product_id AND i.position = 1
-        LEFT JOIN brand b ON p.brandId = b.id
-        LEFT JOIN categories c ON p.cateId = c.id
-        WHERE p.isDelete = 0
-          AND p.cateId = ?
-          AND p.id <> ?
-        ORDER BY p.createAt DESC, p.sold DESC, p.id DESC
-        LIMIT ?
-    """;
+            SELECT
+                p.id, p.cateId, p.brandId, p.proName, p.price,
+                p.description, p.sold, p.createAt, p.isDelete,
+                i.path AS image,
+                b.name AS brandName,
+                c.cateName AS cateName
+            FROM products p
+            LEFT JOIN product_imgs i ON p.id = i.product_id AND i.position = 1
+            LEFT JOIN brand b ON p.brandId = b.id
+            LEFT JOIN categories c ON p.cateId = c.id
+            WHERE p.isDelete = 0
+              AND p.cateId = ?
+              AND p.id <> ?
+            ORDER BY p.createAt DESC, p.sold DESC, p.id DESC
+            LIMIT ?
+        """;
 
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -304,7 +317,9 @@ public class ProductDAO {
             ps.setInt(3, limit);
 
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) list.add(mapRow(rs));
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
             }
 
         } catch (SQLException e) {
@@ -313,5 +328,4 @@ public class ProductDAO {
 
         return list;
     }
-
 }

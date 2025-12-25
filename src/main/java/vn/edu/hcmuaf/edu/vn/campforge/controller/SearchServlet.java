@@ -14,8 +14,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet("/category")
-public class CategoryServlet extends HttpServlet {
+@WebServlet("/search")
+public class SearchServlet extends HttpServlet {
 
     private static final int PAGE_SIZE = 12;
 
@@ -23,13 +23,13 @@ public class CategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Integer cateId  = parseIntOrNull(request.getParameter("id"));
+        String keyword = request.getParameter("q");
+
+        Integer cateId  = parseIntOrNull(request.getParameter("cateId"));
         Integer brandId = parseIntOrNull(request.getParameter("brandId"));
 
         Double minPrice = parseDoubleOrNull(request.getParameter("minPrice"));
         Double maxPrice = parseDoubleOrNull(request.getParameter("maxPrice"));
-
-        String keyword = request.getParameter("q");
 
         String fromDateStr = request.getParameter("fromDate");
         String toDateStr   = request.getParameter("toDate");
@@ -81,22 +81,18 @@ public class CategoryServlet extends HttpServlet {
                 cateId, brandId, min, max, fromDate, toDate, keyword, PAGE_SIZE, offset
         );
 
-        List<Product> latestProducts = ProductService.getLatestProducts(12);
-
         request.setAttribute("products", products);
-        request.setAttribute("latestProducts", latestProducts);
-
         request.setAttribute("page", page);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("totalItems", totalItems);
 
-        request.setAttribute("id", cateId);
+        request.setAttribute("q", keyword);
+        request.setAttribute("cateId", cateId);
         request.setAttribute("brandId", brandId);
         request.setAttribute("minPrice", minPrice);
         request.setAttribute("maxPrice", maxPrice);
         request.setAttribute("fromDate", fromDateStr);
         request.setAttribute("toDate", toDateStr);
-        request.setAttribute("q", keyword);
 
         request.getRequestDispatcher("/category.jsp").forward(request, response);
     }

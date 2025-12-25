@@ -8,23 +8,22 @@ import java.util.List;
 
 public class ProductService {
 
-    // Lấy tất cả (không phân trang)
     public static List<Product> getAllProducts() {
-        return ProductDAO.findProducts(null, null, null, null, Integer.MAX_VALUE, 0);
+        return ProductDAO.findProducts(null, null, null, null, null, null, null, Integer.MAX_VALUE, 0);
     }
 
     public static List<Product> getByCategory(int cateId) {
-        return ProductDAO.findProducts(cateId, null, null, null, Integer.MAX_VALUE, 0);
+        return ProductDAO.findProducts(cateId, null, null, null, null, null, null, Integer.MAX_VALUE, 0);
     }
 
     public static List<Product> getByBrand(int brandId) {
-        return ProductDAO.findProducts(null, brandId, null, null, Integer.MAX_VALUE, 0);
+        return ProductDAO.findProducts(null, brandId, null, null, null, null, null, Integer.MAX_VALUE, 0);
     }
 
     public static List<Product> getByPrice(double min, double max) {
         if (min < 0) min = 0;
         if (max < min) return List.of();
-        return ProductDAO.findProducts(null, null, min, max, Integer.MAX_VALUE, 0);
+        return ProductDAO.findProducts(null, null, min, max, null, null, null, Integer.MAX_VALUE, 0);
     }
 
     public static List<Product> findProducts(
@@ -32,13 +31,13 @@ public class ProductService {
             Integer brandId,
             Double min,
             Double max,
+            String keyword,
             int limit,
             int offset
     ) {
-        return findProducts(cateId, brandId, min, max, null, null, limit, offset);
+        return findProducts(cateId, brandId, min, max, null, null, keyword, limit, offset);
     }
 
-    // Hàm mới – có lọc ngày
     public static List<Product> findProducts(
             Integer cateId,
             Integer brandId,
@@ -46,6 +45,7 @@ public class ProductService {
             Double max,
             Date fromDate,
             Date toDate,
+            String keyword,
             int limit,
             int offset
     ) {
@@ -55,30 +55,31 @@ public class ProductService {
         if (min != null && min < 0) min = 0.0;
         if (min != null && max != null && max < min) return List.of();
 
-        // ngày không hợp lệ
         if (fromDate != null && toDate != null && fromDate.after(toDate)) {
             return List.of();
         }
 
-        if (fromDate == null && toDate == null) {
-            return ProductDAO.findProducts(
-                    cateId, brandId, min, max, limit, offset
-            );
-        }
-
         return ProductDAO.findProducts(
-                cateId, brandId, min, max, fromDate, toDate, limit, offset
+                cateId,
+                brandId,
+                min,
+                max,
+                fromDate,
+                toDate,
+                keyword,
+                limit,
+                offset
         );
     }
-
 
     public static int countProducts(
             Integer cateId,
             Integer brandId,
             Double min,
-            Double max
+            Double max,
+            String keyword
     ) {
-        return countProducts(cateId, brandId, min, max, null, null);
+        return countProducts(cateId, brandId, min, max, null, null, keyword);
     }
 
     public static int countProducts(
@@ -87,7 +88,8 @@ public class ProductService {
             Double min,
             Double max,
             Date fromDate,
-            Date toDate
+            Date toDate,
+            String keyword
     ) {
         if (min != null && min < 0) min = 0.0;
         if (min != null && max != null && max < min) return 0;
@@ -96,12 +98,14 @@ public class ProductService {
             return 0;
         }
 
-        if (fromDate == null && toDate == null) {
-            return ProductDAO.countProducts(cateId, brandId, min, max);
-        }
-
         return ProductDAO.countProducts(
-                cateId, brandId, min, max, fromDate, toDate
+                cateId,
+                brandId,
+                min,
+                max,
+                fromDate,
+                toDate,
+                keyword
         );
     }
 
@@ -121,5 +125,4 @@ public class ProductService {
     public static List<Product> getHomeBestSeller(int limit) {
         return getBestSellerProducts(limit);
     }
-
 }

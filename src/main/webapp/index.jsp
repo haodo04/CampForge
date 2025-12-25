@@ -67,10 +67,12 @@
           <li><a href="contact.jsp">Liên hệ</a></li>
       </ul>
       <div id="right-icons">
-          <div id="search-box">
-              <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
-              <button id="searchBtn"><i class="fa fa-search"></i></button>
-          </div>
+          <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex">
+              <div id="search-box">
+                  <input type="text" name="q" id="searchInput" placeholder="Tìm sản phẩm..." value="${q}" />
+                  <button id="searchBtn"><i class="fa fa-search"></i></button>
+              </div>
+          </form>
           <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
           <div class="auth-buttons">
               <a href="login.jsp" class="btn-login">Đăng nhập</a>
