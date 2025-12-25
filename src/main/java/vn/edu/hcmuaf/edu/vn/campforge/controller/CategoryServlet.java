@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet("/category")
+@WebServlet({"/category", "/search"})
 public class CategoryServlet extends HttpServlet {
 
     private static final int PAGE_SIZE = 12;
@@ -23,19 +23,20 @@ public class CategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Integer cateId  = parseIntOrNull(request.getParameter("id"));
+        String keyword = request.getParameter("q");
+        String sort = request.getParameter("sort");
+
+        Integer cateId = parseIntOrNull(request.getParameter("id"));
         Integer brandId = parseIntOrNull(request.getParameter("brandId"));
 
         Double minPrice = parseDoubleOrNull(request.getParameter("minPrice"));
         Double maxPrice = parseDoubleOrNull(request.getParameter("maxPrice"));
 
-        String keyword = request.getParameter("q");
-
         String fromDateStr = request.getParameter("fromDate");
-        String toDateStr   = request.getParameter("toDate");
+        String toDateStr = request.getParameter("toDate");
 
         Date fromDate = null;
-        Date toDate   = null;
+        Date toDate = null;
 
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -59,8 +60,8 @@ public class CategoryServlet extends HttpServlet {
 
         Double min = null, max = null;
         if (minPrice != null || maxPrice != null) {
-            double minVal = (minPrice != null) ? minPrice : 0.0;
-            double maxVal = (maxPrice != null) ? maxPrice : Double.MAX_VALUE;
+            double minVal = minPrice != null ? minPrice : 0;
+            double maxVal = maxPrice != null ? maxPrice : Double.MAX_VALUE;
             if (maxVal >= minVal) {
                 min = minVal;
                 max = maxVal;
@@ -77,14 +78,12 @@ public class CategoryServlet extends HttpServlet {
         if (page > totalPages) page = totalPages;
         int offset = (page - 1) * PAGE_SIZE;
 
+        // Gọi service với sort
         List<Product> products = ProductService.findProducts(
-                cateId, brandId, min, max, fromDate, toDate, keyword, PAGE_SIZE, offset
+                cateId, brandId, min, max, fromDate, toDate, keyword, sort, PAGE_SIZE, offset
         );
 
-        List<Product> latestProducts = ProductService.getLatestProducts(12);
-
         request.setAttribute("products", products);
-        request.setAttribute("latestProducts", latestProducts);
 
         request.setAttribute("page", page);
         request.setAttribute("totalPages", totalPages);
@@ -97,6 +96,7 @@ public class CategoryServlet extends HttpServlet {
         request.setAttribute("fromDate", fromDateStr);
         request.setAttribute("toDate", toDateStr);
         request.setAttribute("q", keyword);
+        request.setAttribute("sort", sort);
 
         request.getRequestDispatcher("/category.jsp").forward(request, response);
     }
@@ -121,7 +121,7 @@ public class CategoryServlet extends HttpServlet {
 
     private int parsePage(String s) {
         try {
-            int p = (s == null || s.isBlank()) ? 1 : Integer.parseInt(s.trim());
+            int p = s == null || s.isBlank() ? 1 : Integer.parseInt(s.trim());
             return Math.max(p, 1);
         } catch (Exception e) {
             return 1;

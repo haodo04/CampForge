@@ -34,6 +34,7 @@ public class ProductDAO {
             Date fromDate,
             Date toDate,
             String keyword,
+            String sort,
             int limit,
             int offset
     ) {
@@ -90,7 +91,16 @@ public class ProductDAO {
             params.add("%" + keyword.trim() + "%");
         }
 
-        sql.append(" ORDER BY p.createAt DESC, p.id DESC LIMIT ? OFFSET ?");
+        // Xử lý sort
+        if ("new".equals(sort)) {
+            sql.append(" ORDER BY p.createAt DESC, p.id DESC");
+        } else if ("best".equals(sort)) {
+            sql.append(" ORDER BY p.sold DESC, p.createAt DESC, p.id DESC");
+        } else {
+            sql.append(" ORDER BY p.id DESC");
+        }
+
+        sql.append(" LIMIT ? OFFSET ?");
         params.add(limit);
         params.add(offset);
 
@@ -122,7 +132,7 @@ public class ProductDAO {
             int limit,
             int offset
     ) {
-        return findProducts(cateId, brandId, min, max, null, null, null, limit, offset);
+        return findProducts(cateId, brandId, min, max, null, null, null, null, limit, offset);
     }
 
     public static int countProducts(
@@ -205,7 +215,7 @@ public class ProductDAO {
     }
 
     public static List<Product> getLatestProducts(int limit) {
-        return findProducts(null, null, null, null, null, null, null, limit, 0);
+        return findProducts(null, null, null, null, null, null, null, "new", limit, 0);
     }
 
     public static List<Product> getBestSellerProducts(int limit) {

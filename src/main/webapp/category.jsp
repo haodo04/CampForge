@@ -105,7 +105,7 @@
                         </div>
 
                         <!-- FORM DUY NHẤT -->
-                        <form action="category" method="get">
+                        <form action="${pageContext.request.contextPath}/category" method="get">
 
                             <!-- GIÁ -->
                             <div class="mb-4">
@@ -214,7 +214,7 @@
 
                             <!-- SORT -->
                             <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" name="sort" value="new" id="sortNew">
+                                <input class="form-check-input" type="checkbox" name="sort" value="new" id="sortNew" ${sort == 'new' ? 'checked' : ''}>
                                 <label class="form-check-label" for="sortNew">Sản phẩm mới nhất</label>
                             </div>
 
@@ -297,40 +297,36 @@
                 </div>
 
                 <c:if test="${totalPages >= 1}">
-
-                    <!-- Base URL giữ filter -->
-                    <c:url var="baseUrl" value="category">
-                        <c:if test="${not empty id}">
-                            <c:param name="id" value="${id}" />
-                        </c:if>
-                        <c:if test="${not empty brandId}">
-                            <c:param name="brandId" value="${brandId}" />
-                        </c:if>
-                        <c:if test="${not empty minPrice}">
-                            <c:param name="minPrice" value="${minPrice}" />
-                        </c:if>
-                        <c:if test="${not empty maxPrice}">
-                            <c:param name="maxPrice" value="${maxPrice}" />
-                        </c:if>
-                    </c:url>
-
                     <nav class="mt-4">
                         <ul class="pagination justify-content-center">
 
-                            <!-- PREVIOUS -->
+                            <c:url var="prevUrl" value="/category">
+                                <c:param name="page" value="${page - 1}" />
+                                <c:if test="${not empty id}"><c:param name="id" value="${id}" /></c:if>
+                                <c:if test="${not empty brandId}"><c:param name="brandId" value="${brandId}" /></c:if>
+                                <c:if test="${not empty minPrice}"><c:param name="minPrice" value="${minPrice}" /></c:if>
+                                <c:if test="${not empty maxPrice}"><c:param name="maxPrice" value="${maxPrice}" /></c:if>
+                                <c:if test="${not empty fromDate}"><c:param name="fromDate" value="${fromDate}" /></c:if>
+                                <c:if test="${not empty toDate}"><c:param name="toDate" value="${toDate}" /></c:if>
+                                <c:if test="${not empty q}"><c:param name="q" value="${q}" /></c:if>
+                                <c:if test="${not empty sort}"><c:param name="sort" value="${sort}" /></c:if>
+                            </c:url>
+
                             <li class="page-item ${page == 1 ? 'disabled' : ''}">
-                                <c:url var="prevUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${page - 1}" />
-                                </c:url>
-                                <a class="page-link" href="${prevUrl}" aria-label="Previous">
-                                    &laquo;
-                                </a>
+                                <a class="page-link" href="${prevUrl}">&laquo;</a>
                             </li>
 
-                            <!-- PAGE NUMBER -->
                             <c:forEach var="i" begin="1" end="${totalPages}">
-                                <c:url var="pageUrl" value="${baseUrl}">
+                                <c:url var="pageUrl" value="/category">
                                     <c:param name="page" value="${i}" />
+                                    <c:if test="${not empty id}"><c:param name="id" value="${id}" /></c:if>
+                                    <c:if test="${not empty brandId}"><c:param name="brandId" value="${brandId}" /></c:if>
+                                    <c:if test="${not empty minPrice}"><c:param name="minPrice" value="${minPrice}" /></c:if>
+                                    <c:if test="${not empty maxPrice}"><c:param name="maxPrice" value="${maxPrice}" /></c:if>
+                                    <c:if test="${not empty fromDate}"><c:param name="fromDate" value="${fromDate}" /></c:if>
+                                    <c:if test="${not empty toDate}"><c:param name="toDate" value="${toDate}" /></c:if>
+                                    <c:if test="${not empty q}"><c:param name="q" value="${q}" /></c:if>
+                                    <c:if test="${not empty sort}"><c:param name="sort" value="${sort}" /></c:if>
                                 </c:url>
 
                                 <li class="page-item ${i == page ? 'active' : ''}">
@@ -338,22 +334,25 @@
                                 </li>
                             </c:forEach>
 
-                            <!-- NEXT -->
+                            <c:url var="nextUrl" value="/category">
+                                <c:param name="page" value="${page + 1}" />
+                                <c:if test="${not empty id}"><c:param name="id" value="${id}" /></c:if>
+                                <c:if test="${not empty brandId}"><c:param name="brandId" value="${brandId}" /></c:if>
+                                <c:if test="${not empty minPrice}"><c:param name="minPrice" value="${minPrice}" /></c:if>
+                                <c:if test="${not empty maxPrice}"><c:param name="maxPrice" value="${maxPrice}" /></c:if>
+                                <c:if test="${not empty fromDate}"><c:param name="fromDate" value="${fromDate}" /></c:if>
+                                <c:if test="${not empty toDate}"><c:param name="toDate" value="${toDate}" /></c:if>
+                                <c:if test="${not empty q}"><c:param name="q" value="${q}" /></c:if>
+                                <c:if test="${not empty sort}"><c:param name="sort" value="${sort}" /></c:if>
+                            </c:url>
+
                             <li class="page-item ${page == totalPages ? 'disabled' : ''}">
-                                <c:url var="nextUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${page + 1}" />
-                                </c:url>
-                                <a class="page-link" href="${nextUrl}" aria-label="Next">
-                                    &raquo;
-                                </a>
+                                <a class="page-link" href="${nextUrl}">&raquo;</a>
                             </li>
 
                         </ul>
                     </nav>
-
                 </c:if>
-
-
 
             </section>
 
