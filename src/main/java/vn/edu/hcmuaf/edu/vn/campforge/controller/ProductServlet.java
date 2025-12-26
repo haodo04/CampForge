@@ -8,12 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Product;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductImg;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductVariant;
-import vn.edu.hcmuaf.edu.vn.campforge.model.VariantOption;
 import vn.edu.hcmuaf.edu.vn.campforge.service.ProductDetailService;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @WebServlet("/product")
 public class ProductServlet extends HttpServlet {
@@ -35,11 +33,26 @@ public class ProductServlet extends HttpServlet {
         }
 
         List<ProductVariant> variants = detailService.getVariants(productId);
-        Map<Integer, List<VariantOption>> optionMap = detailService.getOptionMap(productId);
 
         Integer selectedVariantId = parseIntObj(req.getParameter("variantId"));
-        if (selectedVariantId == null) {
-            selectedVariantId = (!variants.isEmpty()) ? variants.get(0).getId() : null;
+        ProductVariant selectedVariant = null;
+
+        if (!variants.isEmpty()) {
+            if (selectedVariantId != null) {
+                for (ProductVariant v : variants) {
+                    if (v.getId() == selectedVariantId) {
+                        selectedVariant = v;
+                        break;
+                    }
+                }
+            }
+
+            if (selectedVariant == null) {
+                selectedVariant = variants.get(0);
+                selectedVariantId = selectedVariant.getId();
+            }
+        } else {
+            selectedVariantId = null;
         }
 
         List<ProductImg> images = detailService.getImages(productId);
@@ -47,8 +60,8 @@ public class ProductServlet extends HttpServlet {
 
         req.setAttribute("product", product);
         req.setAttribute("variants", variants);
-        req.setAttribute("optionMap", optionMap);
         req.setAttribute("selectedVariantId", selectedVariantId);
+        req.setAttribute("selectedVariant", selectedVariant);
         req.setAttribute("images", images);
         req.setAttribute("relatedProducts", relatedProducts);
 

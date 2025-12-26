@@ -61,7 +61,7 @@
   width: 100%;
   height: auto; 
   aspect-ratio: 4/3; 
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 20px;
 }
 
@@ -226,4 +226,14 @@ footer .footer-col {
 
 .custom-padding {
   padding: 40px 80px;
+}
+
+.pro .pro-link{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.pro .pro-link:hover{
+  text-decoration: none;
+  color: inherit;
 }
