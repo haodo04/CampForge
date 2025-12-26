@@ -11,13 +11,13 @@ public class ProductVariant implements Serializable {
 
     private String imagePath;
 
-    private Long price;
-    private long finalPrice;
+    private Double price;
+    private Double finalPrice;
 
     private int stock;
     private boolean isActive;
 
-    public ProductVariant(int id, int productId, String color, String size, String imagePath, Long price, long finalPrice, int stock, boolean isActive) {
+    public ProductVariant(int id, int productId, String color, String size, String imagePath, Double price, Double finalPrice, int stock, boolean isActive) {
         this.id = id;
         this.productId = productId;
         this.color = color;
@@ -72,19 +72,19 @@ public class ProductVariant implements Serializable {
         this.imagePath = imagePath;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public long getFinalPrice() {
+    public Double getFinalPrice() {
         return finalPrice;
     }
 
-    public void setFinalPrice(long finalPrice) {
+    public void setFinalPrice(Double finalPrice) {
         this.finalPrice = finalPrice;
     }
 
