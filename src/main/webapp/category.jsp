@@ -1,8 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
-<fmt:setLocale value="vi_VN" />
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -22,7 +20,7 @@
     <link href="./assets/css/category.css" rel="stylesheet"/>
     <link href="./assets/css/styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="assets/css/search.css">
-    <script src="assets/js/search.js"></script>
+
 </head>
 <style>
     ul {
@@ -61,7 +59,7 @@
         left: 0;
     }
 </style>
-<body>
+<body data-ctx="${pageContext.request.contextPath}">
 <div class="header-top"></div>
 <section id="header">
     <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
@@ -73,10 +71,13 @@
         <li><a href="contact.jsp">Liên hệ</a></li>
     </ul>
     <div id="right-icons">
-        <div id="search-box">
-            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
-            <button id="searchBtn"><i class="fa fa-search"></i></button>
-        </div>
+        <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex">
+            <div id="search-box">
+                <input type="text" name="q" id="searchInput"
+                       placeholder="Tìm sản phẩm..." value="${q}" />
+                <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
         <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
         <div class="auth-buttons">
             <a href="login.jsp" class="btn-login">Đăng nhập</a>
@@ -249,7 +250,7 @@
                 </div>
             </aside>
             <section class="col-12 col-lg-9">
-
+                <c:set var="ctx" value="${pageContext.request.contextPath}" />
                 <div id="product-grid" class="row g-3" style="display: flex; flex-wrap: wrap;">
                     <c:choose>
                         <c:when test="${empty products}">
@@ -261,40 +262,40 @@
                         <c:otherwise>
                             <c:forEach var="p" items="${products}">
                                 <div class="col-12 col-sm-6 col-lg-3">
-                                    <c:set var="ctx" value="${pageContext.request.contextPath}" />
-                                    <div class="pro">
-                                        <a class="pro-link" href="${ctx}/product?id=${p.id}">
-                                            <c:choose>
-                                                <c:when test="${not empty p.image}">
-                                                    <img src="${ctx}${p.image}" alt="${p.proName}" />
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <img src="${ctx}/assets/img/products/no-image.png" alt="${p.proName}" />
-                                                </c:otherwise>
-                                            </c:choose>
+                                    <div class="pro" onclick="window.location.href='${ctx}/product?id=${p.id}'">
 
-                                            <div class="des">
-                                                <span><c:out value="${p.brandName}" default="(Không rõ hãng)"/></span>
-                                                <h5><c:out value="${p.proName}" /></h5>
+                                        <c:choose>
+                                            <c:when test="${not empty p.image}">
+                                                <img src="${pageContext.request.contextPath}${p.image}"
+                                                     alt="${p.proName}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png"
+                                                     alt="${p.proName}"/>
+                                            </c:otherwise>
+                                        </c:choose>
 
-                                                <div class="star" aria-label="Đánh giá 5/5">
-                                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                                    <i class="fa-solid fa-star"></i>
-                                                </div>
+                                        <div class="des">
+                <span>
+                  <c:out value="${p.brandName}" default="(Không rõ hãng)"/>
+                </span>
 
-                                                <h4>
-                                                    <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/>đ
-                                                </h4>
+                                            <h5><c:out value="${p.proName}"/></h5>
+
+                                            <div class="star" aria-label="Đánh giá 5/5">
+                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
                                             </div>
-                                        </a>
 
-                                        <a href="${ctx}/cart?action=add&productId=${p.id}"
-                                           class="add-cart"
-                                           aria-label="Thêm vào giỏ"
-                                           onclick="event.stopPropagation();">
-                                            <i class="fa-solid fa-cart-shopping cart"></i>
-                                        </a>
+                                            <h4>${p.formattedPrice}</h4>
+
+                                            <a href="${pageContext.request.contextPath}/product?id=${p.id}"
+                                               class="add-cart" aria-label="Thêm vào giỏ">
+                                                <i class="fa-solid fa-cart-shopping cart"></i>
+                                            </a>
+                                        </div>
+
                                     </div>
                                 </div>
                             </c:forEach>
@@ -302,43 +303,41 @@
                     </c:choose>
                 </div>
 
-                <c:if test="${totalPages >= 1}">
-
-                    <!-- Base URL giữ filter -->
-                    <c:url var="baseUrl" value="category">
-                        <c:if test="${not empty id}">
-                            <c:param name="id" value="${id}"/>
-                        </c:if>
-                        <c:if test="${not empty brandId}">
-                            <c:param name="brandId" value="${brandId}"/>
-                        </c:if>
-                        <c:if test="${not empty minPrice}">
-                            <c:param name="minPrice" value="${minPrice}"/>
-                        </c:if>
-                        <c:if test="${not empty maxPrice}">
-                            <c:param name="maxPrice" value="${maxPrice}"/>
-                        </c:if>
-                    </c:url>
-
+                <c:if test="${totalPages > 1}">
                     <nav class="mt-4">
                         <ul class="pagination justify-content-center">
 
-                            <!-- PREVIOUS -->
+                            <!-- Prev: -->
                             <c:if test="${page > 1}">
+                                <c:url var="prevUrl" value="/category">
+                                    <c:param name="page" value="${page - 1}" />
+                                    <c:if test="${not empty id}"><c:param name="id" value="${id}" /></c:if>
+                                    <c:if test="${not empty brandId}"><c:param name="brandId" value="${brandId}" /></c:if>
+                                    <c:if test="${not empty minPrice}"><c:param name="minPrice" value="${minPrice}" /></c:if>
+                                    <c:if test="${not empty maxPrice}"><c:param name="maxPrice" value="${maxPrice}" /></c:if>
+                                    <c:if test="${not empty fromDate}"><c:param name="fromDate" value="${fromDate}" /></c:if>
+                                    <c:if test="${not empty toDate}"><c:param name="toDate" value="${toDate}" /></c:if>
+                                    <c:if test="${not empty q}"><c:param name="q" value="${q}" /></c:if>
+                                    <c:if test="${not empty sort}"><c:param name="sort" value="${sort}" /></c:if>
+                                </c:url>
+
                                 <li class="page-item">
-                                    <c:url var="prevUrl" value="${baseUrl}">
-                                        <c:param name="page" value="${page - 1}"/>
-                                    </c:url>
-                                    <a class="page-link" href="${prevUrl}" aria-label="Previous">
-                                        &laquo;
-                                    </a>
+                                    <a class="page-link" href="${prevUrl}" aria-label="Previous">&laquo;</a>
                                 </li>
                             </c:if>
 
-                            <!-- PAGE NUMBER -->
+                            <!-- Pages -->
                             <c:forEach var="i" begin="1" end="${totalPages}">
-                                <c:url var="pageUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${i}"/>
+                                <c:url var="pageUrl" value="/category">
+                                    <c:param name="page" value="${i}" />
+                                    <c:if test="${not empty id}"><c:param name="id" value="${id}" /></c:if>
+                                    <c:if test="${not empty brandId}"><c:param name="brandId" value="${brandId}" /></c:if>
+                                    <c:if test="${not empty minPrice}"><c:param name="minPrice" value="${minPrice}" /></c:if>
+                                    <c:if test="${not empty maxPrice}"><c:param name="maxPrice" value="${maxPrice}" /></c:if>
+                                    <c:if test="${not empty fromDate}"><c:param name="fromDate" value="${fromDate}" /></c:if>
+                                    <c:if test="${not empty toDate}"><c:param name="toDate" value="${toDate}" /></c:if>
+                                    <c:if test="${not empty q}"><c:param name="q" value="${q}" /></c:if>
+                                    <c:if test="${not empty sort}"><c:param name="sort" value="${sort}" /></c:if>
                                 </c:url>
 
                                 <li class="page-item ${i == page ? 'active' : ''}">
@@ -346,20 +345,29 @@
                                 </li>
                             </c:forEach>
 
-                            <!-- NEXT -->
-                            <li class="page-item ${page == totalPages ? 'disabled' : ''}">
-                                <c:url var="nextUrl" value="${baseUrl}">
-                                    <c:param name="page" value="${page + 1}"/>
+                            <!-- Next: -->
+                            <c:if test="${page < totalPages}">
+                                <c:url var="nextUrl" value="/category">
+                                    <c:param name="page" value="${page + 1}" />
+                                    <c:if test="${not empty id}"><c:param name="id" value="${id}" /></c:if>
+                                    <c:if test="${not empty brandId}"><c:param name="brandId" value="${brandId}" /></c:if>
+                                    <c:if test="${not empty minPrice}"><c:param name="minPrice" value="${minPrice}" /></c:if>
+                                    <c:if test="${not empty maxPrice}"><c:param name="maxPrice" value="${maxPrice}" /></c:if>
+                                    <c:if test="${not empty fromDate}"><c:param name="fromDate" value="${fromDate}" /></c:if>
+                                    <c:if test="${not empty toDate}"><c:param name="toDate" value="${toDate}" /></c:if>
+                                    <c:if test="${not empty q}"><c:param name="q" value="${q}" /></c:if>
+                                    <c:if test="${not empty sort}"><c:param name="sort" value="${sort}" /></c:if>
                                 </c:url>
-                                <a class="page-link" href="${nextUrl}" aria-label="Next">
-                                    &raquo;
-                                </a>
-                            </li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="${nextUrl}" aria-label="Next">&raquo;</a>
+                                </li>
+                            </c:if>
 
                         </ul>
                     </nav>
-
                 </c:if>
+
 
 
             </section>
@@ -430,6 +438,7 @@
     </div>
 </footer>
 
+<script src="./assets/js/search.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
