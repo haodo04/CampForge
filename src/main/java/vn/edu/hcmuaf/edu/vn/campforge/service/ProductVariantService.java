@@ -1,9 +1,7 @@
 package vn.edu.hcmuaf.edu.vn.campforge.service;
 
 import vn.edu.hcmuaf.edu.vn.campforge.dao.ProductVariantDAO;
-import vn.edu.hcmuaf.edu.vn.campforge.dao.VariantOptionDAO;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductVariant;
-import vn.edu.hcmuaf.edu.vn.campforge.model.VariantOption;
 
 import java.util.HashMap;
 import java.util.List;

@@ -5,7 +5,6 @@ import vn.edu.hcmuaf.edu.vn.campforge.dao.ProductImgDAO;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Product;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductImg;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductVariant;
-import vn.edu.hcmuaf.edu.vn.campforge.model.VariantOption;
 
 import java.util.List;
 import java.util.Map;

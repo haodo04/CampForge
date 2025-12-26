@@ -139,11 +139,45 @@
             đ
         </h2>
 
-        <c:set var="colorSet" value="${empty colorSet ? '' : colorSet}"/>
+        <c:set var="sizeSet" value="${empty sizeSet ? '' : sizeSet}"/>
+
         <div class="pd-option">
             <div class="pd-option-head">
-                <span>Màu:</span>
-                <b id="pickedColor">(chọn)</b>
+                <span>Size:</span>
+            </div>
+
+            <div class="pd-chips" id="sizeChips">
+                <c:forEach var="v" items="${variants}">
+                    <c:set var="opts" value="${optionMap[v.id]}"/>
+                    <c:set var="sizeVal" value=""/>
+
+                    <c:forEach var="o" items="${opts}">
+                        <c:if test="${o.attrCode == 'size' || o.attrName == 'Size'}">
+                            <c:set var="sizeVal" value="${o.value}"/>
+                        </c:if>
+                    </c:forEach>
+
+                    <c:if test="${not empty sizeVal}">
+                        <c:if test="${!fn:contains(sizeSet, '|' += sizeVal += '|')}">
+                            <c:set var="sizeSet" value="${sizeSet}${'|'}${sizeVal}${'|'}"/>
+
+                            <button type="button"
+                                    class="chip"
+                                    data-attr="size"
+                                    data-value="${sizeVal}">
+                                <c:out value="${sizeVal}"/>
+                            </button>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+            </div>
+        </div>
+
+        <c:set var="colorSet" value="${empty colorSet ? '' : colorSet}"/>
+
+        <div class="pd-option">
+            <div class="pd-option-head">
+                <span>Màu sắc:</span>
             </div>
 
             <div class="pd-chips" id="colorChips">
@@ -158,15 +192,15 @@
                     </c:forEach>
 
                     <c:if test="${not empty colorVal}">
-                        <!-- unique color -->
                         <c:if test="${!fn:contains(colorSet, '|' += colorVal += '|')}">
                             <c:set var="colorSet" value="${colorSet}${'|'}${colorVal}${'|'}"/>
 
                             <button type="button"
-                                    class="chip ${v.id == selectedId ? 'is-active' : ''}"
+                                    class="chip chip--color"
                                     data-attr="color"
                                     data-value="${colorVal}">
-                                <c:out value="${colorVal}"/>
+                                <span class="color-swatch"></span>
+                                <span class="chip-text"><c:out value="${colorVal}"/></span>
                             </button>
                         </c:if>
                     </c:if>
@@ -174,28 +208,15 @@
             </div>
         </div>
 
-        <select id="sizeSelect">
-            <option value="">Select Size</option>
+        <div class="pd-qty">
+            <span class="pd-qty-label">Số lượng:</span>
 
-            <c:forEach var="v" items="${variants}">
-                <c:set var="opts" value="${optionMap[v.id]}"/>
-                <c:set var="sizeVal" value=""/>
-
-                <c:forEach var="o" items="${opts}">
-                    <c:if test="${o.attrCode == 'size' || o.attrName == 'Size'}">
-                        <c:set var="sizeVal" value="${o.value}"/>
-                    </c:if>
-                </c:forEach>
-
-                <c:if test="${not empty sizeVal}">
-                    <option value="${v.id}" ${v.id == selectedId ? 'selected' : ''}>
-                        <c:out value="${sizeVal}"/>
-                    </option>
-                </c:if>
-            </c:forEach>
-        </select>
-
-        <input id="qtyInput" type="number" value="1" min="1">
+            <div class="qty-control">
+                <button type="button" class="qty-btn" id="qtyMinus" aria-label="Giảm">−</button>
+                <input id="qtyInput" class="qty-input" type="text" value="1" inputmode="numeric" />
+                <button type="button" class="qty-btn" id="qtyPlus" aria-label="Tăng">+</button>
+            </div>
+        </div>
 
         <button class="normal add-to-cart"
                 type="button"
@@ -208,7 +229,7 @@
             Thêm Vào Giỏ Hàng
         </button>
 
-        <h4>Mô tả sản phẩm</h4>
+        <h4>Mô tả sản phẩm:</h4>
         <span id="pdDescription">
             <c:out value="${p.description}" default="(Chưa có mô tả)"/>
         </span>
@@ -356,6 +377,32 @@
             pickedColor.innerText = btn.dataset.value || "(chọn)";
         });
     });
+</script>
+<script id="variantData" type="application/json">
+    [
+    <c:forEach var="v" items="${variants}" varStatus="st">
+        <c:set var="opts" value="${optionMap[v.id]}"/>
+        <c:set var="colorVal" value=""/>
+        <c:set var="sizeVal" value=""/>
+
+        <c:forEach var="o" items="${opts}">
+            <c:if test="${o.attrCode == 'color' || o.attrName == 'Color' || o.attrName == 'Màu'}">
+                <c:set var="colorVal" value="${o.value}"/>
+            </c:if>
+            <c:if test="${o.attrCode == 'size' || o.attrName == 'Size'}">
+                <c:set var="sizeVal" value="${o.value}"/>
+            </c:if>
+        </c:forEach>
+
+        {
+        "id": ${v.id},
+        "finalPrice": ${v.finalPrice},
+        "stock": ${v.stock},
+        "color": "<c:out value='${colorVal}'/>",
+        "size": "<c:out value='${sizeVal}'/>"
+        }<c:if test="${!st.last}">,</c:if>
+    </c:forEach>
+    ]
 </script>
 <script src="./assets/js/sproduct.js"></script>
 </body>

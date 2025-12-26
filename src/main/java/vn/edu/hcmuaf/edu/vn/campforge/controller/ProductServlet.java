@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Product;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductImg;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductVariant;
-import vn.edu.hcmuaf.edu.vn.campforge.model.VariantOption;
 import vn.edu.hcmuaf.edu.vn.campforge.service.ProductDetailService;
 
 import java.io.IOException;

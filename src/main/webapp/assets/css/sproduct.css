@@ -25,7 +25,7 @@
 }
 
 #prodetails .single-pro-details h4 {
-    padding: 40px 0 20px 0;
+    padding: 20px 0 20px 0;
 }
 
 #prodetails .single-pro-details h2 {
@@ -39,27 +39,20 @@
 }
 
 #prodetails .single-pro-details input {
-    width: 50px;
+    width: 45px;
     height: 47px;
-    padding-left: 10px;
     font-size: 16px;
-    margin-right: 10px;
+    font-weight: 600;
 }
 
 #prodetails .single-pro-details input:focus {
     outline: none;
 }
 
-#prodetails .single-pro-details button {
-    background: #088178;
-    color: #fff;
-}
-
 #prodetails .single-pro-details span {
     line-height: 25px;
 }
 
-/* NEW: sku/stock row */
 .pd-row {
     display: flex;
     gap: 25px;
@@ -76,7 +69,6 @@
     color: #111;
 }
 
-/* NEW: chips */
 .pd-option {
     margin: 10px 0;
 }
@@ -247,6 +239,11 @@
     max-width: 120px;
 }
 
+#prodetails .single-pro-details .add-to-cart {
+    background: #088178;
+    color: #fff;
+}
+
 /* sản phẩm liên quan */
 #product1 h2{
     text-align: left;
@@ -298,6 +295,139 @@
 
 #prodetails .single-pro-details h2 {
     font-size: 35px;
+}
+
+/* các option chọn sản phẩm */
+.pd-option { margin: 14px 0; }
+.pd-option-head { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+
+.pd-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.chip {
+    appearance: none;
+    border: 1px solid #cfcfcf;
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    user-select: none;
+    color: #000;
+}
+
+.chip:hover { border-color: #a9a9a9; }
+
+.chip.is-active {
+    border-color: #000;
+    color: #000;
+    font-weight: 600;
+}
+
+.chip.is-disabled,
+.chip:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* ô chọn số lg sản phẩm */
+.pd-qty { display: flex; align-items: center; gap: 12px; margin: 14px 0; }
+.pd-qty-label { min-width: 60px; color: #666; font-weight: 600}
+
+.qty-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #cfcfcf;
+    border-radius: 0;
+    overflow: hidden;
+    height: 36px;
+    background: #fff;
+}
+
+.qty-btn {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.qty-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.qty-btn {
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-right: 1px solid #cfcfcf;
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-input {
+    width: 52px;
+    height: 36px;
+    border: 0;
+    border-right: 1px solid #cfcfcf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    outline: none;
+    color: #000;
+    background: #fff;
+}
+
+#qtyPlus {
+    border-right: 0;
+}
+
+.pd-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 14px 0;
+}
+
+.pd-option-head {
+    margin: 0;
+}
+
+.pd-option-head span {
+    min-width: 70px;
+    color: #666;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.pd-chips {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ô chọn màu */
+#colorChips .chip {
+    padding: 4px 8px;
+    min-height: 28px;
+    font-size: 13px;
+    gap: 6px;
+}
+
+#colorChips .color-swatch {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #cfcfcf;
 }
 
 
