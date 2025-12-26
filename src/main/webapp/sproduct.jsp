@@ -69,7 +69,7 @@
     </ol>
 </nav>
 
-<section id="prodetails" class="section-p1" data-product-id="${p.id}">
+<section id="prodetails" class="section-p1" data-product-id="${p.id}" data-ctx="${pageContext.request.contextPath}">
     <div class="single-pro-image">
 
         <c:set var="ctx" value="${pageContext.request.contextPath}"/>
@@ -378,58 +378,17 @@
     </div>
 </footer>
 
-<script>
-    const MainImg = document.getElementById("MainImg");
-    const smallImgs = document.getElementsByClassName("small-img");
-    for (let i = 0; i < smallImgs.length; i++) {
-        smallImgs[i].onclick = function () {
-            MainImg.src = smallImgs[i].src;
-        }
-    }
-
-    const sizeSelect = document.getElementById("sizeSelect");
-    const btnAddToCart = document.getElementById("btnAddToCart");
-    sizeSelect?.addEventListener("change", () => {
-        const variantId = sizeSelect.value;
-        if (!variantId) return;
-        const url = new URL(window.location.href);
-        url.searchParams.set("variantId", variantId);
-        window.location.href = url.toString();
-    });
-
-    const pickedColor = document.getElementById("pickedColor");
-    document.querySelectorAll("#colorChips .chip").forEach(btn => {
-        if (btn.classList.contains("is-active")) pickedColor.innerText = btn.dataset.value || "(chọn)";
-        btn.addEventListener("click", () => {
-            document.querySelectorAll("#colorChips .chip").forEach(b => b.classList.remove("is-active"));
-            btn.classList.add("is-active");
-            pickedColor.innerText = btn.dataset.value || "(chọn)";
-        });
-    });
-</script>
 <script id="variantData" type="application/json">
     [
     <c:forEach var="v" items="${variants}" varStatus="st">
-        <c:set var="opts" value="${optionMap[v.id]}"/>
-        <c:set var="colorVal" value=""/>
-        <c:set var="sizeVal" value=""/>
-
-        <c:forEach var="o" items="${opts}">
-            <c:if test="${o.attrCode == 'color' || o.attrName == 'Color' || o.attrName == 'Màu'}">
-                <c:set var="colorVal" value="${o.value}"/>
-            </c:if>
-            <c:if test="${o.attrCode == 'size' || o.attrName == 'Size'}">
-                <c:set var="sizeVal" value="${o.value}"/>
-            </c:if>
-        </c:forEach>
-
         {
         "id": ${v.id},
         "finalPrice": ${v.finalPrice},
         "stock": ${v.stock},
-        "color": "<c:out value='${colorVal}'/>",
-        "size": "<c:out value='${sizeVal}'/>"
-        }<c:if test="${!st.last}"></c:if>
+        "color": "${v.color}",
+        "size": "${v.size}",
+        "image": "${v.imagePath}"
+        }${st.last ? '' : ','}
     </c:forEach>
     ]
 </script>
