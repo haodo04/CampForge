@@ -170,9 +170,21 @@
               </h4>
             </div>
 
-            <a href="${pageContext.request.contextPath}/cart?action=add&productId=${p.id}">
-              <i class="cart fi fi-sr-shopping-cart"></i>
-            </a>
+              <c:choose>
+                  <c:when test="${not empty p.defaultVariantId}">
+                      <a href="${pageContext.request.contextPath}/cart?action=add&variantId=${p.defaultVariantId}&qty=1"
+                         aria-label="Thêm vào giỏ">
+                          <i class="cart fi fi-sr-shopping-cart"></i>
+                      </a>
+                  </c:when>
+                  <c:otherwise>
+                      <a href="${pageContext.request.contextPath}/product?id=${p.id}"
+                         aria-label="Chọn phân loại">
+                          <i class="cart fi fi-sr-shopping-cart"></i>
+                      </a>
+                  </c:otherwise>
+              </c:choose>
+
           </div>
         </c:forEach>
 
@@ -231,9 +243,21 @@
               </h4>
             </div>
 
-            <a href="${pageContext.request.contextPath}/cart?action=add&productId=${p.id}">
-              <i class="cart fi fi-sr-shopping-cart"></i>
-            </a>
+              <c:choose>
+                  <c:when test="${not empty p.defaultVariantId}">
+                      <a href="${pageContext.request.contextPath}/cart?action=add&variantId=${p.defaultVariantId}&qty=1"
+                         aria-label="Thêm vào giỏ">
+                          <i class="cart fi fi-sr-shopping-cart"></i>
+                      </a>
+                  </c:when>
+                  <c:otherwise>
+                      <a href="${pageContext.request.contextPath}/product?id=${p.id}"
+                         aria-label="Chọn phân loại">
+                          <i class="cart fi fi-sr-shopping-cart"></i>
+                      </a>
+                  </c:otherwise>
+              </c:choose>
+
           </div>
         </c:forEach>
 
