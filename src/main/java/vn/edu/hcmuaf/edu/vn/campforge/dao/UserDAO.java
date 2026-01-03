@@ -46,4 +46,19 @@ public class UserDAO {
             return false;
         }
     }
+    // Thêm hàm này vào class UserDAO
+    public static boolean checkUsernameExists(String username) {
+        String sql = "SELECT id FROM users WHERE username = ? LIMIT 1";
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Trả về true nếu tìm thấy username
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
