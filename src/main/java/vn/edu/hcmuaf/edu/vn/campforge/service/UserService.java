@@ -51,4 +51,18 @@ public class UserService {
         boolean success = UserDAO.register(user);
         return success ? "SUCCESS" : "Đăng ký thất bại, hệ thống đang bận!";
     }
+
+    public User login(String username, String password) {
+        // 1. Lấy user từ DB
+        User user = UserDAO.getUserByUsername(username);
+
+        // 2. Nếu user tồn tại, kiểm tra mật khẩu
+        if (user != null) {
+            // BCrypt.checkpw(mật khẩu thô, mật khẩu đã hash)
+            if (BCrypt.checkpw(password, user.getPassword())) {
+                return user; // Đăng nhập thành công
+            }
+        }
+        return null; // Sai tài khoản hoặc mật khẩu
+    }
 }
