@@ -24,7 +24,7 @@ public class CartViewDAO {
                         "  (SELECT pi.path FROM product_imgs pi WHERE pi.product_id = p.id " +
                         "   ORDER BY pi.position ASC, pi.id ASC LIMIT 1)" +
                         ") AS imagePath, " +
-                        "COALESCE(pv.finalPrice, pv.price, p.price) AS unitPrice, " +
+                        "COALESCE(pv.price, p.price) AS unitPrice, " +
                         "pv.stock " +
                         "FROM product_variants pv " +
                         "JOIN products p ON p.id = pv.product_id " +

@@ -28,6 +28,9 @@ public class CartServlet extends HttpServlet {
             case "add":
                 add(req, resp);
                 break;
+            case "addAjax":
+                addAjax(req, resp);
+                break;
             case "remove":
                 remove(req, resp);
                 break;
@@ -35,6 +38,26 @@ public class CartServlet extends HttpServlet {
                 view(req, resp);
         }
     }
+
+    private void addAjax(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json; charset=UTF-8");
+
+        int variantId = parseInt(req.getParameter("variantId"), 0);
+        int qty = parseInt(req.getParameter("qty"), 1);
+
+        if (variantId <= 0) {
+            resp.getWriter().write("{\"ok\":false,\"message\":\"Thiếu variantId\"}");
+            return;
+        }
+
+        Cart cart = cartService.getOrCreate(req.getSession());
+        cart.add(variantId, qty);
+
+        int cartCount = cart.getTotalQuantity();
+
+        resp.getWriter().write("{\"ok\":true,\"cartCount\":" + cartCount + "}");
+    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)

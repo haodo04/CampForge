@@ -124,4 +124,8 @@ public class ProductService {
     public static List<Product> getHomeBestSeller(int limit) {
         return getBestSellerProducts(limit);
     }
+
+    public static List<Product> getLatestProductsWithDefaultVariant(int limit) {
+        return ProductDAO.getLatestProducts(limit);
+    }
 }

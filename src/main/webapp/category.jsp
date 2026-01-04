@@ -78,7 +78,7 @@
                 <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
-        <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+        <a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i></a>
         <div class="auth-buttons">
             <a href="login.jsp" class="btn-login">Đăng nhập</a>
             <a href="register.jsp" class="btn-register">Đăng ký</a>
@@ -290,10 +290,25 @@
 
                                             <h4>${p.formattedPrice}</h4>
 
-                                            <a href="${pageContext.request.contextPath}/product?id=${p.id}"
-                                               class="add-cart" aria-label="Thêm vào giỏ">
-                                                <i class="fa-solid fa-cart-shopping cart"></i>
-                                            </a>
+                                            <c:choose>
+                                                <c:when test="${not empty p.defaultVariantId}">
+                                                    <a href="${pageContext.request.contextPath}/cart?action=add&variantId=${p.defaultVariantId}&qty=1"
+                                                       class="add-cart"
+                                                       aria-label="Thêm vào giỏ"
+                                                       onclick="event.stopPropagation();">
+                                                        <i class="fa-solid fa-cart-shopping cart"></i>
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="${pageContext.request.contextPath}/product?id=${p.id}"
+                                                       class="add-cart"
+                                                       aria-label="Chọn phân loại"
+                                                       onclick="event.stopPropagation();">
+                                                        <i class="fa-solid fa-cart-shopping cart"></i>
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </div>
 
                                     </div>
