@@ -80,8 +80,28 @@
         </form>
         <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
         <div class="auth-buttons">
+            <%
+                // Lấy đối tượng User từ session
+                vn.edu.hcmuaf.edu.vn.campforge.model.User user =
+                        (vn.edu.hcmuaf.edu.vn.campforge.model.User) session.getAttribute("auth");
+
+                if (user == null) {
+            %>
             <a href="login.jsp" class="btn-login">Đăng nhập</a>
             <a href="register.jsp" class="btn-register">Đăng ký</a>
+            <% } else { %>
+            <div class="user-dropdown">
+            <span class="user-name">
+                Xin chào, <strong><%= user.getUsername() %></strong>
+                <i class="fa fa-caret-down"></i>
+            </span>
+                <div class="dropdown-content">
+                    <a href="personal.jsp"><i class="fa fa-user"></i> Thông tin cá nhân</a>
+                    <hr>
+                    <a href="index.jsp" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+                </div>
+            </div>
+            <% } %>
         </div>
     </div>
 </section>
