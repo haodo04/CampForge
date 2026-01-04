@@ -16,6 +16,7 @@ public class Product implements Serializable {
     private String image;
     private String brandName;
     private String cateName;
+    private Integer defaultVariantId;
 
     public Product(int id, int cateId, int brandId, String proName, double price, String description, int sold, Date createAt, int isDelete, String image, String brandName, String cateName) {
         this.id = id;
@@ -44,6 +45,14 @@ public class Product implements Serializable {
         this.isDelete = isDelete;
         this.image = image;
         this.brandName = brandName;
+    }
+
+    public Integer getDefaultVariantId() {
+        return defaultVariantId;
+    }
+
+    public void setDefaultVariantId(Integer defaultVariantId) {
+        this.defaultVariantId = defaultVariantId;
     }
 
     public Product() {

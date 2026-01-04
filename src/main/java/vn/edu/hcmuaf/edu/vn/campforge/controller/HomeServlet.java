@@ -28,6 +28,9 @@ public class HomeServlet extends HttpServlet {
         // Sản phẩm bán chạy
         List<Product> bestSellerProducts = ProductService.getBestSellerProducts(8);
 
+        List<Product> latestProductsDefault = ProductService.getLatestProductsWithDefaultVariant(8);
+        request.setAttribute("latestProductsDefault", latestProductsDefault);
+
         request.setAttribute("latestProducts", latestProducts);
         request.setAttribute("bestSellerProducts", bestSellerProducts);
         request.setAttribute("featuredCategories", CateService.getFeaturedCategories()
