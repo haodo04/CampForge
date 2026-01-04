@@ -39,7 +39,7 @@
             <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
             <button id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
-        <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+        <a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i></a>
 
         <div class="auth-buttons">
             <%
@@ -411,6 +411,27 @@
         }${st.last ? '' : ','}
     </c:forEach>
     ]
+</script>
+<script>
+    (function () {
+        var btn = document.getElementById("btnAddToCart");
+        if (!btn) return;
+
+        btn.addEventListener("click", function () {
+            var vid = btn.getAttribute("data-variant-id");
+            var qtyEl = document.getElementById("qtyInput");
+            var qty = qtyEl ? parseInt(qtyEl.value || "1", 10) : 1;
+            if (!qty || qty < 1) qty = 1;
+
+            if (!vid || vid === "0") {
+                alert("Vui lòng chọn màu/size trước khi thêm vào giỏ.");
+                return;
+            }
+
+            var url = "${pageContext.request.contextPath}/cart?action=add&variantId=" + encodeURIComponent(vid) + "&qty=" + encodeURIComponent(qty);
+            window.location.href = url;
+        });
+    })();
 </script>
 <script src="./assets/js/sproduct.js"></script>
 </body>
