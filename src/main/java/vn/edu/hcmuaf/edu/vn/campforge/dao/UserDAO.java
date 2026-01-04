@@ -26,22 +26,24 @@ public class UserDAO {
      * Trả về true nếu thành công
      */
     public static boolean register(User user) {
-        String sql = "INSERT INTO users (username, password, fullName, email, phone, role, createAt) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // Chỉ dùng 6 dấu hỏi cho 6 cột chính
+        String sql = "INSERT INTO users (username, password, fullName, email, phone, role) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword()); // Lưu ý: Nên Hash mật khẩu trước khi truyền vào đây
+            ps.setString(2, user.getPassword());
             ps.setString(3, user.getFullName());
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getPhone());
-            ps.setInt(6, 0); // Mặc định role là 0 (User)
-            ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+            ps.setInt(6, 0); // Mặc định role User
 
-            return ps.executeUpdate() > 0;
+            int rowAffected = ps.executeUpdate();
+            return rowAffected > 0;
 
         } catch (SQLException e) {
+            System.err.println("LOI SQL: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
