@@ -45,8 +45,8 @@
         <form id="form" novalidate>
 
           <div class="field">
-            <input id="email" class="input" type="email" placeholder=" " required />
-            <label class="label" for="email">Email</label>
+            <input id="username" class="input" type="text" placeholder=" " required />
+            <label class="label" for="username">Tên đăng nhập</label>
           </div>
 
           <div class="field">
