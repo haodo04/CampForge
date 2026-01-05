@@ -42,15 +42,19 @@
         <h2>Chào mừng trở lại</h2>
         <p class="sub">Nhập email và mật khẩu để tiếp tục.</p>
 
-        <form id="form" novalidate>
-
+        <form id="form" action="login" method="POST" novalidate>
+          <% if(request.getAttribute("error") != null) { %>
+          <div style="color: #ef4444; margin-bottom: 10px; font-size: 14px;">
+            <%= request.getAttribute("error") %>
+          </div>
+          <% } %>
           <div class="field">
-            <input id="email" class="input" type="email" placeholder=" " required />
-            <label class="label" for="email">Email</label>
+            <input id="username" name="username" class="input" type="text" placeholder=" " required />
+            <label class="label" for="username">Tên đăng nhập</label>
           </div>
 
           <div class="field">
-            <input id="password" class="input" type="password" placeholder=" " minlength="6" required />
+            <input id="password" name="password" class="input" type="password" placeholder=" " minlength="6" required />
             <label class="label" for="password">Mật khẩu</label>
             <button class="toggle" type="button" onclick="togglePw()">Hiện</button>
           </div>

@@ -20,46 +20,44 @@
     />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/search.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <style>
-        .title-decor::before {
-            content: "";
-            background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
-        }
-
-        #hero button {
-            background-image: url("${pageContext.request.contextPath}/assets/img/button.png");
-        }
-
-        .title-decor::after {
-            content: "";
-            background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
-        }
-    </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+    .title-decor::before {
+        content: "";
+        background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
+    }
+    #hero button {
+        background-image: url("${pageContext.request.contextPath}/assets/img/button.png");
+    }
+    .title-decor::after {
+        content: "";
+        background-image: url('${pageContext.request.contextPath}/assets/img/decor-left.png');
+    }
+</style>
 </head>
 <body>
-<fmt:setLocale value="vi_VN"/>
-<c:set var="hero" value="${homeBanners['home_hero']}"/>
-<c:set var="heroBg" value="${ctx}/assets/img/banner/banner11.jpg"/>
+<fmt:setLocale value="vi_VN" />
+
+<c:set var="hero" value="${homeBanners['home_hero']}" />
+<c:set var="heroBg" value="${ctx}/assets/img/banner/banner11.jpg" />
 <c:if test="${not empty b_hero && not empty b_hero.imageUrl}">
     <c:choose>
         <c:when test="${fn:startsWith(b_hero.imageUrl,'http')}">
-            <c:set var="heroBg" value="${b_hero.imageUrl}"/>
+            <c:set var="heroBg" value="${b_hero.imageUrl}" />
         </c:when>
         <c:otherwise>
-            <c:set var="heroBg" value="${ctx}${b_hero.imageUrl}"/>
+            <c:set var="heroBg" value="${ctx}${b_hero.imageUrl}" />
         </c:otherwise>
     </c:choose>
 </c:if>
 
-<c:set var="heroHref" value="${ctx}/category"/>
+<c:set var="heroHref" value="${ctx}/category" />
 <c:if test="${not empty b_hero && not empty b_hero.linkUrl}">
-    <c:set var="heroHref" value="${ctx}${b_hero.linkUrl}"/>
+    <c:set var="heroHref" value="${ctx}${b_hero.linkUrl}" />
 </c:if>
 
-<c:set var="cart" value="${sessionScope.CART}"/>
-<c:set var="cartCount" value="${cart != null ? cart.totalQuantity : 0}"/>
-
+<c:set var="cart" value="${sessionScope.CART}" />
+<c:set var="cartCount" value="${cart != null ? cart.totalQuantity : 0}" />
 
 <div class="header-top"></div>
 <section id="header">
@@ -71,13 +69,16 @@
         <li><a href="about.jsp">Giới thiệu</a></li>
         <li><a href="contact.jsp">Liên hệ</a></li>
     </ul>
+
     <div id="right-icons">
         <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex">
             <div id="search-box">
-                <input type="text" name="q" id="searchInput" placeholder="Tìm sản phẩm..." value="${q}"/>
+                <input type="text" name="q" id="searchInput" placeholder="Tìm sản phẩm..." value="${q}" />
                 <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
+
+        <!-- mini cart -->
         <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
             <a href="${pageContext.request.contextPath}/cart"
                class="mini-cart-link"
@@ -118,28 +119,45 @@
             </div>
         </div>
 
+        <!-- auth button/user -->
         <div class="auth-buttons">
+            <%
+                vn.edu.hcmuaf.edu.vn.campforge.model.User user =
+                        (vn.edu.hcmuaf.edu.vn.campforge.model.User) session.getAttribute("auth");
+
+                if (user == null) {
+            %>
             <a href="login.jsp" class="btn-login">Đăng nhập</a>
             <a href="register.jsp" class="btn-register">Đăng ký</a>
+            <% } else { %>
+            <div class="user-dropdown">
+                <span class="user-name">
+                    Xin chào, <strong><%= user.getUsername() %></strong>
+                    <i class="fa fa-caret-down"></i>
+                </span>
+                <div class="dropdown-content">
+                    <a href="personal.jsp"><i class="fa fa-user"></i> Thông tin cá nhân</a>
+                    <hr>
+                    <a href="index.jsp" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+                </div>
+            </div>
+            <% } %>
         </div>
     </div>
 </section>
 
-
 <section id="hero" style="background-image: url(${pageContext.request.contextPath}${heroBg});">
     <h1>Ưu đãi cực lớn</h1>
     <p>Giảm giá lên đến 70%!</p>
-    <a href="${pageContext.request.contextPath}/promotion">
-        <button>Mua ngay</button>
-    </a>
+    <a href="${pageContext.request.contextPath}/promotion"><button>Mua ngay</button></a>
 </section>
 
 <div class="intro-container">
     <div class="intro-row">
         <div class="intro-left">
             <img
-                    src="https://plus.unsplash.com/premium_photo-1681882053622-605daf9b9d73?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="Giới thiệu trang web"
+                src="https://plus.unsplash.com/premium_photo-1681882053622-605daf9b9d73?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Giới thiệu trang web"
             />
         </div>
 
