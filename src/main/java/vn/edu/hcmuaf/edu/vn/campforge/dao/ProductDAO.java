@@ -23,6 +23,12 @@ public class ProductDAO {
         p.setImage(rs.getString("image"));
         p.setBrandName(rs.getString("brandName"));
         p.setCateName(rs.getString("cateName"));
+        try {
+            Object dv = rs.getObject("defaultVariantId");
+            p.setDefaultVariantId(dv == null ? null : ((Number) dv).intValue());
+        } catch (SQLException ignore) {
+
+        }
         return p;
     }
 
@@ -338,5 +344,67 @@ public class ProductDAO {
 
         return list;
     }
+
+    public static List<Product> getLatestProductsWithDefaultVariant(int limit) {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+        SELECT
+            p.id, p.cateId, p.brandId, p.proName, p.price,
+            p.description, p.sold, p.createAt, p.isDelete,
+
+            i.path AS image,
+            b.name AS brandName,
+            c.cateName AS cateName,
+
+            COALESCE(v_img.id, v_min.min_variant_id) AS defaultVariantId
+
+        FROM products p
+        LEFT JOIN product_imgs i
+          ON i.product_id = p.id AND i.position = 1
+
+        LEFT JOIN product_variants v_img
+          ON v_img.product_id = p.id
+         AND v_img.is_active = 1
+         AND v_img.image_path = i.path
+
+        LEFT JOIN (
+            SELECT product_id, MIN(id) AS min_variant_id
+            FROM product_variants
+            WHERE is_active = 1
+            GROUP BY product_id
+        ) v_min ON v_min.product_id = p.id
+
+        LEFT JOIN brand b ON p.brandId = b.id
+        LEFT JOIN categories c ON p.cateId = c.id
+
+        WHERE p.isDelete = 0
+        ORDER BY p.createAt DESC, p.id DESC
+        LIMIT ?
+    """;
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, limit);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Product p = mapRow(rs);
+
+                    Object dv = rs.getObject("defaultVariantId");
+                    if (dv == null) p.setDefaultVariantId(null);
+                    else p.setDefaultVariantId(((Number) dv).intValue());
+
+                    list.add(p);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 
 }
