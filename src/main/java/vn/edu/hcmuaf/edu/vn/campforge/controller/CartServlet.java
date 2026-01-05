@@ -2,12 +2,16 @@ package vn.edu.hcmuaf.edu.vn.campforge.controller;
 
 import vn.edu.hcmuaf.edu.vn.campforge.dao.CartViewDAO;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Cart;
+import vn.edu.hcmuaf.edu.vn.campforge.model.CartItem;
+import vn.edu.hcmuaf.edu.vn.campforge.model.CartMiniItem;
 import vn.edu.hcmuaf.edu.vn.campforge.model.CartViewItem;
 import vn.edu.hcmuaf.edu.vn.campforge.service.CartService;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import vn.edu.hcmuaf.edu.vn.campforge.utils.CartJsonBuilder;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -34,10 +38,36 @@ public class CartServlet extends HttpServlet {
             case "remove":
                 remove(req, resp);
                 break;
+            case "mini":
+                miniCart(req, resp);
+                break;
             default:
                 view(req, resp);
         }
     }
+
+    private void miniCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json; charset=UTF-8");
+        HttpSession session = req.getSession();
+
+        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cart");
+        if (cartItems == null) cartItems = new ArrayList<>();
+
+        CartViewDAO dao = new CartViewDAO();
+        List<CartMiniItem> miniItems = dao.getMiniItemsByVariantIds(cartItems);
+
+        int cartCount = 0;
+        double total = 0;
+        for (CartMiniItem it : miniItems) {
+            cartCount += it.getQty();
+            total += it.getQty() * it.getUnitPrice();
+        }
+
+        String json = CartJsonBuilder.toMiniCartJson(cartCount, total, miniItems);
+        resp.getWriter().write(json);
+    }
+
+
 
     private void addAjax(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json; charset=UTF-8");
