@@ -1,4 +1,4 @@
-const ctx = window.contextPath || "";
+const cartCtx = window.contextPath || "";
 
 const wrap = document.getElementById("miniCartWrap");
 const body = document.getElementById("mcddBody");
@@ -20,7 +20,7 @@ async function fetchMiniCart() {
     if (loading) return;
     loading = true;
     try {
-        const res = await fetch(`${ctx}/cart?action=mini`);
+        const res = await fetch(`${cartCtx}/cart?action=mini`);
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
         renderMiniCart(data);
@@ -63,7 +63,7 @@ function renderMiniCart(data) {
 
     body.innerHTML = data.items.map(it => `
     <div class="mcdd-item">
-      <img src="${ctx}/${it.img}" alt="">
+      <img src="${cartCtx}/${it.img}" alt="">
       <div>
         <div class="mcdd-name">${escapeHtml(it.name)}</div>
         <div class="mcdd-meta">

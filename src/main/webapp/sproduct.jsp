@@ -14,16 +14,17 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="./assets/css/styles.css"/>
-    <link rel="stylesheet" href="./assets/css/sproduct.css"/>
-    <link rel="stylesheet" href="assets/css/search.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/sproduct.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/search.css">
 </head>
 <body>
-
+<c:set var="cart" value="${sessionScope.CART}"/>
+<c:set var="cartCount" value="${cart != null ? cart.items.size() : 0}"/>
 <div class="header-top"></div>
 <section id="header">
     <a href="${pageContext.request.contextPath}/home">
-        <img class="logo_img" src="./assets/img/logo_new.png" alt="logo"/>
+        <img class="logo_img" src="${pageContext.request.contextPath}/assets/img/logo_new.png" alt="logo"/>
     </a>
 
     <ul id="navbar">
@@ -39,7 +40,45 @@
             <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
             <button id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
-        <a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i></a>
+        <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
+            <a href="${pageContext.request.contextPath}/cart"
+               class="mini-cart-link"
+               style="position:relative; display:inline-block;">
+                <i class="fa fa-shopping-cart"></i>
+
+                <span id="miniCartQty"
+                      style="position:absolute; top:-6px; right:-10px;
+                              min-width:18px; height:18px; padding:0 5px;
+                              border-radius:999px; font-size:12px; line-height:18px;
+                              text-align:center; background:#e53935; color:#fff;
+                              display:${cartCount > 0 ? 'inline-flex' : 'none'};
+                              justify-content:center; align-items:center;">
+                    ${cartCount}
+                </span>
+            </a>
+
+            <div class="mini-cart-dropdown" id="miniCartDropdown">
+                <div class="mcdd-head">
+                    <strong>Giỏ hàng</strong>
+                    <span class="mcdd-sub" id="mcddCount">0 sản phẩm</span>
+                </div>
+
+                <div class="mcdd-body" id="mcddBody">
+                    <div class="mcdd-empty">Rê chuột để xem giỏ hàng</div>
+                </div>
+
+                <div class="mcdd-foot">
+                    <div class="mcdd-total">
+                        <span>Tổng:</span>
+                        <strong id="mcddTotal">0</strong>
+                    </div>
+                    <div class="mcdd-actions">
+                        <a href="${pageContext.request.contextPath}/cart" class="mcdd-btn outline">Xem giỏ</a>
+                        <a href="${pageContext.request.contextPath}/checkout" class="mcdd-btn solid">Thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="auth-buttons">
             <%
@@ -323,10 +362,22 @@
                     </h4>
                 </div>
 
-                <a href="${pageContext.request.contextPath}/cart?action=add&productId=${p.id}"
-                   onclick="event.stopPropagation();">
-                    <i class="cart fi fi-sr-shopping-cart"></i>
-                </a>
+                <c:choose>
+                    <c:when test="${not empty p.defaultVariantId}">
+                        <a href="javascript:void(0)"
+                           class="js-add-to-cart"
+                           data-variant-id="${p.defaultVariantId}"
+                           onclick="event.preventDefault(); event.stopPropagation();"
+                           aria-label="Thêm vào giỏ">
+                            <i class="cart fi fi-sr-shopping-cart"></i>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/product?id=${p.id}" aria-label="Chọn phân loại">
+                            <i class="cart fi fi-sr-shopping-cart"></i>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </c:forEach>
 
@@ -413,26 +464,9 @@
     ]
 </script>
 <script>
-    (function () {
-        var btn = document.getElementById("btnAddToCart");
-        if (!btn) return;
-
-        btn.addEventListener("click", function () {
-            var vid = btn.getAttribute("data-variant-id");
-            var qtyEl = document.getElementById("qtyInput");
-            var qty = qtyEl ? parseInt(qtyEl.value || "1", 10) : 1;
-            if (!qty || qty < 1) qty = 1;
-
-            if (!vid || vid === "0") {
-                alert("Vui lòng chọn màu/size trước khi thêm vào giỏ.");
-                return;
-            }
-
-            var url = "${pageContext.request.contextPath}/cart?action=add&variantId=" + encodeURIComponent(vid) + "&qty=" + encodeURIComponent(qty);
-            window.location.href = url;
-        });
-    })();
+    window.contextPath = "${pageContext.request.contextPath}";
 </script>
-<script src="./assets/js/sproduct.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/sproduct.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/miniCartDropdown.js"></script>
 </body>
 </html>

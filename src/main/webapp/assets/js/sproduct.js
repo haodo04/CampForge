@@ -184,8 +184,11 @@ function applyVariantUI(v) {
 
     if (v.image) setMainImageAndResetSlider(v.image);
 
+    if (qtyInput) qtyInput.value = "1";
+
     clampQty();
 }
+
 
 function syncAll() {
     setActiveChip(colorChips, selected.color);
@@ -241,3 +244,87 @@ sizeChips.forEach(ch =>
 
     syncAll();
 })();
+
+// add to cart
+async function addToCartAjax(variantId, qty) {
+    const url = `${ctx}/cart?action=addAjax&variantId=${encodeURIComponent(variantId)}&qty=${encodeURIComponent(qty)}`;
+
+    const res = await fetch(url, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+    });
+
+    if (!res.ok) throw new Error("HTTP " + res.status);
+
+    const data = await res.json();
+    if (!data || !data.ok) {
+        throw new Error(data?.message || "Không thể thêm vào giỏ hàng");
+    }
+    return data;
+}
+
+function setMiniCartBadge(n) {
+    const badgeEl = document.getElementById("miniCartQty");
+    if (!badgeEl) return;
+
+    const num = Number(n) || 0;
+    if (num > 0) {
+        badgeEl.textContent = num;
+        badgeEl.style.display = "inline-flex";
+    } else {
+        badgeEl.textContent = "";
+        badgeEl.style.display = "none";
+    }
+}
+
+if (btnAdd) {
+    btnAdd.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const variantId = btnAdd.dataset.variantId;
+        const qty = parseInt(qtyInput?.value || "1", 10) || 1;
+
+        if (!variantId) {
+            alert("Vui lòng chọn phân loại (màu/size) trước khi thêm.");
+            return;
+        }
+
+        try {
+            const data = await addToCartAjax(variantId, qty);
+
+            if (typeof window.refreshMiniCartDropdown === "function") {
+                window.refreshMiniCartDropdown();
+            }
+
+            if (qtyInput) qtyInput.value = "1";
+        } catch (err) {
+            console.error(err);
+            alert(err.message || "Có lỗi khi thêm vào giỏ");
+        }
+    });
+}
+
+document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".js-add-to-cart");
+    if (!btn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const variantId = btn.dataset.variantId;
+    if (!variantId) return;
+
+    try {
+        const url = `${window.contextPath}/cart?action=addAjax&variantId=${encodeURIComponent(variantId)}&qty=1`;
+        const res = await fetch(url, { headers: { "Accept": "application/json" } });
+        const data = await res.json();
+        if (!res.ok || !data?.ok) throw new Error(data?.message || "Không thêm vào giỏ được");
+
+        if (typeof window.refreshMiniCartDropdown === "function") window.refreshMiniCartDropdown();
+    } catch (err) {
+        console.error(err);
+        alert(err.message || "Có lỗi khi thêm vào giỏ");
+    }
+});
+
+
