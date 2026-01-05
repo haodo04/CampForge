@@ -20,7 +20,8 @@ async function fetchMiniCart() {
     if (loading) return;
     loading = true;
     try {
-        const res = await fetch(`${ctx}/cart?action=mini`, { method: "GET" });
+        const res = await fetch(`${ctx}/cart?action=mini`);
+        if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
         renderMiniCart(data);
         loadedOnce = true;

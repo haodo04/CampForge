@@ -54,4 +54,8 @@ public class Cart implements Serializable {
     public void clear() {
         items.clear();
     }
+
+    public int getDistinctCount() {
+        return items == null ? 0 : items.size();
+    }
 }
