@@ -2,12 +2,16 @@ package vn.edu.hcmuaf.edu.vn.campforge.controller;
 
 import vn.edu.hcmuaf.edu.vn.campforge.dao.CartViewDAO;
 import vn.edu.hcmuaf.edu.vn.campforge.model.Cart;
+import vn.edu.hcmuaf.edu.vn.campforge.model.CartItem;
+import vn.edu.hcmuaf.edu.vn.campforge.model.CartMiniItem;
 import vn.edu.hcmuaf.edu.vn.campforge.model.CartViewItem;
 import vn.edu.hcmuaf.edu.vn.campforge.service.CartService;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import vn.edu.hcmuaf.edu.vn.campforge.utils.CartJsonBuilder;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -34,10 +38,38 @@ public class CartServlet extends HttpServlet {
             case "remove":
                 remove(req, resp);
                 break;
+            case "mini":
+                miniCart(req, resp);
+                break;
             default:
                 view(req, resp);
         }
     }
+
+    private void miniCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json; charset=UTF-8");
+
+        Cart cart = cartService.getOrCreate(req.getSession());
+
+        if (cart.getItems() == null || cart.getItems().isEmpty()) {
+            String json = CartJsonBuilder.toMiniCartJson(0, 0, Collections.emptyList());
+            resp.getWriter().write(json);
+            return;
+        }
+
+        Map<Integer, Integer> variantQty = new LinkedHashMap<>();
+        cart.getItems().forEach((k, v) -> variantQty.put(k, v.getQuantity()));
+
+        List<CartViewItem> items = cartViewDAO.getItemsByVariantIds(variantQty);
+
+        int cartCount = cart.getTotalQuantity();
+        double total = items.stream().mapToDouble(CartViewItem::getLineTotal).sum();
+
+        String json = CartJsonBuilder.toMiniCartJsonFromViewItems(cartCount, total, items);
+        resp.getWriter().write(json);
+    }
+
+
 
     private void addAjax(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json; charset=UTF-8");

@@ -126,6 +126,6 @@ public class ProductService {
     }
 
     public static List<Product> getLatestProductsWithDefaultVariant(int limit) {
-        return ProductDAO.getLatestProducts(limit);
+        return ProductDAO.getLatestProductsWithDefaultVariant(limit);
     }
 }

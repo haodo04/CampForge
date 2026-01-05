@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.edu.vn.campforge.dao;
 
 import vn.edu.hcmuaf.edu.vn.campforge.dao.db.DbConnect;
+import vn.edu.hcmuaf.edu.vn.campforge.model.CartItem;
+import vn.edu.hcmuaf.edu.vn.campforge.model.CartMiniItem;
 import vn.edu.hcmuaf.edu.vn.campforge.model.CartViewItem;
 
 import java.sql.*;
@@ -69,4 +71,63 @@ public class CartViewDAO {
 
         return result;
     }
+
+    public List<CartMiniItem> getMiniItemsByVariantIds(List<CartItem> cartItems) {
+        List<CartMiniItem> result = new ArrayList<>();
+        if (cartItems == null || cartItems.isEmpty()) return result;
+
+        StringBuilder in = new StringBuilder();
+        for (int i = 0; i < cartItems.size(); i++) {
+            if (i > 0) in.append(",");
+            in.append("?");
+        }
+
+        String placeholders = String.join(",", java.util.Collections.nCopies(cartItems.size(), "?"));
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT v.id AS variantId, p.id AS productId, p.proName AS name, ");
+        sb.append("v.price AS unitPrice, COALESCE(i.path, v.image_path) AS img ");
+        sb.append("FROM product_variants v ");
+        sb.append("JOIN products p ON p.id = v.product_id ");
+        sb.append("LEFT JOIN product_imgs i ON i.product_id = p.id AND i.position = 1 ");
+        sb.append("WHERE v.id IN (").append(placeholders).append(")");
+
+        String sql = sb.toString();
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            int idx = 1;
+            for (CartItem ci : cartItems) {
+                ps.setInt(idx++, ci.getVariantId());
+            }
+
+            ResultSet rs = ps.executeQuery();
+            Map<Integer, CartMiniItem> map = new HashMap<>();
+
+            while (rs.next()) {
+                CartMiniItem it = new CartMiniItem();
+                it.setVariantId(rs.getInt("variantId"));
+                it.setProductId(rs.getInt("productId"));
+                it.setName(rs.getString("name"));
+                it.setUnitPrice(rs.getDouble("unitPrice"));
+                it.setImg(rs.getString("img"));
+                map.put(it.getVariantId(), it);
+            }
+
+            for (CartItem ci : cartItems) {
+                CartMiniItem it = map.get(ci.getVariantId());
+                if (it != null) {
+                    it.setQty(ci.getQuantity());
+                    result.add(it);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 }
