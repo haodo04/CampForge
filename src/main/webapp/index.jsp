@@ -78,21 +78,46 @@
                 <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
-        <a href="${pageContext.request.contextPath}/cart"
-           class="mini-cart-link"
-           style="position:relative; display:inline-block;">
-            <i class="fa fa-shopping-cart"></i>
+        <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
+            <a href="${pageContext.request.contextPath}/cart"
+               class="mini-cart-link"
+               style="position:relative; display:inline-block;">
+                <i class="fa fa-shopping-cart"></i>
 
-            <span id="miniCartQty"
-                  style="position:absolute; top:-6px; right:-10px;
-                          min-width:18px; height:18px; padding:0 5px;
-                          border-radius:999px; font-size:12px; line-height:18px;
-                          text-align:center; background:#e53935; color:#fff;
-                          display:${cartCount > 0 ? 'inline-flex' : 'none'};
-                          justify-content:center; align-items:center;">
-                ${cartCount}
-            </span>
-        </a>
+                <span id="miniCartQty"
+                      style="position:absolute; top:-6px; right:-10px;
+                              min-width:18px; height:18px; padding:0 5px;
+                              border-radius:999px; font-size:12px; line-height:18px;
+                              text-align:center; background:#e53935; color:#fff;
+                              display:${cartCount > 0 ? 'inline-flex' : 'none'};
+                              justify-content:center; align-items:center;">
+                    ${cartCount}
+                </span>
+            </a>
+
+            <div class="mini-cart-dropdown" id="miniCartDropdown">
+                <div class="mcdd-head">
+                    <strong>Giỏ hàng</strong>
+                    <span class="mcdd-sub" id="mcddCount">0 sản phẩm</span>
+                </div>
+
+                <div class="mcdd-body" id="mcddBody">
+                    <div class="mcdd-empty">Rê chuột để xem giỏ hàng</div>
+                </div>
+
+                <div class="mcdd-foot">
+                    <div class="mcdd-total">
+                        <span>Tổng:</span>
+                        <strong id="mcddTotal">0</strong>
+                    </div>
+                    <div class="mcdd-actions">
+                        <a href="${pageContext.request.contextPath}/cart" class="mcdd-btn outline">Xem giỏ</a>
+                        <a href="${pageContext.request.contextPath}/checkout" class="mcdd-btn solid">Thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="auth-buttons">
             <a href="login.jsp" class="btn-login">Đăng nhập</a>
             <a href="register.jsp" class="btn-register">Đăng ký</a>
@@ -434,6 +459,8 @@
         if (!badge) return;
         badge.textContent = count;
         badge.style.display = count > 0 ? "inline-flex" : "none";
+
+        if (window.refreshMiniCartDropdown) window.refreshMiniCartDropdown();
     };
 
     const addToCartAjax = async (variantId, qty = 1) => {
@@ -465,5 +492,9 @@
         addToCartAjax(variantId, 1).catch(console.error);
     });
 </script>
+<script>
+    window.contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/assets/js/miniCartDropdown.js"></script>
 </body>
 </html>
