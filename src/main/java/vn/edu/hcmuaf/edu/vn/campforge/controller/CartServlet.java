@@ -48,22 +48,24 @@ public class CartServlet extends HttpServlet {
 
     private void miniCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json; charset=UTF-8");
-        HttpSession session = req.getSession();
 
-        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cart");
-        if (cartItems == null) cartItems = new ArrayList<>();
+        Cart cart = cartService.getOrCreate(req.getSession());
 
-        CartViewDAO dao = new CartViewDAO();
-        List<CartMiniItem> miniItems = dao.getMiniItemsByVariantIds(cartItems);
-
-        int cartCount = 0;
-        double total = 0;
-        for (CartMiniItem it : miniItems) {
-            cartCount += it.getQty();
-            total += it.getQty() * it.getUnitPrice();
+        if (cart.getItems() == null || cart.getItems().isEmpty()) {
+            String json = CartJsonBuilder.toMiniCartJson(0, 0, Collections.emptyList());
+            resp.getWriter().write(json);
+            return;
         }
 
-        String json = CartJsonBuilder.toMiniCartJson(cartCount, total, miniItems);
+        Map<Integer, Integer> variantQty = new LinkedHashMap<>();
+        cart.getItems().forEach((k, v) -> variantQty.put(k, v.getQuantity()));
+
+        List<CartViewItem> items = cartViewDAO.getItemsByVariantIds(variantQty);
+
+        int cartCount = cart.getTotalQuantity();
+        double total = items.stream().mapToDouble(CartViewItem::getLineTotal).sum();
+
+        String json = CartJsonBuilder.toMiniCartJsonFromViewItems(cartCount, total, items);
         resp.getWriter().write(json);
     }
 

@@ -1,6 +1,9 @@
 package vn.edu.hcmuaf.edu.vn.campforge.utils;
 
 import vn.edu.hcmuaf.edu.vn.campforge.model.CartMiniItem;
+import vn.edu.hcmuaf.edu.vn.campforge.model.CartViewItem;
+
+import java.util.List;
 
 public class CartJsonBuilder {
 
@@ -26,6 +29,32 @@ public class CartJsonBuilder {
             sb.append("\"unitPrice\":\"").append(it.getUnitPrice()).append("\",");
             sb.append("\"qty\":").append(it.getQty()).append(",");
             sb.append("\"lineTotal\":\"").append(lineTotal).append("\"");
+            sb.append("}");
+        }
+
+        sb.append("]}");
+        return sb.toString();
+    }
+
+    public static String toMiniCartJsonFromViewItems(int cartCount, double total, List<CartViewItem> items) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\"ok\":true");
+        sb.append(",\"cartCount\":").append(cartCount);
+        sb.append(",\"totalAmount\":").append(total);
+        sb.append(",\"items\":[");
+
+        boolean first = true;
+        for (CartViewItem it : items) {
+            if (!first) sb.append(",");
+            first = false;
+
+            sb.append("{");
+            sb.append("\"variantId\":").append(it.getVariantId()).append(",");
+            sb.append("\"productId\":").append(it.getProductId()).append(",");
+            sb.append("\"name\":\"").append(escape(it.getProName())).append("\",");
+            sb.append("\"img\":\"").append(escape(it.getImagePath())).append("\",");
+            sb.append("\"qty\":").append(it.getQuantity()).append(",");
+            sb.append("\"lineTotal\":").append(it.getLineTotal());
             sb.append("}");
         }
 
