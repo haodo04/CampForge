@@ -311,13 +311,15 @@ document.addEventListener("click", async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    const ctx = window.contextPath || "";
     const variantId = btn.dataset.variantId;
-    if (!variantId) return;
+    const qty = 1;
 
     try {
-        const url = `${window.contextPath}/cart?action=addAjax&variantId=${encodeURIComponent(variantId)}&qty=1`;
+        const url = `${ctx}/cart?action=addAjax&variantId=${encodeURIComponent(variantId)}&qty=${encodeURIComponent(qty)}`;
         const res = await fetch(url, { headers: { "Accept": "application/json" } });
         const data = await res.json();
+
         if (!res.ok || !data?.ok) throw new Error(data?.message || "Không thêm vào giỏ được");
 
         if (typeof window.refreshMiniCartDropdown === "function") window.refreshMiniCartDropdown();
@@ -325,6 +327,7 @@ document.addEventListener("click", async (e) => {
         console.error(err);
         alert(err.message || "Có lỗi khi thêm vào giỏ");
     }
-});
+}, true);
+
 
 

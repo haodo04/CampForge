@@ -16,10 +16,9 @@
             rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="./assets/css/styles.css"/>
-    <link href="./assets/css/category.css" rel="stylesheet"/>
-    <link href="./assets/css/styles.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="assets/css/search.css">
+    <link href="${pageContext.request.contextPath}/assets/css/category.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/assets/css/styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/search.css">
 
 </head>
 <style>
@@ -59,10 +58,12 @@
         left: 0;
     }
 </style>
+<c:set var="cart" value="${sessionScope.CART}"/>
+<c:set var="cartCount" value="${cart != null ? cart.items.size() : 0}"/>
 <body data-ctx="${pageContext.request.contextPath}">
 <div class="header-top"></div>
 <section id="header">
-    <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
+    <a href="index.jsp"><img class="logo_img" src="${pageContext.request.contextPath}/assets/img/logo_new.png" alt="logo"></a>
     <ul id="navbar">
         <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
         <li><a class="active" href="${pageContext.request.contextPath}/category">Danh mục</a></li>
@@ -78,7 +79,48 @@
                 <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
             </div>
         </form>
-        <a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i></a>
+
+        <c:set var="cc" value="${empty cartCount ? 0 : cartCount}" />
+        <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
+            <a href="${pageContext.request.contextPath}/cart"
+               class="mini-cart-link"
+               style="position:relative; display:inline-block;">
+                <i class="fa fa-shopping-cart"></i>
+
+                <span id="miniCartQty"
+                      style="position:absolute; top:-6px; right:-10px;
+                              min-width:18px; height:18px; padding:0 5px;
+                              border-radius:999px; font-size:12px; line-height:18px;
+                              text-align:center; background:#e53935; color:#fff;
+                              display:${cc > 0 ? 'inline-flex' : 'none'};
+                              justify-content:center; align-items:center;">
+                    ${cc}
+                </span>
+            </a>
+
+            <div class="mini-cart-dropdown" id="miniCartDropdown">
+                <div class="mcdd-head">
+                    <strong>Giỏ hàng</strong>
+                    <span class="mcdd-sub" id="mcddCount">0 sản phẩm</span>
+                </div>
+
+                <div class="mcdd-body" id="mcddBody">
+                    <div class="mcdd-empty">Rê chuột để xem giỏ hàng</div>
+                </div>
+
+                <div class="mcdd-foot">
+                    <div class="mcdd-total">
+                        <span>Tổng:</span>
+                        <strong id="mcddTotal">0</strong>
+                    </div>
+                    <div class="mcdd-actions">
+                        <a href="${pageContext.request.contextPath}/cart" class="mcdd-btn outline">Xem giỏ</a>
+                        <a href="${pageContext.request.contextPath}/checkout" class="mcdd-btn solid">Thanh toán</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="auth-buttons">
             <%
                 // Lấy đối tượng User từ session
@@ -312,15 +354,17 @@
 
                                             <c:choose>
                                                 <c:when test="${not empty p.defaultVariantId}">
-                                                    <a href="${pageContext.request.contextPath}/cart?action=add&variantId=${p.defaultVariantId}&qty=1"
-                                                       class="add-cart"
+                                                    <a href="javascript:void(0)"
+                                                       class="add-cart js-add-to-cart"
+                                                       data-variant-id="${p.defaultVariantId}"
                                                        aria-label="Thêm vào giỏ"
-                                                       onclick="event.stopPropagation();">
+                                                       onclick="event.stopPropagation(); event.preventDefault();">
                                                         <i class="fa-solid fa-cart-shopping cart"></i>
                                                     </a>
+
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="${pageContext.request.contextPath}/product?id=${p.id}"
+                                                    <a href="${ctx}/product?id=${p.id}"
                                                        class="add-cart"
                                                        aria-label="Chọn phân loại"
                                                        onclick="event.stopPropagation();">
@@ -472,8 +516,42 @@
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
     </div>
 </footer>
+<script>
+    window.contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/assets/js/miniCartDropdown.js"></script>
 
-<script src="./assets/js/search.js"></script>
+<script>
+    document.addEventListener("click", async (e) => {
+        const a = e.target.closest("a.js-add-to-cart");
+        if (!a) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const variantId = a.dataset.variantId;
+        if (!variantId) return;
+
+        try {
+            const url = `${window.contextPath}/cart?action=addAjax&variantId=${encodeURIComponent(variantId)}&qty=1`;
+            const res = await fetch(url, { headers: { "Accept": "application/json" } });
+            const data = await res.json();
+            if (!res.ok || !data?.ok) throw new Error(data?.message || "Không thêm vào giỏ được");
+
+            const badge = document.getElementById("miniCartQty");
+            if (badge) {
+                const n = Number(data.cartCount) || 0;
+                badge.textContent = n;
+                badge.style.display = n > 0 ? "inline-flex" : "none";
+            }
+            if (typeof window.refreshMiniCartDropdown === "function") window.refreshMiniCartDropdown();
+        } catch (err) {
+            console.error(err);
+            alert(err.message || "Có lỗi khi thêm vào giỏ");
+        }
+    }, true);
+</script>
+<script src="${pageContext.request.contextPath}/assets/js/search.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

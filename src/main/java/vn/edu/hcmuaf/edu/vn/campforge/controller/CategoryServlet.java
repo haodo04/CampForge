@@ -13,11 +13,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import vn.edu.hcmuaf.edu.vn.campforge.model.Cart;
+import vn.edu.hcmuaf.edu.vn.campforge.service.CartService;
 
 @WebServlet({"/category", "/search"})
 public class CategoryServlet extends HttpServlet {
 
     private static final int PAGE_SIZE = 12;
+
+    private final CartService cartService = new CartService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,6 +38,9 @@ public class CategoryServlet extends HttpServlet {
 
         String fromDateStr = request.getParameter("fromDate");
         String toDateStr = request.getParameter("toDate");
+
+        Cart cart = cartService.getOrCreate(request.getSession());
+        request.setAttribute("cartCount", cart.getTotalQuantity());
 
         Date fromDate = null;
         Date toDate = null;
