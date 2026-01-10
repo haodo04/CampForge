@@ -48,25 +48,28 @@ public class CartServlet extends HttpServlet {
 
     private void miniCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json; charset=UTF-8");
+        try {
+            Cart cart = cartService.getOrCreate(req.getSession());
 
-        Cart cart = cartService.getOrCreate(req.getSession());
+            if (cart.getItems() == null || cart.getItems().isEmpty()) {
+                resp.getWriter().write("{\"ok\":true,\"cartCount\":0,\"totalAmount\":0,\"items\":[]}");
+                return;
+            }
 
-        if (cart.getItems() == null || cart.getItems().isEmpty()) {
-            String json = CartJsonBuilder.toMiniCartJson(0, 0, Collections.emptyList());
+            Map<Integer, Integer> variantQty = new LinkedHashMap<>();
+            cart.getItems().forEach((k, v) -> variantQty.put(k, v.getQuantity()));
+
+            List<CartViewItem> items = cartViewDAO.getItemsByVariantIds(variantQty);
+            int cartCount = cart.getItems().size();
+            double total = items.stream().mapToDouble(CartViewItem::getLineTotal).sum();
+
+            String json = CartJsonBuilder.toMiniCartJsonFromViewItems(cartCount, total, items);
             resp.getWriter().write(json);
-            return;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.getWriter().write("{\"ok\":false}");
         }
-
-        Map<Integer, Integer> variantQty = new LinkedHashMap<>();
-        cart.getItems().forEach((k, v) -> variantQty.put(k, v.getQuantity()));
-
-        List<CartViewItem> items = cartViewDAO.getItemsByVariantIds(variantQty);
-
-        int cartCount = cart.getTotalQuantity();
-        double total = items.stream().mapToDouble(CartViewItem::getLineTotal).sum();
-
-        String json = CartJsonBuilder.toMiniCartJsonFromViewItems(cartCount, total, items);
-        resp.getWriter().write(json);
     }
 
 
@@ -85,7 +88,7 @@ public class CartServlet extends HttpServlet {
         Cart cart = cartService.getOrCreate(req.getSession());
         cart.add(variantId, qty);
 
-        int cartCount = cart.getTotalQuantity();
+        int cartCount = cart.getItems().size();
 
         resp.getWriter().write("{\"ok\":true,\"cartCount\":" + cartCount + "}");
     }

@@ -56,8 +56,8 @@
     <c:set var="heroHref" value="${ctx}${b_hero.linkUrl}" />
 </c:if>
 
-<c:set var="cart" value="${sessionScope.CART}" />
-<c:set var="cartCount" value="${cart != null ? cart.totalQuantity : 0}" />
+<c:set var="cart" value="${sessionScope.CART}"/>
+<c:set var="cartCount" value="${cart != null ? cart.items.size() : 0}"/>
 
 <div class="header-top"></div>
 <section id="header">

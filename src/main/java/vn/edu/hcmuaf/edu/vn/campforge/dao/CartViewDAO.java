@@ -31,7 +31,8 @@ public class CartViewDAO {
                         "FROM product_variants pv " +
                         "JOIN products p ON p.id = pv.product_id " +
                         "WHERE pv.id IN (" + placeholders + ") " +
-                        "AND pv.is_active = 1 AND p.isDelete = 0";
+                        "AND COALESCE(pv.is_active, 1) = 1 " +
+                        "AND COALESCE(p.isDelete, 0) = 0";
 
         Map<Integer, CartViewItem> temp = new HashMap<>();
 
