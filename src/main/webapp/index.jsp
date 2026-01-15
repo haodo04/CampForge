@@ -138,7 +138,7 @@
                 <div class="dropdown-content">
                     <a href="personal.jsp"><i class="fa fa-user"></i> Thông tin cá nhân</a>
                     <hr>
-                    <a href="index.jsp" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+                    <a href="logout" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
                 </div>
             </div>
             <% } %>
