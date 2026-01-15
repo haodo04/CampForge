@@ -19,21 +19,18 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 1. Lấy dữ liệu từ Form (Khớp với thuộc tính 'name' ở JSP)
         String fullName = request.getParameter("fullName");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
         String rePass = request.getParameter("rePassword");
 
-        // Tạm thời để trống phone vì giao diện mới không có field này
-        String phone = "";
+        String result = UserService.getInstance().register(username, pass, rePass, fullName, email, "");
 
-        // 2. Gọi Service xử lý
-        String result = UserService.getInstance().register(username, pass, rePass, fullName, email, phone);
-
-        if ("SUCCESS".equals(result)) {
-            response.sendRedirect("login.jsp");
+        if ("SUCCESS_VERIFY".equals(result)) {
+            // Không redirect ngay mà forward để mang theo thông báo
+            request.setAttribute("msg", "Đăng ký thành công! Vui lòng kiểm tra Email để kích hoạt tài khoản.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             request.setAttribute("error", result);
             request.getRequestDispatcher("register.jsp").forward(request, response);

@@ -17,30 +17,18 @@ public class UserService {
     /**
      * Logic đăng ký người dùng
      */
-    public String register(
-            String username,
-            String password,
-            String rePassword,
-            String fullName,
-            String email,
-            String phone) {
-        // 1. Kiểm tra trống (Validation cơ bản)
+    public String register(String username, String password, String rePassword,
+                           String fullName, String email, String phone) {
+        // 1. Validation
         if (username == null || username.trim().isEmpty()) return "Tên đăng nhập không được để trống!";
+        if (!password.equals(rePassword)) return "Mật khẩu xác nhận không khớp!";
+        if (UserDAO.checkUsernameExists(username)) return "Tên đăng nhập đã tồn tại!";
+        if (UserDAO.checkEmailExists(email)) return "Email đã tồn tại!";
 
-        // 2. Kiểm tra mật khẩu khớp
-        if (!password.equals(rePassword)) {
-            return "Mật khẩu xác nhận không khớp!";
-        }
-
-        // 3. KIỂM TRA TRÙNG USERNAME (Rất quan trọng)
-        if (UserDAO.checkUsernameExists(username)) {
-            return "Tên đăng nhập đã tồn tại!";
-        }
-
-        // 4. Mã hóa mật khẩu
+        // 2. Mã hóa mật khẩu
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        // 5. Lưu vào DB
+        // 3. Lưu vào DB
         User user = new User();
         user.setUsername(username);
         user.setPassword(hashedPassword);
@@ -49,20 +37,28 @@ public class UserService {
         user.setPhone(phone);
 
         boolean success = UserDAO.register(user);
-        return success ? "SUCCESS" : "Đăng ký thất bại, hệ thống đang bận!";
+
+        // 4. NẾU LƯU THÀNH CÔNG -> GỬI MAIL VERIFY
+        if (success) {
+            String token = java.util.UUID.randomUUID().toString();
+            UserDAO.saveVerifyToken(email, token);
+            EmailService.sendVerifyEmail(email, token);
+            return "SUCCESS_VERIFY"; // Trả về mã riêng để Servlet nhận biết
+        }
+
+        return "Đăng ký thất bại!";
     }
 
     public User login(String username, String password) {
-        // 1. Lấy user từ DB
         User user = UserDAO.getUserByUsername(username);
-
-        // 2. Nếu user tồn tại, kiểm tra mật khẩu
-        if (user != null) {
-            // BCrypt.checkpw(mật khẩu thô, mật khẩu đã hash)
-            if (BCrypt.checkpw(password, user.getPassword())) {
-                return user; // Đăng nhập thành công
+        if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+            // KIỂM TRA XÁC THỰC
+            if (user.getIsVerified() == 0) {
+                // Bạn có thể ném Exception hoặc xử lý tùy ý để báo lỗi chưa verify
+                return null;
             }
+            return user;
         }
-        return null; // Sai tài khoản hoặc mật khẩu
+        return null;
     }
 }

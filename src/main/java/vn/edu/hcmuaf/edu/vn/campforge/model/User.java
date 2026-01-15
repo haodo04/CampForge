@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String phone;
     private int role;
     private Timestamp createAt;
+    private int isVerified;
 
     // Constructor không đối số (Bắt buộc cho Java Bean)
     public User() {
@@ -94,6 +95,10 @@ public class User implements Serializable {
     public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
     }
+
+    public int getIsVerified() { return isVerified; }
+
+    public void setIsVerified(int isVerified) { this.isVerified = isVerified; }
 
     // Ghi đè phương thức toString để dễ debug
     @Override
