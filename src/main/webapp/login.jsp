@@ -77,8 +77,10 @@
             </button>
 
             <button type="button" class="sbtn gg">
-              <i class="fa-brands fa-google"></i>
-              Google
+              <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/campforge_war/login-google&response_type=code&client_id=1077549100477-97ee4he5fe0niock79ri485igr55ed1o.apps.googleusercontent.com"
+                 class="sbtn gg">
+                <i class="fa-brands fa-google"></i> Google
+              </a>
             </button>
 
           </div>
