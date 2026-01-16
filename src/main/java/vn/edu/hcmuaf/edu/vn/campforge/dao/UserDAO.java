@@ -165,4 +165,16 @@ public class UserDAO {
             conn.createStatement().executeUpdate("DELETE FROM verify_tokens WHERE email = '" + email + "'");
         } catch (SQLException e) { e.printStackTrace(); }
     }
+    // Đăng ký người dùng từ Google (mật khẩu để trống)
+    public static boolean registerGoogleUser(User user) {
+        String sql = "INSERT INTO users (username, fullName, email, is_verified, role, password) VALUES (?, ?, ?, 1, 0, ?)";
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getEmail()); // Dùng email làm username luôn
+            ps.setString(2, user.getFullName());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, ""); // Không có mật khẩu cho login Google
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) { e.printStackTrace(); return false; }
+    }
 }
