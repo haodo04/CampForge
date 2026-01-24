@@ -48,16 +48,22 @@ public class ProductDAO {
 
         StringBuilder sql = new StringBuilder("""
             SELECT
-                p.id, p.cateId, p.brandId, p.proName, p.price,
-                p.description, p.sold, p.createAt, p.isDelete,
-                i.path AS image,
-                b.name AS brandName,
-                c.cateName AS cateName
+            p.id, p.cateId, p.brandId, p.proName, p.price,
+            p.description, p.sold, p.createAt, p.isDelete,
+            i.path AS image,
+            b.name AS brandName,
+            c.cateName AS cateName,
+            v_min.min_variant_id AS defaultVariantId
             FROM products p
             LEFT JOIN product_imgs i ON p.id = i.product_id AND i.position = 1
-            LEFT JOIN brand b ON p.brandId = b.id
-            LEFT JOIN categories c ON p.cateId = c.id
-            WHERE p.isDelete = 0
+            LEFT JOIN (SELECT product_id, MIN(id) AS min_variant_id
+                        FROM product_variants
+                        WHERE is_active = 1
+                        GROUP BY product_id
+                    ) v_min ON v_min.product_id = p.id
+                    LEFT JOIN brand b ON p.brandId = b.id
+                    LEFT JOIN categories c ON p.cateId = c.id
+                    WHERE p.isDelete = 0
         """);
 
         List<Object> params = new ArrayList<>();
@@ -119,7 +125,12 @@ public class ProductDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    list.add(mapRow(rs));
+                    Product p = mapRow(rs);
+                    Object dv = rs.getObject("defaultVariantId");
+                    if (dv == null) p.setDefaultVariantId(null);
+                    else p.setDefaultVariantId(((Number) dv).intValue());
+
+                    list.add(p);
                 }
             }
 
