@@ -237,3 +237,7 @@ footer .footer-col {
   text-decoration: none;
   color: inherit;
 }
+
+.shop-page #product-grid .pro { cursor: default; }
+.shop-page #product-grid .pro .pro-link { position: relative; z-index: 1; cursor: pointer; }
+.shop-page #product-grid .pro .add-cart { z-index: 5; }
