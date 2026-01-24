@@ -25,8 +25,8 @@
     /></a>
 
     <ul id="navbar">
-        <li><a class="active" href="index.jsp">Trang chủ</a></li>
-        <li><a href="category.jsp">Danh mục</a></li>
+        <li><a class="active" href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+        <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
         <li><a href="blog.jsp">Blog</a></li>
         <li><a href="about.jsp">Giới thiệu</a></li>
         <li><a href="contact.jsp">Liên hệ</a></li>
@@ -37,7 +37,7 @@
             <input type="text" id="searchInput" placeholder="Tìm sản phẩm..." />
             <button id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
-        <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+        <a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i></a>
 
         <div class="auth-buttons">
             <%
@@ -47,8 +47,8 @@
 
                 if (user == null) {
             %>
-            <a href="login.jsp" class="btn-login">Đăng nhập</a>
-            <a href="register.jsp" class="btn-register">Đăng ký</a>
+            <a href="${pageContext.request.contextPath}/login" class="btn-login">Đăng nhập</a>
+            <a href="${pageContext.request.contextPath}/register" class="btn-register">Đăng ký</a>
             <% } else { %>
             <div class="user-dropdown">
             <span class="user-name">
@@ -56,9 +56,9 @@
                 <i class="fa fa-caret-down"></i>
             </span>
                 <div class="dropdown-content">
-                    <a href="personal.jsp"><i class="fa fa-user"></i> Thông tin cá nhân</a>
+                    <a href="${pageContext.request.contextPath}/personal"><i class="fa fa-user"></i> Thông tin cá nhân</a>
                     <hr>
-                    <a href="index.jsp" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+                    <a href="${pageContext.request.contextPath}/home" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
                 </div>
             </div>
             <% } %>
@@ -109,6 +109,13 @@
                     </div>
                 </div>
             </form>
+
+            <div class="applied-discount">
+                <span>Đã áp dụng giảm giá</span>
+                <strong id="appliedDiscount">
+                    - <fmt:formatNumber value="${discount}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
+                </strong>
+            </div>
 
             <div class="shipping-method">
                 <h3>Phương thức giao hàng</h3>

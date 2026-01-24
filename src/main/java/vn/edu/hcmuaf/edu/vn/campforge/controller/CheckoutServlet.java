@@ -31,17 +31,30 @@ public class CheckoutServlet extends HttpServlet {
         Cart cart = cartService.getOrCreate(request.getSession());
         request.setAttribute("cartCount", cart.getTotalQuantity());
 
-        List<CartItem> cartItems = (List<CartItem>) cart.getItems();
-        if (cartItems == null || cartItems.isEmpty()) {
+        Map<Integer, Integer> variantQtyMap = new LinkedHashMap<>();
+
+        Object itemsObj = cart.getItems();
+        if (itemsObj == null) {
             response.sendRedirect(request.getContextPath() + "/cart");
             return;
         }
 
-        Map<Integer, Integer> variantQtyMap = new LinkedHashMap<>();
-        for (CartItem ci : cartItems) {
-            int vid = ci.getVariantId();
-            int qty = ci.getQuantity();
-            variantQtyMap.put(vid, variantQtyMap.getOrDefault(vid, 0) + qty);
+        if (itemsObj instanceof Map<?, ?> map) {
+            for (Object v : map.values()) {
+                if (v instanceof CartItem ci) {
+                    int vid = ci.getVariantId();
+                    int qty = ci.getQuantity();
+                    variantQtyMap.put(vid, variantQtyMap.getOrDefault(vid, 0) + qty);
+                } else if (v instanceof Integer qty) {
+                    Object key = null;
+                }
+            }
+
+        }
+
+        if (variantQtyMap.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/cart");
+            return;
         }
 
         List<CartViewItem> items = cartViewDAO.getItemsByVariantIds(variantQtyMap);
