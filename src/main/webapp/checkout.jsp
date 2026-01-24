@@ -112,9 +112,14 @@
 
             <div class="shipping-method">
                 <h3>Phương thức giao hàng</h3>
-                <label><input type="radio" name="shipping" checked> Giao hàng tiêu chuẩn - 100,000 đ</label><br>
-                <label><input type="radio" name="shipping"> Giao hàng nhanh - 150,000 đ</label>
+                <label>
+                    <input type="radio" name="shipping" value="100000" checked> Giao hàng tiêu chuẩn - 100.000 đ
+                </label><br>
+                <label>
+                    <input type="radio" name="shipping" value="150000"> Giao hàng nhanh - 150.000 đ
+                </label>
             </div>
+
 
             <div class="payment-method">
                 <h3>Phương thức thanh toán</h3>
@@ -257,6 +262,33 @@
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
       </div>
 </footer>
+<script>
+    (function () {
+        const fmt = new Intl.NumberFormat("vi-VN");
+        const summary = document.getElementById("order-summary");
+        if (!summary) return;
+
+        const subtotal = Number(summary.dataset.subtotal || 0);
+        const discount = Number(summary.dataset.discount || 0);
+
+        const elShip = document.getElementById("sumShipping");
+        const elTotal = document.getElementById("sumTotal");
+
+        function updateTotal() {
+            const shipInput = document.querySelector('input[name="shipping"]:checked');
+            const ship = shipInput ? Number(shipInput.value || 0) : 0;
+
+            if (elShip) elShip.textContent = fmt.format(ship) + " đ";
+            if (elTotal) elTotal.textContent = fmt.format(subtotal + ship - discount) + " đ";
+        }
+
+        document.querySelectorAll('input[name="shipping"]').forEach(r => {
+            r.addEventListener("change", updateTotal);
+        });
+
+        updateTotal();
+    })();
+</script>
 
 </body>
 </html>
