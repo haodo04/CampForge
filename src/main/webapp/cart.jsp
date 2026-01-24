@@ -13,9 +13,9 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/cart.css">
-    <link rel="stylesheet" href="assets/css/search.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/cart.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/search.css">
 </head>
 <body>
 
@@ -73,41 +73,37 @@
 </section>
 
 <section id="cart" class="section-p1">
+    <fmt:setLocale value="vi_VN" scope="session"/>
 
     <c:set var="isEmptyCart" value="${empty items}" />
 
     <table width="100%" class="${isEmptyCart ? 'hidden' : ''}">
         <thead>
         <tr>
-            <td>Xóa</td>
+            <td>STT</td>
             <td>Ảnh</td>
             <td>Tên sản phẩm</td>
             <td>Giá</td>
             <td>Số lượng</td>
             <td>Tổng cộng</td>
+            <td>Xóa</td>
         </tr>
         </thead>
         <tbody id="cart-body">
-        <c:forEach var="it" items="${items}">
+        <c:forEach var="it" items="${items}" varStatus="st">
             <tr>
-                <td>
-                    <a href="${pageContext.request.contextPath}/cart?action=remove&variantId=${it.variantId}"
-                       onclick="return confirm('Xóa sản phẩm này khỏi giỏ hàng?');">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                    </a>
+                <td class="td-stt">${st.count}</td>
+                <td class="td-img">
+                    <img class="cart-thumb"
+                         src="${pageContext.request.contextPath}${it.imagePath}"
+                         alt="<c:out value='${it.proName}'/>">
                 </td>
 
-                <td>
-                    <img src="${pageContext.request.contextPath}${it.imagePath}"
-                         alt="<c:out value='${it.proName}'/>"
-                         style="width: 80px; height: 80px; object-fit: cover;">
-                </td>
-
-                <td>
-                    <div style="font-weight: 700;">
+                <td class="td-name">
+                    <div class="cart-name">
                         <c:out value="${it.proName}"/>
                     </div>
-                    <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                    <div class="cart-meta">
                         <c:out value="${it.color}"/>
                         <c:if test="${not empty it.size}">
                             - <c:out value="${it.size}"/>
@@ -116,16 +112,16 @@
                     </div>
                 </td>
 
-                <td>
-                    <fmt:formatNumber value="${it.unitPrice}" type="number" groupingUsed="true"/> vnđ
+                <td class="money">
+                    <fmt:formatNumber value="${it.unitPrice}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
                 </td>
 
                 <td>
-                    <form action="${pageContext.request.contextPath}/cart" method="post" class="qty-form" style="display:flex; gap:8px; align-items:center; justify-content:center;">
+                    <form class="qty-form" action="${pageContext.request.contextPath}/cart" method="post">
                         <input type="hidden" name="action" value="update"/>
                         <input type="hidden" name="variantId" value="${it.variantId}"/>
 
-                        <button type="button" class="qty-btn" data-act="minus">-</button>
+                        <button type="button" class="qty-btn" data-act="minus" aria-label="Giảm">−</button>
 
                         <input name="qty"
                                class="qty-input"
@@ -133,24 +129,30 @@
                                inputmode="numeric"
                                pattern="[0-9]*"
                                min="1"
-                               max="${it.stock}"
-                               style="width: 60px; text-align:center; padding:6px 8px; border:1px solid #ddd; border-radius:6px;">
+                               max="${it.stock}"/>
 
-                        <button type="button" class="qty-btn" data-act="plus">+</button>
-
-                        <button type="submit" class="normal" style="padding:8px 10px;">Cập nhật</button>
+                        <button type="button" class="qty-btn" data-act="plus" aria-label="Tăng">+</button>
                     </form>
+
                     <c:if test="${it.quantity > it.stock}">
-                        <div style="color:#c0392b; font-size:12px; margin-top:6px;">
-                            Số lượng vượt tồn kho, vui lòng giảm.
-                        </div>
+                        <div class="qty-warn">Số lượng vượt tồn kho, vui lòng giảm.</div>
                     </c:if>
                 </td>
 
-                <td>
-                    <fmt:formatNumber value="${it.lineTotal}" type="number" groupingUsed="true"/> vnđ
+                <td class="money">
+                    <fmt:formatNumber value="${it.lineTotal}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
+                </td>
+
+                <td class="td-remove">
+                    <a class="remove-link"
+                       href="${pageContext.request.contextPath}/cart?action=remove&variantId=${it.variantId}"
+                       onclick="return confirm('Xóa sản phẩm này khỏi giỏ hàng?');"
+                       title="Xóa">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
                 </td>
             </tr>
+
         </c:forEach>
         </tbody>
     </table>
@@ -173,32 +175,33 @@
 
     <div id="subtotal">
         <h3>Tổng giỏ hàng</h3>
-        <table>
+        <table class="summary-table">
             <tr>
-                <td>Tổng cộng</td>
-                <td id="subtotal-value">
-                    <fmt:formatNumber value="${subtotal}" type="number" groupingUsed="true"/> vnđ
+                <td>Tạm tính</td>
+                <td class="summary-money" id="subtotal-value">
+                    <fmt:formatNumber value="${subtotal}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
                 </td>
             </tr>
             <tr>
-                <td>Vận chuyển</td>
-                <td>Miễn phí</td>
+                <td>Đã giảm</td>
+                <td class="summary-money" id="discount-value">
+                    0 đ
+                </td>
             </tr>
-            <tr>
+            <tr class="summary-total">
                 <td><strong>Tổng cộng</strong></td>
-                <td id="total-value">
-                    <strong><fmt:formatNumber value="${subtotal}" type="number" groupingUsed="true"/> vnđ</strong>
+                <td class="summary-money" id="total-value">
+                    <strong><fmt:formatNumber value="${subtotal}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ</strong>
                 </td>
             </tr>
         </table>
 
         <c:choose>
             <c:when test="${isEmptyCart}">
-                <button id="checkoutBtn" class="normal" disabled>Thanh toán</button>
+                <button id="checkoutBtn" class="normal checkout-btn" disabled>Thanh toán</button>
             </c:when>
             <c:otherwise>
-                <a id="checkoutBtn" class="normal" href="${pageContext.request.contextPath}/checkout"
-                   style="display:inline-block; text-decoration:none; text-align:center;">
+                <a id="checkoutBtn" class="normal checkout-btn" href="${pageContext.request.contextPath}/checkout">
                     Thanh toán
                 </a>
             </c:otherwise>
@@ -273,36 +276,74 @@
         document.querySelectorAll(".qty-form").forEach(function (form) {
             var input = form.querySelector(".qty-input");
             var minus = form.querySelector('.qty-btn[data-act="minus"]');
-            var plus = form.querySelector('.qty-btn[data-act="plus"]');
+            var plus  = form.querySelector('.qty-btn[data-act="plus"]');
 
             if (!input) return;
+
+            var timer = null;
+
+            function getMax() {
+                var maxAttr = input.getAttribute("max");
+                var max = parseInt(maxAttr || "999999", 10);
+                return isNaN(max) ? 999999 : max;
+            }
 
             function clamp(val) {
                 var n = parseInt(val, 10);
                 if (isNaN(n) || n < 1) n = 1;
 
-                var max = parseInt(input.getAttribute("max") || "999999", 10);
-                if (!isNaN(max) && n > max) n = max;
+                var max = getMax();
+                if (n > max) n = max;
+
                 return n;
+            }
+
+            function submitSoon() {
+                // tránh spam submit khi user click liên tục
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    form.submit();
+                }, 250);
+            }
+
+            function setQtyAndSubmit(nextVal) {
+                input.value = clamp(nextVal);
+                submitSoon();
             }
 
             if (minus) {
                 minus.addEventListener("click", function () {
-                    input.value = clamp(clamp(input.value) - 1);
+                    setQtyAndSubmit(clamp(input.value) - 1);
                 });
             }
+
             if (plus) {
                 plus.addEventListener("click", function () {
-                    input.value = clamp(clamp(input.value) + 1);
+                    setQtyAndSubmit(clamp(input.value) + 1);
                 });
             }
 
             input.addEventListener("input", function () {
-                input.value = clamp(input.value);
+                input.value = input.value.replace(/[^\d]/g, "");
+            });
+
+            input.addEventListener("change", function () {
+                setQtyAndSubmit(input.value);
+            });
+            input.addEventListener("blur", function () {
+                setQtyAndSubmit(input.value);
+            });
+
+            input.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    setQtyAndSubmit(input.value);
+                }
             });
         });
     })();
 </script>
+
 
 </body>
 </html>
