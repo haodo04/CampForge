@@ -324,58 +324,50 @@
                         <c:otherwise>
                             <c:forEach var="p" items="${products}">
                                 <div class="col-12 col-sm-6 col-lg-3">
-                                    <div class="pro" onclick="window.location.href='${ctx}/product?id=${p.id}'">
-
-                                        <c:choose>
-                                            <c:when test="${not empty p.image}">
-                                                <img src="${pageContext.request.contextPath}${p.image}"
-                                                     alt="${p.proName}"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png"
-                                                     alt="${p.proName}"/>
-                                            </c:otherwise>
-                                        </c:choose>
-
-                                        <div class="des">
-                <span>
-                  <c:out value="${p.brandName}" default="(Không rõ hãng)"/>
-                </span>
-
-                                            <h5><c:out value="${p.proName}"/></h5>
-
-                                            <div class="star" aria-label="Đánh giá 5/5">
-                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-
-                                            <h4>${p.formattedPrice}</h4>
-
+                                    <div class="pro">
+                                        <a class="pro-link" href="${ctx}/product?id=${p.id}">
                                             <c:choose>
-                                                <c:when test="${not empty p.defaultVariantId}">
-                                                    <a href="javascript:void(0)"
-                                                       class="add-cart js-add-to-cart"
-                                                       data-variant-id="${p.defaultVariantId}"
-                                                       aria-label="Thêm vào giỏ"
-                                                       onclick="event.stopPropagation(); event.preventDefault();">
-                                                        <i class="fa-solid fa-cart-shopping cart"></i>
-                                                    </a>
-
+                                                <c:when test="${not empty p.image}">
+                                                    <img src="${pageContext.request.contextPath}${p.image}" alt="${p.proName}"/>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="${ctx}/product?id=${p.id}"
-                                                       class="add-cart"
-                                                       aria-label="Chọn phân loại"
-                                                       onclick="event.stopPropagation();">
-                                                        <i class="fa-solid fa-cart-shopping cart"></i>
-                                                    </a>
+                                                    <img src="${pageContext.request.contextPath}/assets/img/products/no-image.png" alt="${p.proName}"/>
                                                 </c:otherwise>
                                             </c:choose>
 
-                                        </div>
+                                            <div class="des">
+                                                <span><c:out value="${p.brandName}" default="(Không rõ hãng)"/></span>
+                                                <h5><c:out value="${p.proName}"/></h5>
 
+                                                <div class="star" aria-label="Đánh giá 5/5">
+                                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                </div>
+
+                                                <h4>${p.formattedPrice}</h4>
+                                            </div>
+                                        </a>
+
+                                        <c:choose>
+                                            <c:when test="${not empty p.defaultVariantId}">
+                                                <a href="javascript:void(0)"
+                                                   class="add-cart js-add-to-cart"
+                                                   data-variant-id="${p.defaultVariantId}"
+                                                   aria-label="Thêm vào giỏ">
+                                                    <i class="fa-solid fa-cart-shopping cart"></i>
+                                                </a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="${ctx}/product?id=${p.id}"
+                                                   class="add-cart"
+                                                   aria-label="Chọn phân loại">
+                                                    <i class="fa-solid fa-cart-shopping cart"></i>
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
+
                                 </div>
                             </c:forEach>
                         </c:otherwise>
@@ -527,15 +519,18 @@
         if (!a) return;
 
         e.preventDefault();
-        e.stopPropagation();
 
         const variantId = a.dataset.variantId;
         if (!variantId) return;
 
         try {
-            const url = `${window.contextPath}/cart?action=addAjax&variantId=${encodeURIComponent(variantId)}&qty=1`;
+            const url = window.contextPath
+                + "/cart?action=addAjax&variantId="
+                + encodeURIComponent(variantId)
+                + "&qty=1";
             const res = await fetch(url, { headers: { "Accept": "application/json" } });
             const data = await res.json();
+
             if (!res.ok || !data?.ok) throw new Error(data?.message || "Không thêm vào giỏ được");
 
             const badge = document.getElementById("miniCartQty");
@@ -544,13 +539,15 @@
                 badge.textContent = n;
                 badge.style.display = n > 0 ? "inline-flex" : "none";
             }
-            if (typeof window.refreshMiniCartDropdown === "function") window.refreshMiniCartDropdown();
+
+            if (window.refreshMiniCartDropdown) window.refreshMiniCartDropdown();
         } catch (err) {
             console.error(err);
             alert(err.message || "Có lỗi khi thêm vào giỏ");
         }
-    }, true);
+    });
 </script>
+
 <script src="${pageContext.request.contextPath}/assets/js/search.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

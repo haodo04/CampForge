@@ -1,4 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<fmt:setLocale value="vi_VN" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css"/>
-    <link rel="stylesheet" href="assets/css/checkout.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/search.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/checkout.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/search.css">
 </head>
 <body>
 <div class="header-top"></div>
 <section id="header">
-    <a href="index.jsp"
+    <a href="${pageContext.request.contextPath}/home"
     ><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"
     /></a>
 
@@ -108,9 +112,14 @@
 
             <div class="shipping-method">
                 <h3>Phương thức giao hàng</h3>
-                <label><input type="radio" name="shipping" checked> Giao hàng tiêu chuẩn - 100,000 đ</label><br>
-                <label><input type="radio" name="shipping"> Giao hàng nhanh - 150,000 đ</label>
+                <label>
+                    <input type="radio" name="shipping" value="100000" checked> Giao hàng tiêu chuẩn - 100.000 đ
+                </label><br>
+                <label>
+                    <input type="radio" name="shipping" value="150000"> Giao hàng nhanh - 150.000 đ
+                </label>
             </div>
+
 
             <div class="payment-method">
                 <h3>Phương thức thanh toán</h3>
@@ -123,36 +132,72 @@
         <div class="checkout-right">
             <h3>Đơn hàng của bạn</h3>
 
-            <div class="cart-item">
-                <img src="./assets/img/products/balo1.jpg" alt="Sofa">
-                <div class="details">
-                    <p class="name">Balo leo nui</p>
-                    <p class="color">Màu xanh</p>
-                    <p class="price">1,200,000 đ</p>
+            <c:choose>
+                <c:when test="${empty items}">
+                    <p style="padding: 12px 0;">Giỏ hàng trống.</p>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="it" items="${items}">
+                        <div class="cart-item">
+                            <img src="${ctx}${it.imagePath}" alt="<c:out value='${it.proName}'/>">
+
+                            <div class="details">
+                                <p class="name"><c:out value="${it.proName}"/></p>
+                                <p class="color">
+                                    <c:if test="${not empty it.color}">Màu: <c:out value="${it.color}"/></c:if>
+                                    <c:if test="${not empty it.size}"> - Size: <c:out value="${it.size}"/></c:if>
+                                </p>
+                                <p class="price">
+                                    <fmt:formatNumber value="${it.unitPrice}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
+                                </p>
+                            </div>
+
+                            <input type="number" value="${it.quantity}" readonly>
+
+                            <button type="button" title="Xóa">
+                                <a href="${ctx}/cart?action=remove&variantId=${it.variantId}">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                            </button>
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+
+            <div class="summary" id="order-summary"
+                 data-subtotal="${subtotal}"
+                 data-discount="${discount}">
+                <div>
+                    <span>Tạm tính</span>
+                    <span id="sumSubtotal">
+                <fmt:formatNumber value="${subtotal}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
+            </span>
                 </div>
-                <input type="number" value="1">
-                <button><a href=""><i class="fa-solid fa-xmark"></i></a></button>
-            </div>
-
-            <div class="cart-item">
-                <img src="./assets/img/products/n5.jpg" alt="Desk">
-                <div class="details">
-                    <p class="name">Bộ dụng cụ đánh lửa</p>
-                    <p class="price">225,000 đ</p>
+                <div>
+                    <span>Phí giao hàng</span>
+                    <span id="sumShipping">
+                <fmt:formatNumber value="${shippingFee}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
+            </span>
                 </div>
-                <input type="number" value="1">
-                <button><a href=""><i class="fa-solid fa-xmark"></i></a></button>
+                <div>
+                    <span>Đã giảm</span>
+                    <span id="sumDiscount">
+                - <fmt:formatNumber value="${discount}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
+            </span>
+                </div>
+                <div class="total">
+                    <span>Tổng thanh toán</span>
+                    <span id="sumTotal">
+                <fmt:formatNumber value="${total}" type="number" groupingUsed="true" maxFractionDigits="0"/> đ
+            </span>
+                </div>
             </div>
 
-            <div class="summary" id="order-summary">
-                <div><span>Tạm tính</span><span>1,425,000 đ</span></div>
-                <div><span>Phí giao hàng</span><span>100,000 đ</span></div>
-                <div><span>Mã giảm giá</span><span>- 40,000 đ</span></div>
-                <div class="total"><span>Tổng tính</span><span>1,485,000 đ</span></div>
-            </div>
-
-            <button class="normal">Thanh toán</button>
+            <button class="normal" form="shipping-form" type="submit" ${empty items ? "disabled" : ""}>
+                Thanh toán
+            </button>
         </div>
+
     </div>
 </section>
 
@@ -217,6 +262,33 @@
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
       </div>
 </footer>
+<script>
+    (function () {
+        const fmt = new Intl.NumberFormat("vi-VN");
+        const summary = document.getElementById("order-summary");
+        if (!summary) return;
+
+        const subtotal = Number(summary.dataset.subtotal || 0);
+        const discount = Number(summary.dataset.discount || 0);
+
+        const elShip = document.getElementById("sumShipping");
+        const elTotal = document.getElementById("sumTotal");
+
+        function updateTotal() {
+            const shipInput = document.querySelector('input[name="shipping"]:checked');
+            const ship = shipInput ? Number(shipInput.value || 0) : 0;
+
+            if (elShip) elShip.textContent = fmt.format(ship) + " đ";
+            if (elTotal) elTotal.textContent = fmt.format(subtotal + ship - discount) + " đ";
+        }
+
+        document.querySelectorAll('input[name="shipping"]').forEach(r => {
+            r.addEventListener("change", updateTotal);
+        });
+
+        updateTotal();
+    })();
+</script>
 
 </body>
 </html>
