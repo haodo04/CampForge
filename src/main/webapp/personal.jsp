@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,29 +35,90 @@
   <body>
   <div class="header-top"></div>
   <section id="header">
-      <a href="#"
-        ><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"
-      /></a>
+    <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
+    <ul id="navbar">
+      <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
+      <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
+      <li><a href="blog.jsp">Blog</a></li>
+      <li><a href="about.jsp">Giới thiệu</a></li>
+      <li><a href="contact.jsp">Liên hệ</a></li>
+    </ul>
 
-      <ul id="navbar">
-        <li><a href="index.jsp">Trang chủ</a></li>
-        <li><a href="category.jsp">Danh mục</a></li>
-        <li><a href="blog.jsp">Blog</a></li>
-        <li><a href="about.jsp">Giới thiệu</a></li>
-        <li><a href="contact.jsp">Liên hệ</a></li>
-      </ul>
+    <div id="right-icons">
+      <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex">
+        <div id="search-box">
+          <input type="text" name="q" id="searchInput" placeholder="Tìm sản phẩm..." value="${q}" />
+          <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
+        </div>
+      </form>
 
-      <div id="right-icons">
-        <a href="#"><i class="fa fa-search"></i></a>
-        <a href="personal.jsp"><i class="fa-solid fa-user"></i></a>
-        <a href="cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+      <!-- mini cart -->
+      <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
+        <a href="${pageContext.request.contextPath}/cart"
+           class="mini-cart-link"
+           style="position:relative; display:inline-block;">
+          <i class="fa fa-shopping-cart"></i>
 
-        <div class="auth-buttons">
-          <a href="index.jsp" class="btn-logout">
-            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-          </a>
+          <span id="miniCartQty"
+                style="position:absolute; top:-6px; right:-10px;
+                        min-width:18px; height:18px; padding:0 5px;
+                        border-radius:999px; font-size:12px; line-height:18px;
+                        text-align:center; background:#e53935; color:#fff;
+                        display:${cartCount > 0 ? 'inline-flex' : 'none'};
+                        justify-content:center; align-items:center;">
+            ${cartCount}
+          </span>
+        </a>
+
+        <div class="mini-cart-dropdown" id="miniCartDropdown">
+          <div class="mcdd-head">
+            <strong>Giỏ hàng</strong>
+            <span class="mcdd-sub" id="mcddCount">0 sản phẩm</span>
+          </div>
+
+          <div class="mcdd-body" id="mcddBody">
+            <div class="mcdd-empty">Rê chuột để xem giỏ hàng</div>
+          </div>
+
+          <div class="mcdd-foot">
+            <div class="mcdd-total">
+              <span>Tổng:</span>
+              <strong id="mcddTotal">0</strong>
+            </div>
+            <div class="mcdd-actions">
+              <a href="${pageContext.request.contextPath}/cart" class="mcdd-btn outline">Xem giỏ</a>
+              <a href="${pageContext.request.contextPath}/checkout" class="mcdd-btn solid">Thanh toán</a>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- auth button/user -->
+      <div class="auth-buttons">
+        <%
+          vn.edu.hcmuaf.edu.vn.campforge.model.User user =
+                  (vn.edu.hcmuaf.edu.vn.campforge.model.User) session.getAttribute("auth");
+
+          if (user == null) {
+        %>
+        <a href="logout" class="logout-link">
+          <i class="fas fa-sign-out-alt"></i> Đăng xuất
+        </a>
+        <% } else { %>
+        <div class="user-dropdown">
+                <span class="user-name">
+                    Xin chào, <strong><%= user.getUsername() %></strong>
+                    <i class="fa fa-caret-down"></i>
+                </span>
+          <div class="dropdown-content">
+            <a href="${pageContext.request.contextPath}/personal"> Thông tin cá nhân</a>
+            <hr>
+            <a href="logout" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
   </section>
     <!-- main -->
     <div class="container mt-5">
@@ -67,13 +129,10 @@
         <div class="card">
           <div class="card-body">
             <div>
-              <p><strong>Họ và tên:</strong> Nguyễn Văn A</p>
-              <p><strong>Số điện thoại:</strong> 0901234567</p>
-              <p><strong>Email:</strong> nguyenvana@example.com</p>
-              <p>
-                <strong>Địa chỉ:</strong> 123 Đường ABC, Phường 1, Quận 2, TP.
-                Hồ Chí Minh
-              </p>
+              <p><strong>Họ và tên:</strong> ${user.fullName}</p>
+              <p><strong>Số điện thoại:</strong> ${user.phone != null ? user.phone : 'Chưa cập nhật'}</p>
+              <p><strong>Email:</strong> ${user.email}</p>
+              <p><strong>Địa chỉ:</strong>Chưa cập nhật</p>
               <div class="button-group">
                 <button
                   class="btn btn-warning btn-sm"
@@ -89,9 +148,7 @@
                 >
                   <i class="fas fa-edit"></i> Chỉnh sửa
                 </button>
-                <button class="btn btn-danger btn-sm" onclick="logout()">
-                  <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                </button>
+                <a href="logout" class="btn btn-danger btn-sm logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
                 <button
                   class="btn btn-primary btn-sm"
                   data-bs-toggle="modal"
