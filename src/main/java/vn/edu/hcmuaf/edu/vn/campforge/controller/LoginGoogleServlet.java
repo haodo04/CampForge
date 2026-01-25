@@ -40,7 +40,6 @@ public class LoginGoogleServlet extends HttpServlet {
             GoogleDTO googleUser = getUserInfo(accessToken);
 
             // 3. Xử lý logic Login với Database
-            // Lưu ý: Nên dùng Email để tìm kiếm vì Login Google định danh qua Email
             User user = UserDAO.getUserByUsername(googleUser.getEmail());
 
             if (user == null) {
@@ -52,7 +51,6 @@ public class LoginGoogleServlet extends HttpServlet {
                 user.setIsVerified(1); // Google đã verify email rồi
 
                 if (UserDAO.registerGoogleUser(user)) {
-                    // QUAN TRỌNG: Phải lấy lại để có đầy đủ username, id từ DB
                     user = UserDAO.getUserByUsername(googleUser.getEmail());
                 }
             }
@@ -70,7 +68,6 @@ public class LoginGoogleServlet extends HttpServlet {
     }
 
     public String getToken(String code) throws IOException {
-        // SỬA TẠI ĐÂY: Key phải là "client_id", "client_secret",...
         String response = Request.Post(LINK_GET_TOKEN)
                 .bodyForm(Form.form()
                         .add("client_id", CLIENT_ID)
