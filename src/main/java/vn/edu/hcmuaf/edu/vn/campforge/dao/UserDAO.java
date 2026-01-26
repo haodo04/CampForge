@@ -16,6 +16,7 @@ public class UserDAO {
         user.setFullName(rs.getString("fullName"));
         user.setEmail(rs.getString("email"));
         user.setPhone(rs.getString("phone"));
+        user.setAddress(rs.getString("address"));
         user.setRole(rs.getInt("role"));
         user.setCreateAt(rs.getTimestamp("createAt"));
         user.setIsVerified(rs.getInt("is_verified"));
@@ -176,5 +177,24 @@ public class UserDAO {
             ps.setString(4, ""); // Không có mật khẩu cho login Google
             return ps.executeUpdate() > 0;
         } catch (SQLException e) { e.printStackTrace(); return false; }
+    }
+    public boolean updateProfile(int userId, String fullName, String phone, String email, String address) {
+        String sql = "UPDATE users SET fullName = ?, phone = ?, email = ?, address = ? WHERE id = ?";
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, fullName);
+            ps.setString(2, phone);
+            ps.setString(3, email);
+            ps.setString(4, address);
+            ps.setInt(5, userId);
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Lỗi Update Profile: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -78,7 +78,17 @@
   align-items: center;
 }
 #editPersonalInfoModal {
-  z-index: 1050;
+  background-color: #fff !important;
+  color: #333 !important;
+  position: relative;
+  z-index: 1060;
+}
+
+.modal-backdrop {
+  z-index: 1040 !important;
+}
+.modal {
+  z-index: 1050 !important;
 }
 
 #addressModal {
