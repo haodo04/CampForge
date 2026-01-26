@@ -21,7 +21,7 @@ public class PersonalServlet extends HttpServlet {
 
         if (auth == null) {
             // Nếu chưa đăng nhập, đá về trang login
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
