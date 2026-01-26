@@ -31,8 +31,58 @@
     <link rel="stylesheet" href="./assets/css/styles.css" />
     <link rel="stylesheet" href="./assets/css/personal.css" />
       <link rel="stylesheet" href="assets/css/search.css">
+      <style>
+          #top-notification {
+              position: fixed;
+              top: -100px;
+              left: 50%;
+              transform: translateX(-50%);
+              z-index: 10000;
+              transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+              min-width: 280px;
+          }
+
+          #top-notification.show {
+              top: 30px;
+          }
+
+          .notif-box {
+              background: #ffffff;
+              color: #333;
+              padding: 12px 20px;
+              border-radius: 50px;
+              box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+              display: flex;
+              align-items: center;
+              border: 1px solid #eee;
+          }
+
+          .notif-box i {
+              margin-right: 12px;
+              font-size: 18px;
+          }
+
+          .success-border { border-bottom: 3px solid #28a745; }
+          .error-border { border-bottom: 3px solid #dc3545; }
+      </style>
   </head>
   <body>
+  <div id="top-notification">
+      <c:choose>
+          <c:when test="${param.msg == 'change_success'}">
+              <div class="notif-box success-border">
+                  <i class="fas fa-check-circle text-success"></i>
+                  <span>Cập nhật mật khẩu thành công!</span>
+              </div>
+          </c:when>
+          <c:when test="${not empty passwordError}">
+              <div class="notif-box error-border">
+                  <i class="fas fa-times-circle text-danger"></i>
+                  <span>${passwordError}</span>
+              </div>
+          </c:when>
+      </c:choose>
+  </div>
   <div class="header-top"></div>
   <section id="header">
     <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
@@ -781,5 +831,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const notif = document.getElementById('top-notification');
+          // Kiểm tra xem có nội dung thông báo không
+          if (notif.querySelector('.notif-box')) {
+              setTimeout(() => {
+                  notif.classList.add('show');
+              }, 300);
+
+              setTimeout(() => {
+                  notif.classList.remove('show');
+              }, 3300);
+
+              // 3. Xóa tham số trên URL
+              const url = new URL(window.location);
+              url.searchParams.delete('msg');
+              window.history.replaceState({}, '', url);
+          }
+      });
+  </script>
   </body>
 </html>
