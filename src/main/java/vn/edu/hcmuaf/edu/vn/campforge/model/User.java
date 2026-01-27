@@ -12,13 +12,15 @@ public class User implements Serializable {
     private String phone;
     private int role;
     private Timestamp createAt;
+    private int isVerified;
+    private String address;
 
     // Constructor không đối số (Bắt buộc cho Java Bean)
     public User() {
     }
 
     // Constructor đầy đủ đối số (Tùy chọn, dùng để khởi tạo nhanh)
-    public User(int id, String username, String password, String fullName, String email, String phone, int role, Timestamp createAt) {
+    public User(int id, String username, String password, String fullName, String email, String phone, int role, Timestamp createAt, String address) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -27,6 +29,7 @@ public class User implements Serializable {
         this.phone = phone;
         this.role = role;
         this.createAt = createAt;
+        this.address = address;
     }
 
     // --- GETTERS AND SETTERS ---
@@ -94,6 +97,14 @@ public class User implements Serializable {
     public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
     }
+
+    public int getIsVerified() { return isVerified; }
+
+    public void setIsVerified(int isVerified) { this.isVerified = isVerified; }
+
+    public String getAddress() { return address; }
+
+    public void setAddress(String address) { this.address = address; }
 
     // Ghi đè phương thức toString để dễ debug
     @Override

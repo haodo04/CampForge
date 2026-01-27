@@ -11,6 +11,11 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
@@ -24,7 +29,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("auth", authenticatedUser);
 
             // Chuyển hướng về trang chủ
-            response.sendRedirect("index.jsp");
+            response.sendRedirect(request.getContextPath() + "/home");
         } else {
             // Thông báo lỗi nếu sai thông tin
             request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");

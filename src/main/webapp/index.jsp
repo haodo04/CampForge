@@ -127,8 +127,8 @@
 
                 if (user == null) {
             %>
-            <a href="login.jsp" class="btn-login">Đăng nhập</a>
-            <a href="register.jsp" class="btn-register">Đăng ký</a>
+            <a href="${pageContext.request.contextPath}/login" class="btn-login">Đăng nhập</a>
+            <a href="${pageContext.request.contextPath}/register" class="btn-register">Đăng ký</a>
             <% } else { %>
             <div class="user-dropdown">
                 <span class="user-name">
@@ -136,9 +136,9 @@
                     <i class="fa fa-caret-down"></i>
                 </span>
                 <div class="dropdown-content">
-                    <a href="personal.jsp"><i class="fa fa-user"></i> Thông tin cá nhân</a>
+                    <a href="${pageContext.request.contextPath}/personal"> Thông tin cá nhân</a>
                     <hr>
-                    <a href="index.jsp" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+                    <a href="logout" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
                 </div>
             </div>
             <% } %>

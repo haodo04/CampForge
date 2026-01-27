@@ -43,16 +43,28 @@
           Nhập email của bạn. Chúng tôi sẽ gửi liên kết để đặt lại mật khẩu (giả lập).
         </p>
 
-        <form id="forgotForm" novalidate>
+        <form id="forgotForm" action="${pageContext.request.contextPath}/forgot-password" method="post">
+
+          <%-- Hiển thị thông báo thành công hoặc lỗi từ Servlet --%>
+          <% String msg = (String) request.getAttribute("msg"); %>
+          <% if (msg != null) { %>
+          <p style="color: #10b981; font-size: 14px; margin-bottom: 15px;"><%= msg %></p>
+          <% } %>
+
+          <% String error = (String) request.getAttribute("error"); %>
+          <% if (error != null) { %>
+          <p style="color: #ef4444; font-size: 14px; margin-bottom: 15px;"><%= error %></p>
+          <% } %>
+
           <div class="field">
-            <input id="forgotEmail" class="input" type="email" placeholder=" " required />
+            <input id="forgotEmail" name="email" class="input" type="email" placeholder=" " required />
             <label class="label" for="forgotEmail">Email</label>
           </div>
 
           <button id="forgotSubmit" class="btn" type="submit">Gửi liên kết đặt lại</button>
 
           <p class="tiny" style="margin-top:16px;">
-            Nhớ lại mật khẩu rồi? 
+            Nhớ lại mật khẩu rồi?
             <a href="login.jsp" style="color: var(--brand); font-weight: 600;">
               Quay lại đăng nhập
             </a>
