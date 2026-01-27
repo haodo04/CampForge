@@ -10,28 +10,51 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+
+    private String sanitizeReturn(String r) {
+        if (r == null) return null;
+        r = r.trim();
+        if (!r.startsWith("/")) return null;
+        if (r.startsWith("//")) return null;
+        if (r.contains("://")) return null;
+        return r;
+    }
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String ret = sanitizeReturn(request.getParameter("return"));
+        if (ret != null) {
+            request.getSession().setAttribute("returnAfterLogin", ret);
+        }
+
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
 
-        // Gọi Service xử lý
         User authenticatedUser = UserService.getInstance().login(user, pass);
 
         if (authenticatedUser != null) {
-            // Lưu thông tin vào Session
             HttpSession session = request.getSession();
             session.setAttribute("auth", authenticatedUser);
 
-            // Chuyển hướng về trang chủ
-            response.sendRedirect(request.getContextPath() + "/home");
+            String ret = sanitizeReturn(request.getParameter("return"));
+            if (ret == null) {
+                ret = (String) session.getAttribute("returnAfterLogin");
+            }
+            session.removeAttribute("returnAfterLogin");
+
+            if (ret == null) ret = "/home";
+            response.sendRedirect(request.getContextPath() + ret);
+
         } else {
-            // Thông báo lỗi nếu sai thông tin
             request.setAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
