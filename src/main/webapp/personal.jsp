@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +86,7 @@
 </div>
 <div class="header-top"></div>
 <section id="header">
-    <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
+    <a href="${pageContext.request.contextPath}/home"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
     <ul id="navbar">
         <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
         <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
@@ -95,13 +96,10 @@
     </ul>
 
     <div id="right-icons">
-        <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex">
-            <div id="search-box">
-                <input type="text" name="q" id="searchInput" placeholder="Tìm sản phẩm..." value="${q}" />
-                <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
-            </div>
-        </form>
-
+        <div id="search-box">
+            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
+            <button id="searchBtn"><i class="fa fa-search"></i></button>
+        </div>
         <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
             <a href="${pageContext.request.contextPath}/cart"
                class="mini-cart-link"
@@ -149,15 +147,14 @@
 
                 if (user == null) {
             %>
-            <a href="logout" class="logout-link">
-                <i class="fas fa-sign-out-alt"></i> Đăng xuất
-            </a>
+            <a href="login.jsp" class="btn-login">Đăng nhập</a>
+            <a href="register.jsp" class="btn-register">Đăng ký</a>
             <% } else { %>
             <div class="user-dropdown">
-                <span class="user-name">
-                    Xin chào, <strong><%= user.getUsername() %></strong>
-                    <i class="fa fa-caret-down"></i>
-                </span>
+            <span class="user-name">
+                Xin chào, <strong><%= user.getUsername() %></strong>
+                <i class="fa fa-caret-down"></i>
+            </span>
                 <div class="dropdown-content">
                     <a href="${pageContext.request.contextPath}/personal"> Thông tin cá nhân</a>
                     <hr>
@@ -337,68 +334,117 @@
                 class="order-status-tabs d-flex justify-content-start mb-4"
                 id="orderStatusTabs"
         >
-            <button class="status-tab active" data-status="ALL">Tất cả</button>
-            <button class="status-tab" data-status="chờ">Chờ xác nhận</button>
-            <button class="status-tab" data-status="đang giao">Vận chuyển</button>
-            <button class="status-tab" data-status="hoàn thành">
-                Hoàn thành
-            </button>
-            <button class="status-tab" data-status="đã hủy giao hàng">
-                Đã hủy
-            </button>
-            <button class="status-tab" data-status="giao hàng thất bại">
-                Thất bại
-            </button>
+            <button class="status-tab active" data-status="">Tất cả</button>
+            <button class="status-tab" data-status="PENDING">Chờ xác nhận</button>
+            <button class="status-tab" data-status="DELIVERING">Đang giao</button>
+            <button class="status-tab" data-status="COMPLETED">Hoàn thành</button>
+            <button class="status-tab" data-status="CANCELED">Đã huỷ</button>
         </div>
 
         <table id="allOrders" class="table table-bordered display">
             <thead>
-            <tr>
-                <th>Mã Đơn Hàng</th>
-                <th>Tổng Tiền</th>
-                <th>Ngày Đặt</th>
-                <th>Thanh Toán</th>
-                <th>Phương thức TT</th>
+            <tr data-order-id="12345">
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Thanh toán</th>
                 <th>Vận chuyển</th>
-                <th>Hành Động</th>
+                <th>Hành động</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>#ODR12345</td>
-                <td><span class="fw-bold">1.500.000 ₫</span></td>
-                <td>2025-10-25</td>
-                <td>Đã thanh toán</td>
-                <td>COD</td>
-                <td>Hoàn thành</td>
-                <td>
-                    <button
-                            class="btn btn-info btn-sm view-order"
-                            data-bs-toggle="modal"
-                            data-bs-target="#orderDetailsModal"
-                    >
-                        Chi tiết
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>#ODR12346</td>
-                <td><span class="fw-bold">850.000 ₫</span></td>
-                <td>2025-10-28</td>
-                <td>Chưa thanh toán</td>
-                <td>VNPay</td>
-                <td>Đang giao</td>
-                <td>
-                    <button
-                            class="btn btn-info btn-sm view-order"
-                            data-bs-toggle="modal"
-                            data-bs-target="#orderDetailsModal"
-                    >
-                        Chi tiết
-                    </button>
-                </td>
-            </tr>
+            <tbody id="ordersTbody">
+            <c:choose>
+                <c:when test="${empty orders}">
+                    <tr>
+                        <td colspan="6" style="text-align:center;">
+                            <c:choose>
+                                <c:when test="${not empty orderError}">
+                                    ${orderError}
+                                </c:when>
+                                <c:otherwise>
+                                    Bạn chưa có đơn hàng nào.
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:when>
+
+                <c:otherwise>
+                    <c:forEach var="o" items="${orders}">
+                        <tr>
+                            <td>#ODR${o.id}</td>
+
+                            <td>
+                                <fmt:formatDate value="${o.orderDate}" pattern="dd/MM/yyyy HH:mm"/>
+                            </td>
+
+                            <td class="text-right">
+                                <fmt:formatNumber value="${o.totalAmount}" type="number"/> đ
+                            </td>
+
+                            <td>
+                                <c:choose>
+                                    <c:when test="${o.paymentStatus == 'UNPAID'}">Chưa thanh toán</c:when>
+                                    <c:when test="${o.paymentStatus == 'PENDING'}">Chờ thanh toán</c:when>
+                                    <c:when test="${o.paymentStatus == 'PAID'}">Đã thanh toán</c:when>
+                                    <c:when test="${o.paymentStatus == 'FAILED'}">Thanh toán thất bại</c:when>
+                                    <c:when test="${o.paymentStatus == 'REFUNDED'}">Đã hoàn tiền</c:when>
+                                    <c:otherwise>${o.paymentStatus}</c:otherwise>
+                                </c:choose>
+                            </td>
+
+                            <td>
+                                <c:choose>
+                                    <c:when test="${o.deliveryStatus == 'PENDING'}">Chờ xác nhận</c:when>
+                                    <c:when test="${o.deliveryStatus == 'DELIVERING'}">Đang giao</c:when>
+                                    <c:when test="${o.deliveryStatus == 'COMPLETED'}">Hoàn thành</c:when>
+                                    <c:when test="${o.deliveryStatus == 'CANCELED'}">Đã huỷ</c:when>
+                                    <c:otherwise>${o.deliveryStatus}</c:otherwise>
+                                </c:choose>
+                            </td>
+
+                            <td>
+                                <c:choose>
+
+                                    <c:when test="${o.deliveryStatus == 'PENDING'}">
+                                        <form method="post" action="${pageContext.request.contextPath}/order-cancel" style="display:inline;">
+                                            <input type="hidden" name="orderId" value="${o.id}" />
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('Bạn chắc chắn muốn huỷ đơn này?');">
+                                                Huỷ đơn
+                                            </button>
+                                        </form>
+                                    </c:when>
+
+                                    <c:when test="${o.deliveryStatus == 'COMPLETED'}">
+                                        <a class="btn btn-sm btn-success"
+                                           href="${pageContext.request.contextPath}/review?orderId=${o.id}">
+                                            Đánh giá
+                                        </a>
+                                    </c:when>
+
+                                    <c:when test="${o.deliveryStatus == 'DELIVERING'}">
+                                        <button type="button" class="btn btn-sm btn-secondary" disabled>Đang giao</button>
+                                    </c:when>
+
+                                    <c:when test="${o.deliveryStatus == 'CANCELED'}">
+                                        <button type="button" class="btn btn-sm btn-secondary" disabled>Đã huỷ</button>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <button type="button" class="btn btn-sm btn-secondary" disabled>—</button>
+                                    </c:otherwise>
+
+                                </c:choose>
+                            </td>
+
+                        </tr>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
             </tbody>
+
+
         </table>
     </div>
 </div>
@@ -496,56 +542,11 @@
                 ></button>
             </div>
             <div class="modal-body">
-                <div class="d-flex align-items-center mb-3 border p-2 rounded">
-                    <img
-                            id="productImage"
-                            src="./assets/img/products/f3.jpg"
-                            alt="Ảnh sản phẩm"
-                            width="60"
-                            height="60"
-                            style="object-fit: cover; border-radius: 4px"
-                    />
-                    <div class="ms-3 flex-grow-1">
-                        <div id="productName" class="fw-bold">
-                            Tranh Phong Cảnh (Mẫu)
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-3">
-                                Kích thước: <span id="productSize">40x60cm</span>
-                            </div>
-                            <div>Số lượng: <span id="productQuantity">1</span></div>
-                        </div>
-                    </div>
+                <input type="hidden" id="reviewOrderId" value="">
+
+                <div id="reviewItemsWrap">
+                    <p class="text-muted mb-0">Đang tải danh sách sản phẩm...</p>
                 </div>
-
-                <form id="reviewForm">
-                    <input
-                            type="hidden"
-                            id="paintingId"
-                            name="paintingId"
-                            value="1"
-                    />
-                    <input type="hidden" id="itemId" name="itemId" value="101" />
-
-                    <div id="starRating" class="mb-2">
-                        <i class="fa fa-star text-warning" data-value="1"></i>
-                        <i class="fa fa-star text-warning" data-value="2"></i>
-                        <i class="fa fa-star text-warning" data-value="3"></i>
-                        <i class="fa fa-star" data-value="4"></i>
-                        <i class="fa fa-star" data-value="5"></i>
-                    </div>
-
-                    <textarea
-                            id="comment"
-                            class="form-control mb-2"
-                            rows="4"
-                            placeholder="Viết đánh giá của bạn..."
-                    ></textarea>
-                    <input type="hidden" id="rating" value="3" />
-                    <button type="submit" class="btn btn-primary">
-                        Gửi đánh giá
-                    </button>
-                </form>
             </div>
         </div>
     </div>
@@ -756,6 +757,27 @@
         <p>@ 2025, CampShop - HTML CSS Ecommerce Website</p>
     </div>
 </footer>
+<div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận huỷ đơn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+
+            <div class="modal-body">
+                <p style="margin:0;">Bạn chắc chắn muốn huỷ đơn <b id="cancelOrderCode">#</b>?</p>
+                <input type="hidden" id="cancelOrderId" value="">
+                <div id="cancelOrderErr" style="display:none; margin-top:8px; color:#b42318; font-size:13px;"></div>
+            </div>
+
+            <div class="modal-footer" style="gap:8px;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmCancel">Huỷ đơn</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
@@ -766,24 +788,412 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const notif = document.getElementById('top-notification');
-        // Kiểm tra xem có nội dung thông báo không
-        if (notif.querySelector('.notif-box')) {
-            setTimeout(() => {
-                notif.classList.add('show');
-            }, 300);
+    const ctx = "${pageContext.request.contextPath}";
 
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 3300);
+    document.addEventListener("DOMContentLoaded", function () {
+        const notif = document.getElementById("top-notification");
+        if (notif && notif.querySelector(".notif-box")) {
+            setTimeout(function () { notif.classList.add("show"); }, 300);
+            setTimeout(function () { notif.classList.remove("show"); }, 3300);
 
-            // 3. Xóa tham số trên URL
-            const url = new URL(window.location);
-            url.searchParams.delete('msg');
-            window.history.replaceState({}, '', url);
+            const url = new URL(window.location.href);
+            url.searchParams.delete("msg");
+            window.history.replaceState({}, "", url.toString());
         }
     });
+
+    function fmtMoneyVn(numStr) {
+        const n = Number(numStr || 0);
+        return new Intl.NumberFormat("vi-VN").format(n) + " đ";
+    }
+
+    function fmtDateVn(iso) {
+        if (!iso) return "";
+        const d = new Date(iso);
+        const pad = function (x) { return String(x).padStart(2, "0"); };
+        return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() + " " +
+            pad(d.getHours()) + ":" + pad(d.getMinutes());
+    }
+
+    function renderOrders(orders) {
+        const tbody = document.getElementById("ordersTbody");
+        if (!tbody) return;
+
+        if (!orders || orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Bạn chưa có đơn hàng nào.</td></tr>';
+            return;
+        }
+
+        let html = "";
+        for (let i = 0; i < orders.length; i++) {
+            const o = orders[i];
+
+            let actionHtml = '<button type="button" class="btn btn-sm btn-secondary" disabled>—</button>';
+
+            if (o.canCancel) {
+                actionHtml =
+                    '<button type="button" class="btn btn-sm btn-danger btn-open-cancel" ' +
+                    'data-order-id="' + o.id + '" ' +
+                    'data-bs-toggle="modal" data-bs-target="#cancelOrderModal">' +
+                    'Huỷ đơn' +
+                    '</button>';
+            }
+            else if (o.canReview) {
+            actionHtml =
+                '<button type="button" class="btn btn-sm btn-success btn-open-review" ' +
+                'data-order-id="' + o.id + '" ' +
+                'data-bs-toggle="modal" data-bs-target="#reviewModal">' +
+                'Đánh giá' +
+                '</button>';
+            }
+
+
+        html +=
+                "<tr>" +
+                "<td>#ODR" + o.id + "</td>" +
+                "<td>" + fmtDateVn(o.orderDate) + "</td>" +
+                '<td class="text-right">' + fmtMoneyVn(o.totalAmount) + "</td>" +
+                "<td>" + (o.paymentStatusVi || o.paymentStatus || "") + "</td>" +
+                "<td>" + (o.deliveryStatusVi || o.deliveryStatus || "") + "</td>" +
+                "<td>" + actionHtml + "</td>" +
+                "</tr>";
+        }
+
+        tbody.innerHTML = html;
+    }
+
+    async function loadOrdersByStatus(status) {
+        let url = ctx + "/personal";
+        if (status) url += "?status=" + encodeURIComponent(status);
+
+        const res = await fetch(url, {
+            headers: {
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+
+        if (res.status === 401) {
+            window.location.href = ctx + "/login?return=/personal";
+            return;
+        }
+
+        const data = await res.json();
+        if (!data || !data.ok) throw new Error((data && data.message) || "Load orders failed");
+
+        renderOrders(data.orders);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".status-tab[data-status]");
+
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].addEventListener("click", async function () {
+                for (let j = 0; j < tabs.length; j++) tabs[j].classList.remove("active");
+                this.classList.add("active");
+
+                const st = this.getAttribute("data-status") || "";
+                try {
+                    await loadOrdersByStatus(st);
+                } catch (e) {
+                    console.error(e);
+                    window.location.href = st ? (ctx + "/personal?status=" + encodeURIComponent(st)) : (ctx + "/personal");
+                }
+            });
+        }
+
+        const active = document.querySelector(".status-tab.active[data-status]");
+        const initStatus = active ? (active.getAttribute("data-status") || "") : "";
+        loadOrdersByStatus(initStatus).catch(console.error);
+    });
+
+    function escHtml(s) {
+        if (s == null) return "";
+        return String(s)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    async function fetchReviewItems(orderId) {
+        const url = ctx + "/review?action=items&orderId=" + encodeURIComponent(orderId);
+        const res = await fetch(url, {
+            headers: { "Accept": "application/json", "X-Requested-With": "XMLHttpRequest" }
+        });
+        if (res.status === 401) {
+            window.location.href = ctx + "/login?return=/personal";
+            return null;
+        }
+        const data = await res.json();
+        if (!data || !data.ok) throw new Error((data && data.message) || "Load review items failed");
+        return data.items || [];
+    }
+
+    function renderStarsHtml(orderItemId, ratingValue) {
+        let html = '<div class="rv-stars" data-order-item-id="' + orderItemId + '">';
+        for (let i = 1; i <= 5; i++) {
+            const cls = (i <= ratingValue) ? "fa fa-star text-warning rv-star" : "fa fa-star rv-star";
+            html += '<i class="' + cls + '" data-value="' + i + '"></i>';
+        }
+        html += '</div>';
+        html += '<input type="hidden" class="rv-rating" id="rv_rating_' + orderItemId + '" value="' + ratingValue + '">';
+        return html;
+    }
+
+    function normalizeImgUrl(path) {
+        if (!path) return "";
+        if (path.startsWith("http://") || path.startsWith("https://")) return path;
+        if (path.startsWith(ctx + "/")) return path;
+
+        if (!path.startsWith("/")) path = "/" + path;
+        return ctx + path;
+    }
+
+    function renderReviewItems(orderId, items) {
+        const wrap = document.getElementById("reviewItemsWrap");
+        if (!wrap) return;
+
+        if (!items || items.length === 0) {
+            wrap.innerHTML = '<p class="mb-0">Không có sản phẩm để đánh giá (chỉ cho phép đơn Hoàn thành).</p>';
+            return;
+        }
+
+        let html = "";
+        for (let i = 0; i < items.length; i++) {
+            const it = items[i];
+
+            const reviewed = !!it.reviewed;
+            const img = normalizeImgUrl(it.image);
+            const name = it.proName ? it.proName : "";
+            const size = it.size ? it.size : "";
+            const qty = it.quantity ? it.quantity : "";
+
+            html +=
+                '<div class="d-flex align-items-start mb-3 border p-2 rounded" data-order-item-id="' + it.orderItemId + '">' +
+                '<img src="' + escHtml(img) + '" alt="Ảnh sản phẩm" width="60" height="60" style="object-fit:cover;border-radius:4px;">' +
+                '<div class="ms-3 flex-grow-1">' +
+                '<div class="fw-bold">' + escHtml(name) + '</div>' +
+                '<div class="d-flex flex-wrap text-muted" style="gap:12px;">' +
+                (size ? ('<div>Kích thước: <span>' + escHtml(size) + '</span></div>') : '') +
+                (qty ? ('<div>Số lượng: <span>' + escHtml(qty) + '</span></div>') : '') +
+                '</div>' +
+
+                (reviewed
+                        ? '<div class="mt-2 text-success fw-semibold">Bạn đã đánh giá sản phẩm này.</div>'
+                        : (
+                            '<div class="mt-2">' +
+                            renderStarsHtml(it.orderItemId, 5) +
+                            '<textarea class="form-control mt-2 rv-content" id="rv_content_' + it.orderItemId + '" rows="3" placeholder="Viết đánh giá của bạn..."></textarea>' +
+                            '<div class="mt-2">' +
+                            '<button type="button" class="btn btn-primary btn-submit-review" ' +
+                            'data-order-id="' + orderId + '" ' +
+                            'data-order-item-id="' + it.orderItemId + '" ' +
+                            'data-product-id="' + it.productId + '">' +
+                            'Gửi đánh giá' +
+                            '</button>' +
+                            '</div>' +
+                            '</div>'
+                        )
+                ) +
+                '</div>' +
+                '</div>';
+        }
+
+        wrap.innerHTML = html;
+    }
+
+    async function submitReview(orderId, orderItemId, productId) {
+        const ratingEl = document.getElementById("rv_rating_" + orderItemId);
+        const contentEl = document.getElementById("rv_content_" + orderItemId);
+
+        const rating = ratingEl ? ratingEl.value : "5";
+        const content = contentEl ? contentEl.value : "";
+
+        const body =
+            "orderId=" + encodeURIComponent(orderId) +
+            "&orderItemId=" + encodeURIComponent(orderItemId) +
+            "&productId=" + encodeURIComponent(productId) +
+            "&rating=" + encodeURIComponent(rating) +
+            "&content=" + encodeURIComponent(content);
+
+        const res = await fetch(ctx + "/review", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: body
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data || !data.ok) {
+            alert((data && data.message) ? data.message : "Gửi đánh giá thất bại");
+            return;
+        }
+
+        const items = await fetchReviewItems(orderId);
+        renderReviewItems(orderId, items);
+    }
+
+    document.addEventListener("click", async function (e) {
+        const btn = e.target.closest(".btn-open-review");
+        if (!btn) return;
+
+        const orderId = btn.getAttribute("data-order-id");
+        if (!orderId) return;
+
+        document.getElementById("reviewOrderId").value = orderId;
+        const wrap = document.getElementById("reviewItemsWrap");
+        if (wrap) wrap.innerHTML = '<p class="text-muted mb-0">Đang tải danh sách sản phẩm...</p>';
+
+        try {
+            const items = await fetchReviewItems(orderId);
+            renderReviewItems(Number(orderId), items);
+        } catch (err) {
+            console.error(err);
+            if (wrap) wrap.innerHTML = "<p>Không tải được dữ liệu đánh giá.</p>";
+        }
+    });
+
+    document.addEventListener("click", function (e) {
+        const star = e.target.closest(".rv-star");
+        if (!star) return;
+
+        const starsWrap = star.closest(".rv-stars");
+        if (!starsWrap) return;
+
+        const orderItemId = starsWrap.getAttribute("data-order-item-id");
+        const val = star.getAttribute("data-value");
+
+        const input = document.getElementById("rv_rating_" + orderItemId);
+        if (input) input.value = val;
+
+        const all = starsWrap.querySelectorAll(".rv-star");
+        for (let i = 0; i < all.length; i++) {
+            const v = all[i].getAttribute("data-value");
+            if (Number(v) <= Number(val)) {
+                all[i].classList.add("text-warning");
+            } else {
+                all[i].classList.remove("text-warning");
+            }
+        }
+    });
+
+    document.addEventListener("click", function (e) {
+        const btn = e.target.closest(".btn-submit-review");
+        if (!btn) return;
+
+        const orderId = btn.getAttribute("data-order-id");
+        const orderItemId = btn.getAttribute("data-order-item-id");
+        const productId = btn.getAttribute("data-product-id");
+
+        submitReview(orderId, orderItemId, productId).catch(console.error);
+    });
+
+    document.addEventListener("hidden.bs.modal", function (e) {
+        if (e.target && e.target.id === "reviewModal") {
+            const wrap = document.getElementById("reviewItemsWrap");
+            if (wrap) wrap.innerHTML = '<p class="text-muted mb-0">Đang tải danh sách sản phẩm...</p>';
+            const hid = document.getElementById("reviewOrderId");
+            if (hid) hid.value = "";
+        }
+    });
+</script>
+<script>
+    (function () {
+        var modalEl = document.getElementById("cancelOrderModal");
+        if (!modalEl) return;
+
+        var cancelOrderIdEl = document.getElementById("cancelOrderId");
+        var cancelOrderCodeEl = document.getElementById("cancelOrderCode");
+        var cancelErrEl = document.getElementById("cancelOrderErr");
+        var btnConfirm = document.getElementById("btnConfirmCancel");
+
+        function showErr(msg) {
+            cancelErrEl.style.display = "block";
+            cancelErrEl.textContent = msg || "Huỷ đơn thất bại";
+        }
+        function clearErr() {
+            cancelErrEl.style.display = "none";
+            cancelErrEl.textContent = "";
+        }
+
+        document.addEventListener("click", function (e) {
+            var btn = e.target.closest(".btn-open-cancel");
+            if (!btn) return;
+
+            clearErr();
+
+            var orderId = btn.getAttribute("data-order-id");
+            if (!orderId) return;
+
+            cancelOrderIdEl.value = orderId;
+            cancelOrderCodeEl.textContent = "#ODR" + orderId;
+        });
+
+        btnConfirm.addEventListener("click", async function () {
+            clearErr();
+
+            var orderId = cancelOrderIdEl.value;
+            if (!orderId) return;
+
+            btnConfirm.disabled = true;
+
+            try {
+                var res = await fetch(ctx + "/order-cancel", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: "orderId=" + encodeURIComponent(orderId)
+                });
+
+                if (res.status === 401) {
+                    window.location.href = ctx + "/login?return=/personal";
+                    return;
+                }
+
+                var data = await res.json();
+                if (!res.ok || !data || !data.ok) {
+                    showErr((data && data.message) ? data.message : "Huỷ đơn thất bại");
+                    return;
+                }
+
+                var row = document.querySelector('tr[data-order-id="' + orderId + '"]');
+                if (row) row.remove();
+
+                try {
+                    var active = document.querySelector(".status-tab.active[data-status]");
+                    var st = active ? (active.getAttribute("data-status") || "") : "";
+                    if (typeof loadOrdersByStatus === "function") {
+                        await loadOrdersByStatus(st);
+                    }
+                } catch (err) {}
+
+                if (window.bootstrap && bootstrap.Modal) {
+                    var ins = bootstrap.Modal.getInstance(modalEl);
+                    if (ins) ins.hide();
+                }
+
+            } catch (err) {
+                console.error(err);
+                showErr("Không thể huỷ đơn lúc này.");
+            } finally {
+                btnConfirm.disabled = false;
+            }
+        });
+
+        modalEl.addEventListener("hidden.bs.modal", function () {
+            clearErr();
+            cancelOrderIdEl.value = "";
+        });
+
+    })();
 </script>
 </body>
 </html>

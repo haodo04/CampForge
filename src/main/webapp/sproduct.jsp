@@ -21,6 +21,21 @@
 <body>
 <c:set var="cart" value="${sessionScope.CART}"/>
 <c:set var="cartCount" value="${cart != null ? cart.items.size() : 0}"/>
+
+<c:set var="p" value="${product}"/>
+<c:set var="selectedId" value="${selectedVariantId}"/>
+<c:set var="selectedVariant" value="${null}"/>
+
+<c:forEach var="v" items="${variants}">
+    <c:if test="${v.id == selectedId}">
+        <c:set var="selectedVariant" value="${v}"/>
+    </c:if>
+</c:forEach>
+
+<c:url var="loginReturnUrl" value="/login">
+    <c:param name="return" value="/product?id=${p.id}"/>
+</c:url>
+
 <div class="header-top"></div>
 <section id="header">
     <a href="${pageContext.request.contextPath}/home">
@@ -40,6 +55,7 @@
             <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
             <button id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
+
         <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
             <a href="${pageContext.request.contextPath}/cart"
                class="mini-cart-link"
@@ -82,40 +98,31 @@
 
         <div class="auth-buttons">
             <%
-                // Lấy đối tượng User từ session
                 vn.edu.hcmuaf.edu.vn.campforge.model.User user =
                         (vn.edu.hcmuaf.edu.vn.campforge.model.User) session.getAttribute("auth");
 
                 if (user == null) {
             %>
-            <a href="login.jsp" class="btn-login">Đăng nhập</a>
-            <a href="register.jsp" class="btn-register">Đăng ký</a>
+            <a href="<%= request.getContextPath() %>/login" class="btn-login">Đăng nhập</a>
+            <a href="<%= request.getContextPath() %>/register" class="btn-register">Đăng ký</a>
             <% } else { %>
             <div class="user-dropdown">
-            <span class="user-name">
-                Xin chào, <strong><%= user.getUsername() %></strong>
-                <i class="fa fa-caret-down"></i>
-            </span>
+                <span class="user-name">
+                    Xin chào, <strong><%= user.getUsername() %></strong>
+                    <i class="fa fa-caret-down"></i>
+                </span>
                 <div class="dropdown-content">
-                    <a href="${pageContext.request.contextPath}/personal"> Thông tin cá nhân</a>
+                    <a href="${pageContext.request.contextPath}/personal">Thông tin cá nhân</a>
                     <hr>
-                    <a href="logout" class="logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
+                    <a href="${pageContext.request.contextPath}/logout" class="logout-link">
+                        <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                    </a>
                 </div>
             </div>
             <% } %>
         </div>
     </div>
 </section>
-
-<c:set var="p" value="${product}"/>
-<c:set var="selectedId" value="${selectedVariantId}"/>
-<c:set var="selectedVariant" value="${null}"/>
-
-<c:forEach var="v" items="${variants}">
-    <c:if test="${v.id == selectedId}">
-        <c:set var="selectedVariant" value="${v}"/>
-    </c:if>
-</c:forEach>
 
 <nav class="sp-breadcrumb-wrap">
     <ol class="sp-breadcrumb">
@@ -132,7 +139,6 @@
     <div class="single-pro-image">
 
         <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-
         <c:set var="mainImgPath" value=""/>
 
         <c:if test="${selectedVariant != null && not empty selectedVariant.imagePath}">
@@ -185,6 +191,26 @@
         <h4 id="pdName">
             <c:out value="${p.proName}"/>
         </h4>
+
+        <div class="pd-review-summary">
+            <span class="pd-stars">
+                <c:forEach var="i" begin="1" end="5">
+                    <c:choose>
+                        <c:when test="${i <= avgRatingRounded}">
+                            <i class="fa-solid fa-star"></i>
+                        </c:when>
+                        <c:otherwise>
+                            <i class="fa-regular fa-star"></i>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </span>
+
+            <span class="pd-review-text">
+                <fmt:formatNumber value="${avgRating}" maxFractionDigits="1"/> / 5
+                (<c:out value="${reviewCount}"/> đánh giá)
+            </span>
+        </div>
 
         <div class="pd-row">
             <div class="pd-kv">
@@ -242,19 +268,6 @@
             </div>
         </c:if>
 
-
-        <c:set var="colorSet" value=""/>
-        <c:set var="colorCount" value="0"/>
-
-        <c:forEach var="v" items="${variants}">
-            <c:if test="${not empty v.color}">
-                <c:if test="${!fn:contains(colorSet, '|' += v.color += '|')}">
-                    <c:set var="colorSet" value="${colorSet}${'|'}${v.color}${'|'}"/>
-                    <c:set var="colorCount" value="${colorCount + 1}"/>
-                </c:if>
-            </c:if>
-        </c:forEach>
-
         <c:set var="colorSet" value=""/>
         <c:set var="colorCount" value="0"/>
 
@@ -294,7 +307,6 @@
             </div>
         </c:if>
 
-
         <div class="pd-qty">
             <span class="pd-qty-label">Số lượng:</span>
 
@@ -323,6 +335,117 @@
     </div>
 </section>
 
+<section id="pdReviews" class="section-p1 pd-reviews">
+    <h2 class="pd-reviews-title">ĐÁNH GIÁ SẢN PHẨM</h2>
+
+    <div class="pd-reviews-head">
+        <div class="pd-reviews-score">
+            <div class="pd-reviews-avg">
+                <fmt:formatNumber value="${avgRating}" maxFractionDigits="1"/>
+                <span class="pd-reviews-max">/5</span>
+            </div>
+
+            <div class="pd-stars">
+                <c:forEach var="i" begin="1" end="5">
+                    <c:choose>
+                        <c:when test="${i <= avgRatingRounded}">
+                            <i class="fa-solid fa-star"></i>
+                        </c:when>
+                        <c:otherwise>
+                            <i class="fa-regular fa-star"></i>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </div>
+
+            <div class="pd-reviews-count">
+                <c:out value="${reviewCount}"/> đánh giá
+            </div>
+        </div>
+    </div>
+
+    <c:choose>
+        <c:when test="${empty reviews && reviewCount > 0}">
+            <p class="pd-reviews-empty pd-reviews-error">Không tải được nội dung đánh giá. Vui lòng tải lại trang.</p>
+        </c:when>
+
+        <c:when test="${empty reviews}">
+            <p class="pd-reviews-empty">Chưa có đánh giá nào.</p>
+        </c:when>
+
+        <c:otherwise>
+            <div class="pd-review-list">
+                <c:forEach var="r" items="${reviews}">
+                    <div class="pd-review-item">
+                        <div class="pd-review-top">
+                            <div class="pd-review-user">
+                                <c:out value="${r.userFullName}"/>
+                            </div>
+
+                            <div class="pd-review-stars">
+                                <c:forEach var="i" begin="1" end="5">
+                                    <c:choose>
+                                        <c:when test="${i <= r.rating}">
+                                            <i class="fa-solid fa-star"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="fa-regular fa-star"></i>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </div>
+                        </div>
+
+                        <div class="pd-review-content">
+                            <c:out value="${r.content}" default=""/>
+                        </div>
+
+                        <div class="pd-review-time">
+                            <fmt:formatDate value="${r.createdAt}" pattern="dd/MM/yyyy HH:mm"/>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:otherwise>
+    </c:choose>
+
+    <div class="pd-add-review" style="margin-top:16px;">
+        <h3 style="margin:0 0 10px; font-size:18px;">Thêm đánh giá</h3>
+
+        <c:choose>
+            <c:when test="${empty sessionScope.auth}">
+                <p class="pd-reviews-empty" style="margin-bottom:10px;">Bạn cần đăng nhập để đánh giá.</p>
+                <a class="pd-login-btn" href="${loginReturnUrl}">Đăng nhập</a>
+            </c:when>
+
+            <c:otherwise>
+                <form id="addReviewForm">
+                    <input type="hidden" name="productId" value="${p.id}"/>
+
+                    <div style="margin-bottom:10px;">
+                        <label style="display:block; margin-bottom:6px;">Rating:</label>
+                        <select name="rating" class="form-select" style="max-width:120px;">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom:10px;">
+                        <label style="display:block; margin-bottom:6px;">Nội dung:</label>
+                        <textarea name="content" class="form-control" rows="3"
+                                  placeholder="Viết đánh giá của bạn..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
+
+    </div>
+</section>
 
 <section id="product1" class="section-p1">
     <h2>SẢN PHẨM LIÊN QUAN</h2>
@@ -463,9 +586,56 @@
     </c:forEach>
     ]
 </script>
+
 <script>
     window.contextPath = "${pageContext.request.contextPath}";
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var form = document.getElementById("addReviewForm");
+        if (!form) return;
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            var ctx = window.contextPath || "";
+            var fd = new FormData(form);
+
+            var target = String(fd.get("target") || "");
+            var parts = target.split(":");
+
+            var body =
+                "productId=" + encodeURIComponent(fd.get("productId")) +
+                "&rating=" + encodeURIComponent(fd.get("rating")) +
+                "&content=" + encodeURIComponent(fd.get("content") || "");
+
+            try {
+                var res = await fetch(ctx + "/review", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: body
+                });
+
+                var data = await res.json();
+                if (!res.ok || !data || !data.ok) {
+                    alert((data && data.message) ? data.message : "Gửi đánh giá thất bại");
+                    return;
+                }
+
+                window.location.reload();
+            } catch (err) {
+                console.error(err);
+                alert("Không thể gửi đánh giá lúc này.");
+            }
+        });
+    });
+</script>
+
 <script src="${pageContext.request.contextPath}/assets/js/sproduct.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/miniCartDropdown.js"></script>
 </body>
