@@ -20,4 +20,14 @@ public class OrderService {
     public List<Order> getOrdersByUserId(int userId, String deliveryStatus) throws SQLException {
         return orderDAO.findByUserId(userId, deliveryStatus);
     }
+
+    public void cancelOrder(int userId, int orderId) throws Exception {
+        if (orderId <= 0) throw new IllegalArgumentException("Order không hợp lệ");
+
+        boolean ok = orderDAO.cancelOrderIfPending(orderId, userId);
+        if (!ok) {
+            throw new IllegalStateException("Chỉ có thể huỷ đơn khi đang chờ xác nhận.");
+        }
+    }
+
 }

@@ -116,4 +116,34 @@ public class OrderDAO {
         return list;
     }
 
+    public boolean isCompletedOrderOfUser(int orderId, int userId) throws java.sql.SQLException {
+        String sql = "SELECT 1 FROM orders WHERE id=? AND user_id=? AND delivery_status='COMPLETED' AND is_delete=0 LIMIT 1";
+        try (java.sql.Connection c = vn.edu.hcmuaf.edu.vn.campforge.dao.db.DbConnect.getConnection();
+             java.sql.PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            ps.setInt(2, userId);
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+    public boolean cancelOrderIfPending(int orderId, int userId) throws SQLException {
+        String sql = """
+        UPDATE orders
+        SET delivery_status = 'CANCELED', updated_at = NOW()
+        WHERE id = ?
+          AND user_id = ?
+          AND delivery_status = 'PENDING'
+          AND is_delete = 0
+    """;
+
+        try (Connection c = DbConnect.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+
 }
