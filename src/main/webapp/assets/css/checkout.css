@@ -324,7 +324,22 @@
     display: flex;
     gap: 10px;
 }
-.address-row select{ flex: 1; }
+.address-row input{
+    flex: 1;
+}
+
+.address-row input{
+    width: 100%;
+    padding: 12px 12px;
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.address-row input:focus{
+    border-color: #088178;
+    box-shadow: 0 0 0 4px rgba(8,129,120,0.12);
+    outline: none;
+}
 
 /* shipping + payment section */
 .shipping-method,
@@ -562,5 +577,60 @@
     font-variant-numeric: tabular-nums;
     font-weight: 600;
 }
+
+.shipping-fee{
+    margin-top: 30px;
+}
+.shipping-fee .fee-line{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-top: 1px dashed #e6e6e6;
+}
+.shipping-fee .fee-note{
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+}
+.pm-cod{
+    padding: 12px 0;
+    border-top: 1px dashed #e6e6e6;
+    color: #333;
+    font-size: 15px;
+}
+.pm-cod i{ margin-right: 8px; color: #088178; }
+
+.cf-modal{ display:none; position:fixed; inset:0; z-index: 99999; }
+.cf-modal.open{ display:block; }
+.cf-modal__backdrop{
+    position:absolute; inset:0; background: rgba(0,0,0,.35);
+}
+.cf-modal__dialog{
+    position:relative;
+    width: min(420px, calc(100% - 32px));
+    margin: 12vh auto 0;
+    background:#fff;
+    border-radius: 12px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.18);
+    text-align:center;
+}
+.cf-modal__icon{
+    font-size: 46px;
+    color: #1fb46a;
+    margin-bottom: 8px;
+}
+.cf-modal__dialog h4{
+    margin: 8px 0 6px;
+    font-size: 18px;
+    font-weight: 800;
+}
+.cf-modal__dialog p{
+    margin: 0 0 14px;
+    font-size: 14px;
+    color:#465b52;
+}
+
 
 
