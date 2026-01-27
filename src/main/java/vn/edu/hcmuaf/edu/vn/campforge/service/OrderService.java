@@ -1,0 +1,23 @@
+package vn.edu.hcmuaf.edu.vn.campforge.service;
+
+import vn.edu.hcmuaf.edu.vn.campforge.dao.OrderDAO;
+import vn.edu.hcmuaf.edu.vn.campforge.model.Order;
+
+import java.sql.SQLException;
+import java.util.List;
+
+public class OrderService {
+
+    private static final OrderService INSTANCE = new OrderService();
+    private final OrderDAO orderDAO = new OrderDAO();
+
+    private OrderService() {}
+
+    public static OrderService getInstance() {
+        return INSTANCE;
+    }
+
+    public List<Order> getOrdersByUserId(int userId, String deliveryStatus) throws SQLException {
+        return orderDAO.findByUserId(userId, deliveryStatus);
+    }
+}

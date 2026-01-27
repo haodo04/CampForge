@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +86,7 @@
 </div>
 <div class="header-top"></div>
 <section id="header">
-    <a href="index.jsp"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
+    <a href="${pageContext.request.contextPath}/home"><img class="logo_img" src="./assets/img/logo_new.png" alt="logo"></a>
     <ul id="navbar">
         <li><a href="${pageContext.request.contextPath}/home" class="active">Trang chủ</a></li>
         <li><a href="${pageContext.request.contextPath}/category">Danh mục</a></li>
@@ -95,13 +96,10 @@
     </ul>
 
     <div id="right-icons">
-        <form action="${pageContext.request.contextPath}/search" method="get" class="d-flex">
-            <div id="search-box">
-                <input type="text" name="q" id="searchInput" placeholder="Tìm sản phẩm..." value="${q}" />
-                <button id="searchBtn" type="submit"><i class="fa fa-search"></i></button>
-            </div>
-        </form>
-
+        <div id="search-box">
+            <input type="text" id="searchInput" placeholder="Tìm sản phẩm..."/>
+            <button id="searchBtn"><i class="fa fa-search"></i></button>
+        </div>
         <div class="mini-cart-wrap" id="miniCartWrap" style="position:relative; display:inline-block;">
             <a href="${pageContext.request.contextPath}/cart"
                class="mini-cart-link"
@@ -149,15 +147,14 @@
 
                 if (user == null) {
             %>
-            <a href="logout" class="logout-link">
-                <i class="fas fa-sign-out-alt"></i> Đăng xuất
-            </a>
+            <a href="login.jsp" class="btn-login">Đăng nhập</a>
+            <a href="register.jsp" class="btn-register">Đăng ký</a>
             <% } else { %>
             <div class="user-dropdown">
-                <span class="user-name">
-                    Xin chào, <strong><%= user.getUsername() %></strong>
-                    <i class="fa fa-caret-down"></i>
-                </span>
+            <span class="user-name">
+                Xin chào, <strong><%= user.getUsername() %></strong>
+                <i class="fa fa-caret-down"></i>
+            </span>
                 <div class="dropdown-content">
                     <a href="${pageContext.request.contextPath}/personal"> Thông tin cá nhân</a>
                     <hr>
@@ -337,68 +334,117 @@
                 class="order-status-tabs d-flex justify-content-start mb-4"
                 id="orderStatusTabs"
         >
-            <button class="status-tab active" data-status="ALL">Tất cả</button>
-            <button class="status-tab" data-status="chờ">Chờ xác nhận</button>
-            <button class="status-tab" data-status="đang giao">Vận chuyển</button>
-            <button class="status-tab" data-status="hoàn thành">
-                Hoàn thành
-            </button>
-            <button class="status-tab" data-status="đã hủy giao hàng">
-                Đã hủy
-            </button>
-            <button class="status-tab" data-status="giao hàng thất bại">
-                Thất bại
-            </button>
+            <button class="status-tab active" data-status="">Tất cả</button>
+            <button class="status-tab" data-status="PENDING">Chờ xác nhận</button>
+            <button class="status-tab" data-status="DELIVERING">Đang giao</button>
+            <button class="status-tab" data-status="COMPLETED">Hoàn thành</button>
+            <button class="status-tab" data-status="CANCELED">Đã huỷ</button>
         </div>
 
         <table id="allOrders" class="table table-bordered display">
             <thead>
             <tr>
-                <th>Mã Đơn Hàng</th>
-                <th>Tổng Tiền</th>
-                <th>Ngày Đặt</th>
-                <th>Thanh Toán</th>
-                <th>Phương thức TT</th>
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Thanh toán</th>
                 <th>Vận chuyển</th>
-                <th>Hành Động</th>
+                <th>Hành động</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>#ODR12345</td>
-                <td><span class="fw-bold">1.500.000 ₫</span></td>
-                <td>2025-10-25</td>
-                <td>Đã thanh toán</td>
-                <td>COD</td>
-                <td>Hoàn thành</td>
-                <td>
-                    <button
-                            class="btn btn-info btn-sm view-order"
-                            data-bs-toggle="modal"
-                            data-bs-target="#orderDetailsModal"
-                    >
-                        Chi tiết
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>#ODR12346</td>
-                <td><span class="fw-bold">850.000 ₫</span></td>
-                <td>2025-10-28</td>
-                <td>Chưa thanh toán</td>
-                <td>VNPay</td>
-                <td>Đang giao</td>
-                <td>
-                    <button
-                            class="btn btn-info btn-sm view-order"
-                            data-bs-toggle="modal"
-                            data-bs-target="#orderDetailsModal"
-                    >
-                        Chi tiết
-                    </button>
-                </td>
-            </tr>
+            <tbody id="ordersTbody">
+            <c:choose>
+                <c:when test="${empty orders}">
+                    <tr>
+                        <td colspan="6" style="text-align:center;">
+                            <c:choose>
+                                <c:when test="${not empty orderError}">
+                                    ${orderError}
+                                </c:when>
+                                <c:otherwise>
+                                    Bạn chưa có đơn hàng nào.
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:when>
+
+                <c:otherwise>
+                    <c:forEach var="o" items="${orders}">
+                        <tr>
+                            <td>#ODR${o.id}</td>
+
+                            <td>
+                                <fmt:formatDate value="${o.orderDate}" pattern="dd/MM/yyyy HH:mm"/>
+                            </td>
+
+                            <td class="text-right">
+                                <fmt:formatNumber value="${o.totalAmount}" type="number"/> đ
+                            </td>
+
+                            <td>
+                                <c:choose>
+                                    <c:when test="${o.paymentStatus == 'UNPAID'}">Chưa thanh toán</c:when>
+                                    <c:when test="${o.paymentStatus == 'PENDING'}">Chờ thanh toán</c:when>
+                                    <c:when test="${o.paymentStatus == 'PAID'}">Đã thanh toán</c:when>
+                                    <c:when test="${o.paymentStatus == 'FAILED'}">Thanh toán thất bại</c:when>
+                                    <c:when test="${o.paymentStatus == 'REFUNDED'}">Đã hoàn tiền</c:when>
+                                    <c:otherwise>${o.paymentStatus}</c:otherwise>
+                                </c:choose>
+                            </td>
+
+                            <td>
+                                <c:choose>
+                                    <c:when test="${o.deliveryStatus == 'PENDING'}">Chờ xác nhận</c:when>
+                                    <c:when test="${o.deliveryStatus == 'DELIVERING'}">Đang giao</c:when>
+                                    <c:when test="${o.deliveryStatus == 'COMPLETED'}">Hoàn thành</c:when>
+                                    <c:when test="${o.deliveryStatus == 'CANCELED'}">Đã huỷ</c:when>
+                                    <c:otherwise>${o.deliveryStatus}</c:otherwise>
+                                </c:choose>
+                            </td>
+
+                            <td>
+                                <c:choose>
+
+                                    <c:when test="${o.deliveryStatus == 'PENDING'}">
+                                        <form method="post" action="${pageContext.request.contextPath}/order-cancel" style="display:inline;">
+                                            <input type="hidden" name="orderId" value="${o.id}" />
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('Bạn chắc chắn muốn huỷ đơn này?');">
+                                                Huỷ đơn
+                                            </button>
+                                        </form>
+                                    </c:when>
+
+                                    <c:when test="${o.deliveryStatus == 'COMPLETED'}">
+                                        <a class="btn btn-sm btn-success"
+                                           href="${pageContext.request.contextPath}/review?orderId=${o.id}">
+                                            Đánh giá
+                                        </a>
+                                    </c:when>
+
+                                    <c:when test="${o.deliveryStatus == 'DELIVERING'}">
+                                        <button type="button" class="btn btn-sm btn-secondary" disabled>Đang giao</button>
+                                    </c:when>
+
+                                    <c:when test="${o.deliveryStatus == 'CANCELED'}">
+                                        <button type="button" class="btn btn-sm btn-secondary" disabled>Đã huỷ</button>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <button type="button" class="btn btn-sm btn-secondary" disabled>—</button>
+                                    </c:otherwise>
+
+                                </c:choose>
+                            </td>
+
+                        </tr>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
             </tbody>
+
+
         </table>
     </div>
 </div>
@@ -766,23 +812,121 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const notif = document.getElementById('top-notification');
-        // Kiểm tra xem có nội dung thông báo không
-        if (notif.querySelector('.notif-box')) {
-            setTimeout(() => {
-                notif.classList.add('show');
-            }, 300);
+    const ctx = "${pageContext.request.contextPath}";
 
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 3300);
+    document.addEventListener("DOMContentLoaded", function () {
+        const notif = document.getElementById("top-notification");
+        if (notif && notif.querySelector(".notif-box")) {
+            setTimeout(function () { notif.classList.add("show"); }, 300);
+            setTimeout(function () { notif.classList.remove("show"); }, 3300);
 
-            // 3. Xóa tham số trên URL
-            const url = new URL(window.location);
-            url.searchParams.delete('msg');
-            window.history.replaceState({}, '', url);
+            const url = new URL(window.location.href);
+            url.searchParams.delete("msg");
+            window.history.replaceState({}, "", url.toString());
         }
+    });
+
+    function fmtMoneyVn(numStr) {
+        const n = Number(numStr || 0);
+        return new Intl.NumberFormat("vi-VN").format(n) + " đ";
+    }
+
+    function fmtDateVn(iso) {
+        if (!iso) return "";
+        const d = new Date(iso);
+        const pad = function (x) { return String(x).padStart(2, "0"); };
+        return pad(d.getDate()) + "/" + pad(d.getMonth() + 1) + "/" + d.getFullYear() + " " +
+            pad(d.getHours()) + ":" + pad(d.getMinutes());
+    }
+
+    function renderOrders(orders) {
+        const tbody = document.getElementById("ordersTbody");
+        if (!tbody) return;
+
+        if (!orders || orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Bạn chưa có đơn hàng nào.</td></tr>';
+            return;
+        }
+
+        let html = "";
+        for (let i = 0; i < orders.length; i++) {
+            const o = orders[i];
+
+            let actionHtml = '<button type="button" class="btn btn-sm btn-secondary" disabled>—</button>';
+
+            if (o.canCancel) {
+                actionHtml =
+                    '<form method="post" action="' + ctx + '/order-cancel" style="display:inline;">' +
+                    '<input type="hidden" name="orderId" value="' + o.id + '">' +
+                    '<button type="submit" class="btn btn-sm btn-danger" ' +
+                    'onclick="return confirm(\\\'Bạn chắc chắn muốn huỷ đơn này?\\\');">' +
+                    'Huỷ đơn' +
+                    '</button>' +
+                    '</form>';
+            } else if (o.canReview) {
+                actionHtml =
+                    '<a class="btn btn-sm btn-success" href="' + ctx + '/review?orderId=' + o.id + '">' +
+                    'Đánh giá' +
+                    '</a>';
+            }
+
+            html +=
+                "<tr>" +
+                "<td>#ODR" + o.id + "</td>" +
+                "<td>" + fmtDateVn(o.orderDate) + "</td>" +
+                '<td class="text-right">' + fmtMoneyVn(o.totalAmount) + "</td>" +
+                "<td>" + (o.paymentStatusVi || o.paymentStatus || "") + "</td>" +
+                "<td>" + (o.deliveryStatusVi || o.deliveryStatus || "") + "</td>" +
+                "<td>" + actionHtml + "</td>" +
+                "</tr>";
+        }
+
+        tbody.innerHTML = html;
+    }
+
+    async function loadOrdersByStatus(status) {
+        let url = ctx + "/personal";
+        if (status) url += "?status=" + encodeURIComponent(status);
+
+        const res = await fetch(url, {
+            headers: {
+                "Accept": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+
+        if (res.status === 401) {
+            window.location.href = ctx + "/login?return=/personal";
+            return;
+        }
+
+        const data = await res.json();
+        if (!data || !data.ok) throw new Error((data && data.message) || "Load orders failed");
+
+        renderOrders(data.orders);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".status-tab[data-status]");
+
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].addEventListener("click", async function () {
+                for (let j = 0; j < tabs.length; j++) tabs[j].classList.remove("active");
+                this.classList.add("active");
+
+                const st = this.getAttribute("data-status") || "";
+                try {
+                    await loadOrdersByStatus(st);
+                } catch (e) {
+                    console.error(e);
+                    window.location.href = st ? (ctx + "/personal?status=" + encodeURIComponent(st)) : (ctx + "/personal");
+                }
+            });
+        }
+
+        const active = document.querySelector(".status-tab.active[data-status]");
+        const initStatus = active ? (active.getAttribute("data-status") || "") : "";
+        loadOrdersByStatus(initStatus).catch(console.error);
     });
 </script>
 </body>
