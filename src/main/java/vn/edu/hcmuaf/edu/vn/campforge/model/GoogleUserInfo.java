@@ -1,6 +1,6 @@
 package vn.edu.hcmuaf.edu.vn.campforge.model;
 
-public class GoogleDTO {
+public class GoogleUserInfo {
     private String id;
     private String email;
     private boolean verified_email;
