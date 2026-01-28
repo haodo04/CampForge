@@ -15,12 +15,15 @@ public class CartViewItem implements Serializable {
     private double unitPrice;
     private int stock;
     private int quantity;
+    private String brandName;
 
     public double getLineTotal() {
         return unitPrice * quantity;
     }
 
-    // getters & setters
+    public String getBrandName() { return brandName; }
+    public void setBrandName(String brandName) { this.brandName = brandName; }
+
     public int getVariantId() { return variantId; }
     public void setVariantId(int variantId) { this.variantId = variantId; }
 

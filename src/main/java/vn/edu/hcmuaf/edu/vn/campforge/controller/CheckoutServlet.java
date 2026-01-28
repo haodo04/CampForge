@@ -13,8 +13,9 @@ import vn.edu.hcmuaf.edu.vn.campforge.model.CartViewItem;
 import vn.edu.hcmuaf.edu.vn.campforge.model.User;
 import vn.edu.hcmuaf.edu.vn.campforge.service.CartService;
 import vn.edu.hcmuaf.edu.vn.campforge.service.CheckoutService;
-
+import vn.edu.hcmuaf.edu.vn.campforge.vnpay.VnpayPaymentService;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,10 +27,25 @@ public class CheckoutServlet extends HttpServlet {
     private final CartService cartService = new CartService();
     private final CartViewDAO cartViewDAO = new CartViewDAO();
     private final CheckoutService checkoutService = new CheckoutService();
+    private final VnpayPaymentService vnpayPaymentService = new VnpayPaymentService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String paid = request.getParameter("paid");
+        String paidOrderId = request.getParameter("orderId");
+        if (paid != null && paidOrderId != null && !paidOrderId.isBlank()) {
+            request.setAttribute("items", java.util.Collections.emptyList());
+            request.setAttribute("subtotal", BigDecimal.ZERO);
+            request.setAttribute("discount", BigDecimal.ZERO);
+            request.setAttribute("shippingFee", BigDecimal.ZERO);
+            request.setAttribute("total", BigDecimal.ZERO);
+            request.setAttribute("cartCount", 0);
+
+            request.getRequestDispatcher("/checkout.jsp").forward(request, response);
+            return;
+        }
 
         Cart cart = cartService.getOrCreate(request.getSession());
         request.setAttribute("cartCount", cart.getTotalQuantity());
@@ -45,9 +61,9 @@ public class CheckoutServlet extends HttpServlet {
 
         BigDecimal subtotal = BigDecimal.ZERO;
         for (CartViewItem it : items) {
-            BigDecimal price = BigDecimal.valueOf(it.getUnitPrice());
-            BigDecimal qty = BigDecimal.valueOf(it.getQuantity());
-            subtotal = subtotal.add(price.multiply(qty));
+            subtotal = subtotal.add(
+                    BigDecimal.valueOf(it.getUnitPrice()).multiply(BigDecimal.valueOf(it.getQuantity()))
+            );
         }
 
         BigDecimal discount = BigDecimal.ZERO;
@@ -84,6 +100,19 @@ public class CheckoutServlet extends HttpServlet {
                 return;
             }
 
+            String paid = request.getParameter("paid");
+            String paidOrderId = request.getParameter("orderId");
+
+            if (paid != null && paidOrderId != null && !paidOrderId.isBlank()) {
+                request.setAttribute("items", java.util.Collections.emptyList());
+                request.setAttribute("subtotal", BigDecimal.ZERO);
+                request.setAttribute("discount", BigDecimal.ZERO);
+                request.setAttribute("shippingFee", BigDecimal.ZERO);
+                request.setAttribute("total", BigDecimal.ZERO);
+                request.getRequestDispatcher("/checkout.jsp").forward(request, response);
+                return;
+            }
+
             String receiverName = safe(request.getParameter("receiver_name"));
             String phone = safe(request.getParameter("phone"));
             String email = safe(request.getParameter("email"));
@@ -112,7 +141,7 @@ public class CheckoutServlet extends HttpServlet {
             User auth = (User) session.getAttribute("auth");
             Integer userId = (auth != null) ? auth.getId() : null;
 
-            int orderId = checkoutService.placeOrder(
+            CheckoutService.PlaceOrderResult result = checkoutService.placeOrderWithMeta(
                     cart, userId,
                     receiverName, phone, email,
                     addressLine, ward, district, province, note,
@@ -121,10 +150,32 @@ public class CheckoutServlet extends HttpServlet {
 
             request.getSession().removeAttribute(CartService.SESSION_CART_KEY);
 
-            if (isAjax) {
-                writeJson(response, 200, "{\"ok\":true,\"orderId\":" + orderId + "}");
+            boolean isVnpay = result.getPaymentMethod() != null && result.getPaymentMethod().equalsIgnoreCase("VNPAY");
+            if (isVnpay) {
+                String locale = safe(request.getParameter("language"));
+                if (locale.isEmpty()) locale = "vn";
+
+                String paymentUrl = vnpayPaymentService.createPaymentUrl(
+                        request,
+                        result.getOrderId(),
+                        result.getTotal(),
+                        result.getVnpTxnRef(),
+                        locale
+                );
+
+                if (isAjax) {
+                    writeJson(response, 200,
+                            "{\"ok\":true,\"orderId\":" + result.getOrderId()
+                                    + ",\"paymentUrl\":\"" + escapeJson(paymentUrl) + "\"}");
+                } else {
+                    response.sendRedirect(paymentUrl);
+                }
             } else {
-                response.sendRedirect(request.getContextPath() + "/order-success?orderId=" + orderId);
+                if (isAjax) {
+                    writeJson(response, 200, "{\"ok\":true,\"orderId\":" + result.getOrderId() + "}");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/order-success?orderId=" + result.getOrderId());
+                }
             }
 
         } catch (Exception ex) {
@@ -140,8 +191,7 @@ public class CheckoutServlet extends HttpServlet {
         }
     }
 
-
-private Map<Integer, Integer> buildVariantQtyMap(Cart cart) {
+    private Map<Integer, Integer> buildVariantQtyMap(Cart cart) {
         Map<Integer, Integer> variantQtyMap = new LinkedHashMap<>();
         if (cart == null || cart.getItems() == null) return variantQtyMap;
 
@@ -156,8 +206,7 @@ private Map<Integer, Integer> buildVariantQtyMap(Cart cart) {
                     int vid = ((Number) k).intValue();
                     int qty = ((Number) v).intValue();
                     variantQtyMap.put(vid, variantQtyMap.getOrDefault(vid, 0) + qty);
-                }
-                else if (v instanceof CartItem ci) {
+                } else if (v instanceof CartItem ci) {
                     int vid = ci.getVariantId();
                     int qty = ci.getQuantity();
                     variantQtyMap.put(vid, variantQtyMap.getOrDefault(vid, 0) + qty);
@@ -169,7 +218,7 @@ private Map<Integer, Integer> buildVariantQtyMap(Cart cart) {
     }
 
     private static String safe(String s) {
-        return s == null ? "" : s.trim();
+        return (s == null) ? "" : s.trim();
     }
 
     private static BigDecimal parseMoney(String s, BigDecimal def) {
@@ -185,13 +234,16 @@ private Map<Integer, Integer> buildVariantQtyMap(Cart cart) {
         response.setStatus(status);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(json);
+        try (PrintWriter out = response.getWriter()) {
+            out.write(json);
+        }
     }
 
     private static String escapeJson(String s) {
+        if (s == null) return "";
         return s.replace("\\", "\\\\")
                 .replace("\"", "\\\"")
-                .replace("\n", " ")
-                .replace("\r", " ");
+                .replace("\n", "\\n")
+                .replace("\r", "\\r");
     }
 }

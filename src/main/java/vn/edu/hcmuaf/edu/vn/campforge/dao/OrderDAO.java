@@ -228,4 +228,33 @@ public class OrderDAO {
     }
 
 
+
+    public BigDecimal getTotalAmountById(int orderId) throws SQLException {
+        String sql = "SELECT total_amount FROM orders WHERE id = ? AND is_delete = 0";
+        try (Connection c = DbConnect.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getBigDecimal("total_amount");
+                return null;
+            }
+        }
+    }
+
+    public void updatePaymentStatusIfPending(int orderId, String paymentStatus) throws SQLException {
+        String sql = """
+        UPDATE orders
+        SET payment_status = ?, updated_at = NOW()
+        WHERE id = ?
+          AND payment_status = 'PENDING'
+          AND is_delete = 0
+    """;
+        try (Connection c = DbConnect.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, paymentStatus);
+            ps.setInt(2, orderId);
+            ps.executeUpdate();
+        }
+    }
+
 }
