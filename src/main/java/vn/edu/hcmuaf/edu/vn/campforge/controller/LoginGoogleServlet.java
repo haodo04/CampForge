@@ -45,7 +45,7 @@ public class LoginGoogleServlet extends HttpServlet {
             if (user == null) {
                 // Nếu chưa có email này trong DB -> Tạo mới User
                 user = new User();
-                user.setUsername(googleUser.getEmail()); // Dùng email làm username
+                user.setUsername(googleUser.getName()); // Dùng fullName làm username
                 user.setEmail(googleUser.getEmail());
                 user.setFullName(googleUser.getName());
                 user.setIsVerified(1); // Google đã verify email rồi
@@ -57,8 +57,6 @@ public class LoginGoogleServlet extends HttpServlet {
 
             // 4. Lưu vào session và vào Home
             request.getSession().setAttribute("auth", user);
-            System.out.println("Google Email: " + googleUser.getEmail());
-            System.out.println("User Object Username: " + (user != null ? user.getUsername() : "USER NULL"));
             response.sendRedirect(request.getContextPath() + "/home");
 
         } catch (Exception e) {

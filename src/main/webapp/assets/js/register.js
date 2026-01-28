@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (form) {
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Chặn gửi mặc định để kiểm tra
+      e.preventDefault();
 
       let ok = true;
 
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // 2. Nếu mọi thứ OK -> Gửi dữ liệu thật về Servlet
       if (ok) {
         submitBtn.disabled = true;
-        submitBtn.textContent = "Processing...";
+        submitBtn.textContent = "Đang tạo...";
 
         // Lệnh này sẽ kích hoạt doPost trong RegisterServlet
         form.submit();
@@ -48,6 +48,6 @@ function togglePw(id, btnEl) {
   if (input) {
     const isPw = input.type === "password";
     input.type = isPw ? "text" : "password";
-    btnEl.textContent = isPw ? "Hide" : "Show";
+    btnEl.textContent = isPw ? "ẩn" : "hiện";
   }
 }

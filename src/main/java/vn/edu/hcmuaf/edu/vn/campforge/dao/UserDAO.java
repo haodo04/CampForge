@@ -23,10 +23,6 @@ public class UserDAO {
         return user;
     }
 
-    /**
-     * Thực hiện đăng ký người dùng mới
-     * Trả về true nếu thành công
-     */
     public static boolean register(User user) {
         // Chỉ dùng 6 dấu hỏi cho 6 cột chính
         String sql = "INSERT INTO users (username, password, fullName, email, phone, role) VALUES (?, ?, ?, ?, ?, ?)";
@@ -171,7 +167,7 @@ public class UserDAO {
         String sql = "INSERT INTO users (username, fullName, email, is_verified, role, password) VALUES (?, ?, ?, 1, 0, ?)";
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, user.getEmail()); // Dùng email làm username luôn
+            ps.setString(1, user.getFullName()); // Dùng fullName làm username luôn
             ps.setString(2, user.getFullName());
             ps.setString(3, user.getEmail());
             ps.setString(4, ""); // Không có mật khẩu cho login Google
