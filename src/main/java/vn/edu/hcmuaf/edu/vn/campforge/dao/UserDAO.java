@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.edu.vn.campforge.dao;
 
 import vn.edu.hcmuaf.edu.vn.campforge.dao.db.DbConnect;
 import vn.edu.hcmuaf.edu.vn.campforge.model.User;
+import vn.edu.hcmuaf.edu.vn.campforge.model.UserRole;
 
 import java.sql.*;
 
@@ -39,7 +40,7 @@ public class UserDAO {
             ps.setString(3, user.getFullName());
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getPhone());
-            ps.setInt(6, 0); // Mặc định role User
+            ps.setInt(6, UserRole.USER.getCode());
 
             int rowAffected = ps.executeUpdate();
             return rowAffected > 0;
@@ -166,18 +167,24 @@ public class UserDAO {
             conn.createStatement().executeUpdate("DELETE FROM verify_tokens WHERE email = '" + email + "'");
         } catch (SQLException e) { e.printStackTrace(); }
     }
-    // Đăng ký người dùng từ Google (mật khẩu để trống)
+
     public static boolean registerGoogleUser(User user) {
-        String sql = "INSERT INTO users (username, fullName, email, is_verified, role, password) VALUES (?, ?, ?, 1, 0, ?)";
+        String sql = "INSERT INTO users (username, fullName, email, is_verified, role, password) VALUES (?, ?, ?, 1, ?, ?)";
         try (Connection conn = DbConnect.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, user.getEmail()); // Dùng email làm username luôn
+
+            ps.setString(1, user.getEmail());
             ps.setString(2, user.getFullName());
             ps.setString(3, user.getEmail());
-            ps.setString(4, ""); // Không có mật khẩu cho login Google
+            ps.setInt(4, UserRole.USER.getCode());
+            ps.setString(5, "");
             return ps.executeUpdate() > 0;
-        } catch (SQLException e) { e.printStackTrace(); return false; }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
     public boolean updateProfile(int userId, String fullName, String phone, String email, String address) {
         String sql = "UPDATE users SET fullName = ?, phone = ?, email = ?, address = ? WHERE id = ?";
 

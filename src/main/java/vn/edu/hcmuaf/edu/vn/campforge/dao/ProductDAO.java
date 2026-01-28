@@ -417,5 +417,107 @@ public class ProductDAO {
         return list;
     }
 
+    public static List<Product> findAllForAdmin() {
+        List<Product> list = new ArrayList<>();
 
+        String sql = """
+        SELECT
+            p.id, p.cateId, p.brandId, p.proName, p.price,
+            p.description, p.sold, p.createAt, p.isDelete,
+            i.path AS image,
+            b.name AS brandName,
+            c.cateName AS cateName,
+            v_min.min_variant_id AS defaultVariantId
+        FROM products p
+        LEFT JOIN product_imgs i
+               ON p.id = i.product_id AND i.position = 1
+        LEFT JOIN (
+            SELECT product_id, MIN(id) AS min_variant_id
+            FROM product_variants
+            WHERE is_active = 1
+            GROUP BY product_id
+        ) v_min ON v_min.product_id = p.id
+        LEFT JOIN brand b ON p.brandId = b.id
+        LEFT JOIN categories c ON p.cateId = c.id
+        ORDER BY p.id DESC
+    """;
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Product p = mapRow(rs);
+
+                Object dv = rs.getObject("defaultVariantId");
+                p.setDefaultVariantId(dv == null ? null : ((Number) dv).intValue());
+
+                list.add(p);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static int insert(Connection conn, int cateId, int brandId, String proName,
+                             double price, String description, int isDelete) throws SQLException {
+
+        String sql = """
+          INSERT INTO products(cateId, brandId, proName, price, description, sold, createAt, isDelete)
+          VALUES (?, ?, ?, ?, ?, 0, ?, ?)
+        """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, cateId);
+            ps.setInt(2, brandId);
+            ps.setString(3, proName);
+            ps.setDouble(4, price);
+            ps.setString(5, description);
+            ps.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+            ps.setInt(7, isDelete);
+
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        }
+        throw new SQLException("Insert product failed");
+    }
+
+    public static void deleteById(Connection conn, int id) throws SQLException {
+        String sql = "DELETE FROM products WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
+    }
+
+    public static void updateBasic(Connection conn,
+                                   int id,
+                                   int cateId,
+                                   int brandId,
+                                   String proName,
+                                   double price,
+                                   String description) throws SQLException {
+        String sql = """
+        UPDATE products
+        SET cateId = ?, brandId = ?, proName = ?, price = ?, description = ?
+        WHERE id = ?
+    """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, cateId);
+            ps.setInt(2, brandId);
+            ps.setString(3, proName);
+            ps.setDouble(4, price);
+            ps.setString(5, description);
+            ps.setInt(6, id);
+
+            int updated = ps.executeUpdate();
+            if (updated == 0) {
+                throw new SQLException("Update products failed: id=" + id);
+            }
+        }
+    }
 }

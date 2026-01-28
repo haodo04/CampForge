@@ -3,10 +3,7 @@ package vn.edu.hcmuaf.edu.vn.campforge.dao;
 import vn.edu.hcmuaf.edu.vn.campforge.dao.db.DbConnect;
 import vn.edu.hcmuaf.edu.vn.campforge.model.ProductVariant;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,4 +105,34 @@ public class ProductVariantDAO {
 
         return null;
     }
+
+    public static void insert(Connection conn, int productId, String color, String size,
+                              String imagePath, Double price, int stock, int isActive) throws SQLException {
+        String sql = """
+          INSERT INTO product_variants(product_id, color, size, image_path, price, stock, is_active)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ps.setString(2, color);
+            ps.setString(3, size);
+            ps.setString(4, imagePath);
+
+            if (price == null) ps.setNull(5, Types.DOUBLE);
+            else ps.setDouble(5, price);
+
+            ps.setInt(6, stock);
+            ps.setInt(7, isActive); // 1
+            ps.executeUpdate();
+        }
+    }
+
+    public static void deleteByProductId(Connection conn, int productId) throws SQLException {
+        String sql = "DELETE FROM product_variants WHERE product_id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ps.executeUpdate();
+        }
+    }
+
 }
