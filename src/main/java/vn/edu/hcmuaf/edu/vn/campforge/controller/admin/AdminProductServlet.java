@@ -6,8 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import vn.edu.hcmuaf.edu.vn.campforge.service.AdminProductService;
 import vn.edu.hcmuaf.edu.vn.campforge.service.dto.CreateProductRequest;
+import vn.edu.hcmuaf.edu.vn.campforge.utils.CloudinaryUploadUtil;
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.*;
 
 @WebServlet("/admin/products")
@@ -25,7 +25,10 @@ public class AdminProductServlet extends HttpServlet {
         if ("detail".equalsIgnoreCase(action)) {
             int id = Integer.parseInt(req.getParameter("id"));
             var dto = productService.getProductDetail(id);
-            if (dto == null) { resp.sendError(404); return; }
+            if (dto == null) {
+                resp.sendError(404);
+                return;
+            }
 
             resp.setContentType("application/json; charset=UTF-8");
             resp.getWriter().print(toJson(dto));
@@ -35,7 +38,6 @@ public class AdminProductServlet extends HttpServlet {
         req.setAttribute("products", productService.getAllProducts());
         req.getRequestDispatcher("/admin/products.jsp").forward(req, resp);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -63,30 +65,29 @@ public class AdminProductServlet extends HttpServlet {
         double price = Double.parseDouble(req.getParameter("price"));
         String description = trim(req.getParameter("description"));
 
+        String folder = cateFolder(cateId);
+        String cloudFolder = "campforge/products/" + folder;
+
         Part mainImagePart = req.getPart("mainImage");
         String newMainImagePath = null;
         if (mainImagePart != null && mainImagePart.getSize() > 0) {
-            String folder = cateFolder(cateId);
-            String uploadDir = getServletContext().getRealPath("/assets/img/products/" + folder);
-            Files.createDirectories(Paths.get(uploadDir));
-            String publicBase = "/assets/img/products/" + folder;
-            newMainImagePath = saveUpload(mainImagePart, uploadDir, publicBase);
+            newMainImagePath = CloudinaryUploadUtil.uploadImage(mainImagePart, cloudFolder);
         }
-
-        String folder = cateFolder(cateId);
-        String uploadDir = getServletContext().getRealPath("/assets/img/products/" + folder);
-        Files.createDirectories(Paths.get(uploadDir));
-        String publicBase = "/assets/img/products/" + folder;
 
         boolean replaceGallery = false;
         List<String> newGallery = new ArrayList<>();
         for (Part p : req.getParts()) {
             if (!"galleryImages".equals(p.getName())) continue;
             if (p.getSize() <= 0) continue;
+
             replaceGallery = true;
-            String path = saveUpload(p, uploadDir, publicBase);
-            if (path != null) newGallery.add(path);
+            String url = CloudinaryUploadUtil.uploadImage(p, cloudFolder);
+            if (url != null) newGallery.add(url);
         }
+
+        String variantImagePath = (newMainImagePath != null && !newMainImagePath.isEmpty())
+                ? newMainImagePath
+                : getCurrentMainImagePath(id);
 
         List<CreateProductRequest.ProductVariantInput> variants = new ArrayList<>();
         String[] vColors = req.getParameterValues("variantColor[]");
@@ -108,10 +109,11 @@ public class AdminProductServlet extends HttpServlet {
 
             CreateProductRequest.ProductVariantInput vi = new CreateProductRequest.ProductVariantInput();
             vi.color = color.isEmpty() ? null : color;
-            vi.size = size.isEmpty() ? null : size;
+            vi.size  = size.isEmpty() ? null : size;
             vi.price = vPrice;
             vi.stock = stock;
-            vi.imagePath = null;
+            vi.imagePath = variantImagePath;
+
             variants.add(vi);
         }
 
@@ -119,6 +121,7 @@ public class AdminProductServlet extends HttpServlet {
         String[] sNames = req.getParameterValues("sizeName[]");
         String[] sWeights = req.getParameterValues("sizeWeight[]");
         int sLen = maxLen(sNames, sWeights);
+
         for (int i = 0; i < sLen; i++) {
             String name = trim(getAt(sNames, i));
             String wStr = trim(getAt(sWeights, i));
@@ -141,7 +144,6 @@ public class AdminProductServlet extends HttpServlet {
 
         resp.sendRedirect(req.getContextPath() + "/admin/products?updated=1");
     }
-
 
     private void handleDelete(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         String idStr = req.getParameter("id");
@@ -169,21 +171,19 @@ public class AdminProductServlet extends HttpServlet {
         }
 
         String folder = cateFolder(cateId);
-
-        String uploadDir = getServletContext().getRealPath("/assets/img/products/" + folder);
-        Files.createDirectories(Paths.get(uploadDir));
-
-        String publicBase = "/assets/img/products/" + folder;
+        String cloudFolder = "campforge/products/" + folder;
 
         Part mainImagePart = req.getPart("mainImage");
-        String mainImagePath = saveUpload(mainImagePart, uploadDir, publicBase);
+        String mainImagePath = CloudinaryUploadUtil.uploadImage(mainImagePart, cloudFolder);
         if (mainImagePath == null) throw new IllegalArgumentException("Thiếu ảnh đại diện.");
 
         List<String> galleryPaths = new ArrayList<>();
         for (Part p : req.getParts()) {
             if (!"galleryImages".equals(p.getName())) continue;
-            String path = saveUpload(p, uploadDir, publicBase);
-            if (path != null) galleryPaths.add(path);
+            if (p.getSize() <= 0) continue;
+
+            String url = CloudinaryUploadUtil.uploadImage(p, cloudFolder);
+            if (url != null) galleryPaths.add(url);
         }
 
         List<CreateProductRequest.ProductVariantInput> variants = new ArrayList<>();
@@ -200,19 +200,15 @@ public class AdminProductServlet extends HttpServlet {
             String stockStr = trim(getAt(vStocks, i));
 
             int stock = 0;
-            if (!stockStr.isEmpty()) {
-                stock = Integer.parseInt(stockStr);
-            }
+            if (!stockStr.isEmpty()) stock = Integer.parseInt(stockStr);
 
-            if (color.isEmpty() && size.isEmpty() && priceStr.isEmpty() && stock == 0) {
-                continue;
-            }
+            if (color.isEmpty() && size.isEmpty() && priceStr.isEmpty() && stock == 0) continue;
 
             Double vPrice = priceStr.isEmpty() ? null : Double.parseDouble(priceStr);
 
             CreateProductRequest.ProductVariantInput vi = new CreateProductRequest.ProductVariantInput();
             vi.color = color.isEmpty() ? null : color;
-            vi.size = size.isEmpty() ? null : size;
+            vi.size  = size.isEmpty() ? null : size;
             vi.price = vPrice;
             vi.stock = stock;
             vi.imagePath = mainImagePath;
@@ -256,6 +252,23 @@ public class AdminProductServlet extends HttpServlet {
         resp.sendRedirect(req.getContextPath() + "/admin/products?created=1");
     }
 
+    private String getCurrentMainImagePath(int productId) {
+        try {
+            var dto = productService.getProductDetail(productId);
+            if (dto == null || dto.images == null || dto.images.isEmpty()) return null;
+
+            for (var im : dto.images) {
+                if (im != null && im.getPosition() == 1 && im.getPath() != null && !im.getPath().isBlank()) {
+                    return im.getPath().trim();
+                }
+            }
+            var first = dto.images.get(0);
+            return first == null ? null : first.getPath();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private static String trim(String s) {
         return s == null ? "" : s.trim();
     }
@@ -271,30 +284,12 @@ public class AdminProductServlet extends HttpServlet {
         return a[i];
     }
 
-    private static String saveUpload(Part part, String uploadDir, String publicBase) throws IOException {
-        if (part == null) return null;
-        String submitted = part.getSubmittedFileName();
-        if (submitted == null || submitted.trim().isEmpty() || part.getSize() == 0) return null;
-
-        String ext = "";
-        int dot = submitted.lastIndexOf('.');
-        if (dot >= 0) ext = submitted.substring(dot);
-
-        String fileName = UUID.randomUUID().toString().replace("-", "") + ext;
-        Path savePath = Paths.get(uploadDir, fileName);
-
-        try {
-            part.write(savePath.toString());
-        } catch (Exception ex) {
-            Files.copy(part.getInputStream(), savePath, StandardCopyOption.REPLACE_EXISTING);
-        }
-
-        return publicBase + "/" + fileName;
-    }
-
     private static String esc(String s) {
         if (s == null) return "";
-        return s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "");
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "");
     }
 
     private static String toJson(AdminProductService.ProductDetailDTO dto) {
@@ -311,28 +306,28 @@ public class AdminProductServlet extends HttpServlet {
                 .append("},");
 
         sb.append("\"images\":[");
-        for (int i=0;i<dto.images.size();i++){
-            var im=dto.images.get(i);
-            if(i>0) sb.append(",");
+        for (int i = 0; i < dto.images.size(); i++) {
+            var im = dto.images.get(i);
+            if (i > 0) sb.append(",");
             sb.append("{\"path\":\"").append(esc(im.getPath())).append("\",\"position\":").append(im.getPosition()).append("}");
         }
         sb.append("],");
 
         sb.append("\"variants\":[");
-        for (int i=0;i<dto.variants.size();i++){
-            var v=dto.variants.get(i);
-            if(i>0) sb.append(",");
+        for (int i = 0; i < dto.variants.size(); i++) {
+            var v = dto.variants.get(i);
+            if (i > 0) sb.append(",");
             sb.append("{\"color\":\"").append(esc(v.getColor())).append("\",")
                     .append("\"size\":\"").append(esc(v.getSize())).append("\",")
-                    .append("\"price\":").append(v.getPrice()==null?"null":v.getPrice()).append(",")
+                    .append("\"price\":").append(v.getPrice() == null ? "null" : v.getPrice()).append(",")
                     .append("\"stock\":").append(v.getStock()).append("}");
         }
         sb.append("],");
 
         sb.append("\"sizes\":[");
-        for (int i=0;i<dto.sizes.size();i++){
-            var s=dto.sizes.get(i);
-            if(i>0) sb.append(",");
+        for (int i = 0; i < dto.sizes.size(); i++) {
+            var s = dto.sizes.get(i);
+            if (i > 0) sb.append(",");
             sb.append("{\"sizeName\":\"").append(esc(s.getSizeName())).append("\",\"weight\":").append(s.getWeight()).append("}");
         }
         sb.append("]");
@@ -340,7 +335,6 @@ public class AdminProductServlet extends HttpServlet {
         sb.append("}");
         return sb.toString();
     }
-
 
     private static String cateFolder(int cateId) {
         return switch (cateId) {

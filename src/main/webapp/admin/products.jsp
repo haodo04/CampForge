@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -117,7 +117,9 @@
                 <td>${p.proName}</td>
                 <td>${p.cateName}</td>
                 <td>${p.brandName}</td>
-                <td>${p.formattedPrice}</td>
+                <td data-order="${p.price}">
+                  <fmt:formatNumber value="${p.price}" pattern="#,##0"/> đ
+                </td>
 
                 <td>
                   <c:choose>
@@ -246,7 +248,7 @@
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Ảnh gallery (tuỳ chọn)</label>
+              <label class="form-label">Ảnh phụ (chọn nhiều)</label>
               <input type="file" class="form-control form-control-sm" name="galleryImages" multiple accept="image/*">
             </div>
           </div>

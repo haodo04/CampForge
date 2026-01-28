@@ -20,7 +20,7 @@
     <a href="#" class="sidebar-title">Admin</a>
     <a href="./dashboard.jsp">Tổng quan</a>
     <a href="${pageContext.request.contextPath}/admin/products">Quản lý sản phẩm</a>
-    <a href="orders.jsp">Quản lý đơn hàng</a>
+    <a href="${pageContext.request.contextPath}/admin/orders">Quản lý đơn hàng</a>
     <a href="users.jsp">Quản lý người dùng</a>
     <a href="previews.jsp">Quản lý đánh giá</a>
     <a href="discounts.jsp">Quản lý giảm giá</a>
