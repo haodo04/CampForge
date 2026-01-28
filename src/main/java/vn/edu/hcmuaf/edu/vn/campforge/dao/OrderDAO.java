@@ -145,5 +145,87 @@ public class OrderDAO {
         }
     }
 
+    public List<Order> findAllForAdmin(boolean includeDeleted) throws SQLException {
+        List<Order> list = new ArrayList<>();
+
+        String sql = """
+        SELECT
+            id, user_id, order_date,
+            subtotal_amount, shipping_fee, voucher_discount, total_amount,
+            payment_method, payment_status, delivery_status,
+            delivery_date, vnp_txn_ref, voucher_id,
+            is_delete, updated_at
+        FROM orders
+        WHERE (? = 1 OR is_delete = 0)
+        ORDER BY order_date DESC, id DESC
+    """;
+
+        try (Connection conn = DbConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, includeDeleted ? 1 : 0);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Order o = new Order();
+                    o.setId(rs.getInt("id"));
+                    o.setUserId((Integer) rs.getObject("user_id"));
+                    o.setOrderDate(rs.getTimestamp("order_date"));
+
+                    o.setSubtotalAmount(rs.getBigDecimal("subtotal_amount"));
+                    o.setShippingFee(rs.getBigDecimal("shipping_fee"));
+                    o.setVoucherDiscount(rs.getBigDecimal("voucher_discount"));
+                    o.setTotalAmount(rs.getBigDecimal("total_amount"));
+
+                    o.setPaymentMethod(rs.getString("payment_method"));
+                    o.setPaymentStatus(rs.getString("payment_status"));
+                    o.setDeliveryStatus(rs.getString("delivery_status"));
+
+                    o.setDeliveryDate(rs.getTimestamp("delivery_date"));
+                    o.setVnpTxnRef(rs.getString("vnp_txn_ref"));
+                    o.setVoucherId((Integer) rs.getObject("voucher_id"));
+
+                    o.setDelete(rs.getInt("is_delete") == 1);
+                    o.setUpdatedAt(rs.getTimestamp("updated_at"));
+
+                    list.add(o);
+                }
+            }
+        }
+        return list;
+    }
+
+    public boolean softDeleteById(int orderId) throws SQLException {
+        String sql = "UPDATE orders SET is_delete = 1, updated_at = NOW() WHERE id = ? AND is_delete = 0";
+        try (Connection c = DbConnect.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    public boolean updateStatus(int orderId, String paymentStatus, String deliveryStatus) throws SQLException {
+        String sql = """
+        UPDATE orders
+        SET payment_status = ?,
+            delivery_status = ?,
+            delivery_date = CASE
+                WHEN ? = 'COMPLETED' AND delivery_date IS NULL THEN NOW()
+                ELSE delivery_date
+            END,
+            updated_at = NOW()
+        WHERE id = ? AND is_delete = 0
+    """;
+
+        try (Connection c = DbConnect.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, paymentStatus);
+            ps.setString(2, deliveryStatus);
+            ps.setString(3, deliveryStatus);
+            ps.setInt(4, orderId);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
 
 }
