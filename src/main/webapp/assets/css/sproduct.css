@@ -653,6 +653,59 @@
     opacity: .9;
 }
 
+.pd-stars i,
+.pd-review-stars i{
+    color: #f5b301;
+}
+
+.fa-regular.fa-star{
+    color: #cfcfcf;
+}
+
+.pd-add-review textarea{
+    width: 100%;
+    max-width: 520px;
+    min-height: 110px;
+    border: 1px solid #d0d0d0;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+    line-height: 1.5;
+}
+
+.pd-add-review textarea:focus{
+    border-color: #111;
+}
+
+.pd-rating-picker{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    max-width: 520px;
+    user-select: none;
+}
+
+.pd-rating-picker .rp-star{
+    font-size: 18px;
+    cursor: pointer;
+    color: #cfcfcf;
+}
+
+.pd-rating-picker .rp-star.is-on{
+    color: #f5b301;
+}
+
+.pd-rating-picker .rp-text{
+    margin-left: 8px;
+    font-size: 13px;
+    color: #555;
+    font-weight: 600;
+}
+
 
 
 

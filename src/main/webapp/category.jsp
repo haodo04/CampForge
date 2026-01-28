@@ -194,28 +194,6 @@
                                 </div>
                             </div>
 
-                            <!-- KÍCH THƯỚC -->
-                            <div class="mb-4">
-                                <h6 class="mb-2">Kích thước</h6>
-
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="size" value="2x3" id="s1">
-                                    <label class="form-check-label" for="s1">2×3 m</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="size" value="3x4" id="s2">
-                                    <label class="form-check-label" for="s2">3×4 m</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="size" value="4x6" id="s3">
-                                    <label class="form-check-label" for="s3">4×6 m</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="size" value="6x9" id="s4">
-                                    <label class="form-check-label" for="s4">6×9 m</label>
-                                </div>
-                            </div>
-
                             <!-- CHỦ ĐỀ -->
                             <div class="mb-4">
                                 <h6 class="mb-2">Chủ đề</h6>
@@ -266,17 +244,6 @@
                                     <input class="form-check-input" type="checkbox" name="brandId" value="6" id="a6">
                                     <label class="form-check-label" for="a6">VULTURE</label>
                                 </div>
-                            </div>
-
-                            <div class="form-check mb-2">
-                                <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        id="sortRating"
-                                />
-                                <label class="form-check-label" for="sortRating"
-                                >Đánh giá cao <i class="fa-solid fa-star text-warning"></i
-                                ></label>
                             </div>
 
                             <!-- SORT -->

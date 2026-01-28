@@ -423,14 +423,18 @@
                     <input type="hidden" name="productId" value="${p.id}"/>
 
                     <div style="margin-bottom:10px;">
-                        <label style="display:block; margin-bottom:6px;">Rating:</label>
-                        <select name="rating" class="form-select" style="max-width:120px;">
-                            <option value="5">5</option>
-                            <option value="4">4</option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
-                            <option value="1">1</option>
-                        </select>
+                        <label style="display:block; margin-bottom:6px;">Mức:</label>
+                        <input type="hidden" name="rating" id="ratingValue" value="5"/>
+
+                        <div class="pd-rating-picker" id="ratingPicker" aria-label="Chọn số sao">
+                            <i class="fa-regular fa-star rp-star" data-value="1"></i>
+                            <i class="fa-regular fa-star rp-star" data-value="2"></i>
+                            <i class="fa-regular fa-star rp-star" data-value="3"></i>
+                            <i class="fa-regular fa-star rp-star" data-value="4"></i>
+                            <i class="fa-regular fa-star rp-star" data-value="5"></i>
+                            <span class="rp-text" id="ratingText">5/5</span>
+                        </div>
+
                     </div>
 
                     <div style="margin-bottom:10px;">
@@ -632,6 +636,40 @@
                 console.error(err);
                 alert("Không thể gửi đánh giá lúc này.");
             }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var picker = document.getElementById("ratingPicker");
+        var input = document.getElementById("ratingValue");
+        var text = document.getElementById("ratingText");
+        if (!picker || !input) return;
+
+        function paint(val) {
+            var stars = picker.querySelectorAll(".rp-star");
+            for (var i = 0; i < stars.length; i++) {
+                var v = Number(stars[i].getAttribute("data-value"));
+                if (v <= val) {
+                    stars[i].classList.remove("fa-regular");
+                    stars[i].classList.add("fa-solid");
+                    stars[i].classList.add("is-on");
+                } else {
+                    stars[i].classList.remove("fa-solid");
+                    stars[i].classList.add("fa-regular");
+                    stars[i].classList.remove("is-on");
+                }
+            }
+            input.value = String(val);
+            if (text) text.textContent = val + "/5";
+        }
+
+        paint(Number(input.value || 5));
+
+        picker.addEventListener("click", function (e) {
+            var star = e.target.closest(".rp-star");
+            if (!star) return;
+            var val = Number(star.getAttribute("data-value") || 5);
+            paint(val);
         });
     });
 </script>

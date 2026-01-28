@@ -192,19 +192,13 @@
                         <i class="fas fa-edit"></i> Chỉnh sửa
                     </button>
                     <a href="logout" class="btn btn-danger btn-sm logout-link"><i class="fa fa-sign-out-alt"></i> Đăng xuất</a>
-                    <button
-                            class="btn btn-primary btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#voucherModal"
-                    >
-                        <i class="fas fa-ticket-alt"></i> Voucher của tôi
-                    </button>
-                    <button
-                            class="btn btn-dark btn-sm"
-                            onclick="window.location.href='admin/dashboard.jsp'"
-                    >
-                        <i class="fas fa-user-shield"></i> Admin
-                    </button>
+
+                    <c:if test="${not empty sessionScope.auth and sessionScope.auth.admin}">
+                        <button class="btn btn-dark btn-sm"
+                                onclick="window.location.href='${pageContext.request.contextPath}/admin/dashboard.jsp'">
+                            <i class="fas fa-user-shield"></i> Admin
+                        </button>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -633,70 +627,6 @@
     </div>
 </div>
 
-<div
-        class="modal fade"
-        id="voucherModal"
-        tabindex="-1"
-        aria-labelledby="voucherModalLabel"
-        aria-hidden="true"
->
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="voucherModalLabel">
-                    Danh sách voucher của bạn
-                </h5>
-                <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Đóng"
-                ></button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>Tên voucher</th>
-                        <th>Mã</th>
-                        <th>Giảm (%)</th>
-                        <th>Hiệu lực</th>
-                        <th>Hết hạn</th>
-                        <th>Trạng thái</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Giảm giá đặc biệt</td>
-                        <td>SALE20</td>
-                        <td>20</td>
-                        <td>2025-01-01</td>
-                        <td>2025-12-31</td>
-                        <td>Chưa dùng</td>
-                    </tr>
-                    <tr>
-                        <td>Ưu đãi cho thành viên mới</td>
-                        <td>NEWBIE10</td>
-                        <td>10</td>
-                        <td>2024-01-01</td>
-                        <td>2025-06-30</td>
-                        <td>Đã dùng</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                >
-                    Đóng
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 <section id="newsletter" class="section-p1">
     <div class="newstext">
         <h4>Đăng ký nhận tin</h4>
@@ -981,7 +911,7 @@
                 '</div>' +
 
                 (reviewed
-                        ? '<div class="mt-2 text-success fw-semibold">Bạn đã đánh giá sản phẩm này.</div>'
+                        ? '<div class="mt-2 text-success fw-semibold">Đã đánh giá.</div>'
                         : (
                             '<div class="mt-2">' +
                             renderStarsHtml(it.orderItemId, 5) +
