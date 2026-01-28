@@ -107,8 +107,7 @@
 </section>
 
 <section id="page-header" class="cart-header">
-    <h2>#Giỏ hàng</h2>
-    <p>Nhập mã giảm giá & Giảm lên đến 70%!</p>
+    <h2>Giỏ hàng</h2>
 </section>
 
 <section id="cart" class="section-p1">
@@ -143,11 +142,15 @@
                         <c:out value="${it.proName}"/>
                     </div>
                     <div class="cart-meta">
-                        <c:out value="${it.color}"/>
-                        <c:if test="${not empty it.size}">
-                            - <c:out value="${it.size}"/>
-                        </c:if>
-                        &nbsp;|&nbsp; Tồn: <c:out value="${it.stock}"/>
+                        <c:choose>
+                            <c:when test="${not empty it.brandName}">
+                                Thương hiệu: <c:out value="${it.brandName}"/>
+                            </c:when>
+                            <c:otherwise>
+                                Thương hiệu: --
+                            </c:otherwise>
+                        </c:choose>
+                        &nbsp;|&nbsp; Còn lại: <c:out value="${it.stock}"/>
                     </div>
                 </td>
 
