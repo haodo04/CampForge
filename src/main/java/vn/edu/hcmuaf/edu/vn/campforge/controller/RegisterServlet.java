@@ -29,8 +29,8 @@ public class RegisterServlet extends HttpServlet {
 
         if ("SUCCESS_VERIFY".equals(result)) {
             // Không redirect ngay mà forward để mang theo thông báo
-            request.setAttribute("msg", "Đăng ký thành công! Vui lòng kiểm tra Email để kích hoạt tài khoản.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getSession().setAttribute("msg", "Đăng ký thành công! Vui lòng kiểm tra Email để kích hoạt tài khoản.");
+            response.sendRedirect(request.getContextPath() + "/login");
         } else {
             request.setAttribute("error", result);
             request.getRequestDispatcher("register.jsp").forward(request, response);
