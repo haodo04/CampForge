@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import vn.edu.hcmuaf.edu.vn.campforge.dao.UserDAO;
-import vn.edu.hcmuaf.edu.vn.campforge.model.GoogleDTO;
+import vn.edu.hcmuaf.edu.vn.campforge.model.GoogleUserInfo;
 import vn.edu.hcmuaf.edu.vn.campforge.model.User;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class LoginGoogleServlet extends HttpServlet {
             String accessToken = getToken(code);
 
             // 2. Dùng Access Token lấy thông tin User
-            GoogleDTO googleUser = getUserInfo(accessToken);
+            GoogleUserInfo googleUser = getUserInfo(accessToken);
 
             // 3. Xử lý logic Login với Database
             User user = UserDAO.getUserByUsername(googleUser.getEmail());
@@ -82,9 +82,9 @@ public class LoginGoogleServlet extends HttpServlet {
         return jobj.get("access_token").getAsString();
     }
 
-    private GoogleDTO getUserInfo(String accessToken) throws IOException {
+    private GoogleUserInfo getUserInfo(String accessToken) throws IOException {
         String response = Request.Get(LINK_GET_USER_INFO + "?access_token=" + accessToken)
                 .execute().returnContent().asString();
-        return new Gson().fromJson(response, GoogleDTO.class);
+        return new Gson().fromJson(response, GoogleUserInfo.class);
     }
 }

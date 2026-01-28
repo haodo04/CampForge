@@ -16,6 +16,39 @@
 </head>
 
 <body>
+<div id="custom-toast" style="display: none; position: fixed; top: 20px; right: 20px; background-color: #2ecc71; color: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10000; font-family: sans-serif; transition: opacity 0.5s ease;">
+  <strong style="margin-right: 10px;">✓</strong> <span id="toast-text"></span>
+</div>
+
+<%
+  // Lấy thông báo từ session
+  String msg = (String) session.getAttribute("msg");
+  if (msg != null) {
+%>
+<script>
+  (function() {
+    const toast = document.getElementById('custom-toast');
+    const text = document.getElementById('toast-text');
+
+    // Gán nội dung và hiển thị
+    text.innerText = "<%= msg %>";
+    toast.style.display = 'block';
+    toast.style.opacity = '1';
+
+    // Sau 3 giây thì ẩn đi
+    setTimeout(function() {
+      toast.style.opacity = '0'; // Hiệu ứng mờ dần
+      setTimeout(function() {
+        toast.style.display = 'none';
+      }, 500);
+    }, 3000);
+  })();
+</script>
+<%
+    // Quan trọng: Xóa ngay sau khi hiển thị để không bị hiện lại khi F5 trang
+    session.removeAttribute("msg");
+  }
+%>
   <main class="shell" role="main">
 
     <!-- LEFT AREA -->
