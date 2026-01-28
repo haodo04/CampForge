@@ -177,11 +177,16 @@
 
                 <div class="payment-method">
                     <h3>Phương thức thanh toán</h3>
-                    <div class="pm-cod">
+                    <label class="pm-cod" style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                        <input type="radio" name="payment" value="COD" checked>
                         <i class="fa-solid fa-truck"></i>
-                        Thanh toán khi nhận hàng (COD)
-                    </div>
-                    <input type="hidden" name="payment" value="COD">
+                        <span>Thanh toán khi nhận hàng (COD)</span>
+                    </label>
+                    <label class="pm-vnpay" style="display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:10px;">
+                        <input type="radio" name="payment" value="VNPAY">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span>Thanh toán qua VNPay</span>
+                    </label>
                 </div>
             </form>
         </div>
@@ -203,8 +208,7 @@
                                 <div class="details">
                                     <p class="name"><c:out value="${it.proName}"/></p>
                                     <p class="color">
-                                        <c:if test="${not empty it.color}">Màu: <c:out value="${it.color}"/></c:if>
-                                        <c:if test="${not empty it.size}"> - Size: <c:out value="${it.size}"/></c:if>
+                                        Thương hiệu: <c:out value="${it.brandName}"/>
                                     </p>
                                     <p class="price">
                                         <fmt:formatNumber value="${it.unitPrice}" type="number" groupingUsed="true"
@@ -513,6 +517,11 @@
                     throw new Error((data && data.message) ? data.message : "Đặt hàng thất bại");
                 }
 
+                if (data.paymentUrl) {
+                    window.location.href = data.paymentUrl;
+                    return;
+                }
+
                 openSuccessModal(data.orderId);
                 resetUI();
 
@@ -524,6 +533,30 @@
         }
 
         restoreCheckoutFormFromSessionStorage();
+
+        (function handleVnPayReturn() {
+            try {
+                var url = new URL(window.location.href);
+                var paid = url.searchParams.get("paid");
+                var orderId = url.searchParams.get("orderId");
+
+                if (!paid || !orderId) return;
+
+                if (paid === "1") {
+                    openSuccessModal(orderId);
+                    resetUI();
+                } else {
+                    alert("Thanh toán VNPay thất bại hoặc bị hủy. Mã đơn: " + orderId);
+                }
+
+                url.searchParams.delete("paid");
+                url.searchParams.delete("orderId");
+                window.history.replaceState({}, "", url.pathname);
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();

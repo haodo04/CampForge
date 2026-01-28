@@ -163,7 +163,12 @@
             <c:set var="mainImgPath" value="/assets/img/products/no-image.png"/>
         </c:if>
 
-        <img src="<c:url value='${mainImgPath}'/>" width="100%" id="MainImg" data-all="1" alt="">
+        <c:set var="mainSrc" value="${mainImgPath}"/>
+        <c:if test="${!fn:startsWith(mainSrc, 'http')}">
+            <c:set var="mainSrc" value="${ctx}${mainImgPath}"/>
+        </c:if>
+
+        <img src="${mainSrc}" width="100%" id="MainImg" data-all="1" alt="">
         <button type="button" class="sp-nav sp-prev" aria-label="Ảnh trước">
             <span aria-hidden="true">‹</span>
         </button>
@@ -175,12 +180,15 @@
             <c:forEach var="img" items="${images}">
                 <c:if test="${img.position >= 2}">
                     <div class="small-img-col">
-                        <img
-                                src="${ctx}${img.path}"
-                                width="100%"
-                                class="small-img"
-                                data-pos="${img.position}"
-                                alt="">
+                        <c:set var="thumb" value="${img.path}"/>
+                        <c:choose>
+                            <c:when test="${fn:startsWith(thumb, 'http')}">
+                                <img src="${thumb}" width="100%" class="small-img" data-pos="${img.position}" alt="">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${ctx}${thumb}" width="100%" class="small-img" data-pos="${img.position}" alt="">
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </c:if>
             </c:forEach>

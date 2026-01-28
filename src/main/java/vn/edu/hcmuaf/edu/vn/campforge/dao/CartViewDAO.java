@@ -21,7 +21,7 @@ public class CartViewDAO {
 
         String sql =
                 "SELECT pv.id AS variantId, pv.product_id AS productId, " +
-                        "p.proName, pv.color, pv.size, " +
+                        "p.proName, b.name AS brandName, pv.color, pv.size, " +
                         "COALESCE(pv.image_path, " +
                         "  (SELECT pi.path FROM product_imgs pi WHERE pi.product_id = p.id " +
                         "   ORDER BY pi.position ASC, pi.id ASC LIMIT 1)" +
@@ -30,6 +30,7 @@ public class CartViewDAO {
                         "pv.stock " +
                         "FROM product_variants pv " +
                         "JOIN products p ON p.id = pv.product_id " +
+                        "LEFT JOIN brand b ON b.id = p.brandId " +
                         "WHERE pv.id IN (" + placeholders + ") " +
                         "AND COALESCE(pv.is_active, 1) = 1 " +
                         "AND COALESCE(p.isDelete, 0) = 0";
@@ -49,6 +50,7 @@ public class CartViewDAO {
                 item.setVariantId(rs.getInt("variantId"));
                 item.setProductId(rs.getInt("productId"));
                 item.setProName(rs.getString("proName"));
+                item.setBrandName(rs.getString("brandName"));
                 item.setColor(rs.getString("color"));
                 item.setSize(rs.getString("size"));
                 item.setImagePath(rs.getString("imagePath"));
