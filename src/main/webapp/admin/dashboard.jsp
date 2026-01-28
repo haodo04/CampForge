@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -17,8 +18,8 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <a href="#" class="sidebar-title">Admin</a>
-    <a href="./dashboard.html">Tổng quan</a>
-    <a href="products.jsp">Quản lý sản phẩm</a>
+    <a href="./dashboard.jsp">Tổng quan</a>
+    <a href="${pageContext.request.contextPath}/admin/products">Quản lý sản phẩm</a>
     <a href="orders.jsp">Quản lý đơn hàng</a>
     <a href="users.jsp">Quản lý người dùng</a>
     <a href="previews.jsp">Quản lý đánh giá</a>
@@ -38,6 +39,11 @@
 
 <!-- Main Content -->
 <div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="${pageContext.request.contextPath}/personal" class="btn btn-outline-dark btn-sm">
+            <i class="fa fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
     <div class="row mb-4 align-items-end">
         <div class="col-md-4">
             <label for="startDate" class="form-label"><strong>Từ ngày:</strong></label>
