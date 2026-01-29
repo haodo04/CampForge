@@ -26,7 +26,6 @@ public class DbConnect {
         cfg.setUsername(DbProperties.username());
         cfg.setPassword(DbProperties.password());
 
-        // pool config
         cfg.setMaximumPoolSize(10);
         cfg.setMinimumIdle(2);
         cfg.setConnectionTimeout(30000);
@@ -34,11 +33,9 @@ public class DbConnect {
         cfg.setMaxLifetime(1800000);
 
         cfg.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        // cfg.setLeakDetectionThreshold(20000);
 
         DATA_SOURCE = new HikariDataSource(cfg);
 
-        // Tạo JDBI dùng chung pool
         JDBI = Jdbi.create(DATA_SOURCE);
 
         System.out.println("HikariCP pool initialized.");
